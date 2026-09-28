@@ -1,0 +1,42 @@
+# 7. Close and handoff: certify the envelope, not the ambition
+
+## Objective
+
+Close with the narrowest supported statement, preserve blockers, and define the next owner.
+
+## Required close
+
+Use this structure:
+
+1. **Mode:** REHEARSAL, OFFLINE, or LIVE.
+2. **Compared:** baseline, sustained, controlled pressure, and recovery for one declared identity.
+3. **Observed:** only metrics actually present in the proof package.
+4. **Not proved:** capacity, resilience, Intel utilization, or certification claims not backed by approved live sources.
+5. **Disposition:** pending human review; automated promotion is false.
+6. **Next gate:** exact owner and evidence needed before live execution or independent certification.
+
+For this repository, a defensible close is:
+
+> The Agentic AI 501 rehearsal produced four contract-shaped, correlated proof envelopes for one declared comparison. It demonstrates the evidence and review method, not a live OpenShift capacity result, approved Intel Xeon performance, or Launchpad certification. Live execution remains gated, and the promotion decision remains human-owned.
+
+## Handoff package
+
+Include:
+
+- completed learner record;
+- profile declaration;
+- four source-labeled envelopes;
+- scorecard with blockers and evidence paths;
+- pressure admission and restoration plan for future review;
+- reviewer identity or role and next decision date;
+- cleanup or no-change statement.
+
+Because the current flow is read-only rehearsal, the cleanup statement is: “No target environment or Launchpad state was changed.”
+
+## Learner checkpoint
+
+Have another learner challenge one claim. Either point to the exact proof path or narrow the claim.
+
+**Pass when:** the handoff can be reviewed without oral context and contains no unsupported live claim.
+
+[Return to the journey index](../README.md)

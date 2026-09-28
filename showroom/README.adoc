@@ -1,0 +1,31 @@
+= Agentic AI 501 Showroom component
+
+This directory is the Antora/Showroom rendering of the reviewed Markdown journey in `content-501`. The Markdown remains the learning-source authority; this component does not replace or mutate it.
+
+== Structure
+
+* `antora.yml` defines the versionless `agentic-scale-501` component.
+* `modules/ROOT/nav.adoc` registers the overview followed by the eight stages in their reviewed order.
+* `modules/ROOT/pages/` contains the native AsciiDoc pages.
+* `modules/ROOT/attachments/` carries byte-for-byte copies of the learner templates and rehearsal fixtures for Showroom downloads.
+* `supplemental-ui/` supplies the favicon referenced by the Showroom theme.
+* `../site.yml` is the Showroom-themed Antora playbook.
+
+== Validate and build
+
+From the repository root:
+
+[source,bash]
+----
+npm install --prefix showroom
+npm --prefix showroom run check
+----
+
+The generated site is written to `www/showroom`. In a Git checkout, Antora reads the component directly. In an unpacked directory, the build wrapper creates and removes a temporary Git snapshot because Antora requires a Git-backed local content source. The first build downloads the published RHDP Showroom UI bundle and therefore requires network access. The build does not add AgnosticV configuration or change any live environment.
+
+Run the original rehearsal validator separately:
+
+[source,bash]
+----
+node content-501/tools/rehearsal-check.mjs
+----

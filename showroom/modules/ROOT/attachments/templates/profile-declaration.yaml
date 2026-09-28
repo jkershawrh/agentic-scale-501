@@ -1,0 +1,50 @@
+# Learner-editable declaration for the current safe rehearsal.
+# This file is not an approved live workload profile.
+schema_version: agentic-scale-lab-declaration/v1
+mode: rehearsal
+status: learning-only
+
+run:
+  id: rehearsal-501-001
+  profile_family: agentic-501-rehearsal
+  profile_version: v1
+  workload_image_digest: sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+  evaluation_set_version: eval-rehearsal-v1
+  target: local-contract-fixture
+
+invariants:
+  model: model-rehearsal
+  inference_endpoint: model-gateway-rehearsal
+  policy_version: policy-rehearsal-v1
+  quality_scorer_version: quality-rehearsal-v1
+  telemetry_source: rehearsal-fixture-not-target-telemetry
+
+phases:
+  baseline:
+    concurrency: 1
+    changed_condition: low-load reference
+  sustained:
+    concurrency: 5
+    changed_condition: useful concurrent load
+  pressure:
+    concurrency: 5
+    changed_condition: bounded inference-latency pressure rehearsal
+  recovery:
+    concurrency: 5
+    changed_condition: pressure removed and recovery observed
+
+authority:
+  automated_promotion: false
+  human_review_required: true
+  reviewer_disposition: pending
+
+live_execution_gates:
+  agentic_401_certified: false
+  runtime_approval_enforced: false
+  openshift_target_approved: false
+  intel_telemetry_approved: false
+  thresholds_approved: false
+  pressure_driver_approved: false
+  launchpad_certification_available: false
+
+admission: denied-for-live-execution

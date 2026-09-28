@@ -1,0 +1,49 @@
+{
+  "schemaVersion": "agentic-501-failure-profile/v1",
+  "id": "dependency-latency-small",
+  "version": "1.0.0-draft",
+  "implementationStatus": "runtime-gated",
+  "enabled": false,
+  "failureType": "dependency-latency",
+  "target": {
+    "environment": "ephemeral-lab",
+    "clusterUid": "UNBOUND-EXAMPLE-CLUSTER",
+    "namespace": "participant-example",
+    "selector": "app=example-evidence-service",
+    "allowlistRef": "UNIMPLEMENTED:failure-target-allowlist/v1"
+  },
+  "guards": {
+    "maximumDurationSeconds": 60,
+    "maximumAffectedReplicas": 1,
+    "maximumAffectedPercent": 25,
+    "oneFailureAtATime": true,
+    "automaticRollback": true,
+    "abortConditions": [
+      "authority-boundary-violation",
+      "correlation-loss",
+      "collector-unavailable",
+      "unexpected-blast-radius"
+    ]
+  },
+  "authorization": {
+    "required": true,
+    "singleUse": true,
+    "expiresAfterSeconds": 300,
+    "separationOfDuties": true,
+    "tokenBinding": ["runId", "profileId", "profileVersion", "targetClusterUid", "targetNamespace", "requestDigest"]
+  },
+  "apply": {
+    "driver": "UNIMPLEMENTED:approved-failure-driver",
+    "parameters": { "latencyMs": 500, "jitterMs": 50 }
+  },
+  "rollback": {
+    "driver": "UNIMPLEMENTED:approved-failure-driver",
+    "deadlineSeconds": 30,
+    "verifyCommandId": "UNIMPLEMENTED:verify-no-latency-rule"
+  },
+  "evidence": {
+    "requiredEventTypes": ["failure.applied", "failure.removed", "recovery.asserted", "policy.evaluated"],
+    "retainRawDriverReceipt": true,
+    "redactSecrets": true
+  }
+}

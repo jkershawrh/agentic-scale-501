@@ -1,0 +1,118 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://redhat.com/schemas/agentic-501-correlation-event-v1.json",
+  "title": "Agentic AI 501 correlated telemetry event",
+  "description": "A single observed or derived event in a 501 proof journey. Validation establishes shape, not truth or deployment status.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "eventId",
+    "eventType",
+    "observedAt",
+    "runId",
+    "journeyId",
+    "component",
+    "phase",
+    "otel",
+    "provenance",
+    "attributes"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "agentic-501-correlation-event/v1" },
+    "eventId": { "$ref": "#/$defs/nonEmpty" },
+    "eventType": {
+      "enum": [
+        "journey.started",
+        "journey.completed",
+        "agent.invoked",
+        "agent.completed",
+        "tool.invoked",
+        "tool.completed",
+        "inference.requested",
+        "inference.completed",
+        "policy.evaluated",
+        "quality.scored",
+        "resource.observed",
+        "failure.applied",
+        "failure.removed",
+        "recovery.asserted",
+        "authority.reviewed"
+      ]
+    },
+    "observedAt": { "type": "string", "format": "date-time" },
+    "runId": { "$ref": "#/$defs/nonEmpty" },
+    "journeyId": { "$ref": "#/$defs/nonEmpty" },
+    "stepId": { "$ref": "#/$defs/nonEmpty" },
+    "attempt": { "type": "integer", "minimum": 1 },
+    "component": {
+      "enum": ["scale-runner", "orchestrator", "agent", "mcp", "inference", "policy", "quality-scorer", "collector", "failure-driver", "reviewer"]
+    },
+    "phase": { "enum": ["baseline", "sustained", "pressure", "recovery"] },
+    "otel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["traceId", "spanId", "traceFlags"],
+      "properties": {
+        "traceId": { "type": "string", "pattern": "^[0-9a-f]{32}$" },
+        "spanId": { "type": "string", "pattern": "^[0-9a-f]{16}$" },
+        "parentSpanId": { "type": "string", "pattern": "^[0-9a-f]{16}$" },
+        "traceFlags": { "type": "string", "pattern": "^[0-9a-f]{2}$" }
+      }
+    },
+    "provenance": { "$ref": "#/$defs/provenance" },
+    "attributes": {
+      "type": "object",
+      "description": "Attributes are constrained by semantic-conventions.v1.json. Unknown agentic501.* keys are invalid at admission.",
+      "minProperties": 1,
+      "propertyNames": { "pattern": "^(agentic501|service|deployment|server|gen_ai|error|otel)\\.[a-z0-9_.-]+$" },
+      "additionalProperties": {
+        "type": ["string", "number", "integer", "boolean", "array"],
+        "items": { "type": "string" },
+        "uniqueItems": true
+      }
+    }
+  },
+  "$defs": {
+    "nonEmpty": { "type": "string", "minLength": 1, "maxLength": 256 },
+    "digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["evidenceClass", "sourceSystem", "sourceRecordId", "collector", "payloadDigest", "clock", "captureMode", "implementationStatus"],
+      "properties": {
+        "evidenceClass": { "enum": ["observed", "derived", "rehearsal", "synthetic"] },
+        "sourceSystem": { "$ref": "#/$defs/nonEmpty" },
+        "sourceRecordId": { "$ref": "#/$defs/nonEmpty" },
+        "sourceUri": { "type": "string", "format": "uri" },
+        "collector": { "$ref": "#/$defs/nonEmpty" },
+        "collectorVersion": { "$ref": "#/$defs/nonEmpty" },
+        "payloadDigest": { "$ref": "#/$defs/digest" },
+        "transform": { "$ref": "#/$defs/nonEmpty" },
+        "inputDigests": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/digest" } },
+        "clock": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["source", "synchronized", "maxErrorMs"],
+          "properties": {
+            "source": { "$ref": "#/$defs/nonEmpty" },
+            "synchronized": { "type": "boolean" },
+            "maxErrorMs": { "type": "number", "minimum": 0 }
+          }
+        },
+        "captureMode": { "enum": ["runtime", "replay", "fixture", "manual"] },
+        "implementationStatus": { "enum": ["implemented", "runtime-gated", "unimplemented"] }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "evidenceClass": { "const": "derived" } }, "required": ["evidenceClass"] },
+          "then": { "required": ["transform", "inputDigests"] }
+        },
+        {
+          "if": { "properties": { "captureMode": { "const": "runtime" } }, "required": ["captureMode"] },
+          "then": { "properties": { "implementationStatus": { "const": "implemented" } } }
+        }
+      ]
+    }
+  }
+}

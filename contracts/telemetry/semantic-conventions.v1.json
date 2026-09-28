@@ -1,0 +1,57 @@
+{
+  "schemaVersion": "agentic-501-semconv/v1",
+  "status": "contract-only-runtime-gated",
+  "compatibility": {
+    "opentelemetry": "Use W3C Trace Context and stable OpenTelemetry names where one exists; agentic501.* is a repository-local namespace.",
+    "breakingChangePolicy": "Renames, type changes, or meaning changes require a new schemaVersion. Additive optional attributes require a contract review."
+  },
+  "correlation": {
+    "traceRule": "One trace per journey. All agent, tool, inference, policy, quality, resource, failure, and recovery spans for that journey share trace_id.",
+    "runRule": "agentic501.run.id is identical for every journey and every phase in one declared run.",
+    "stepRule": "agentic501.step.id is stable across retries; agentic501.attempt distinguishes attempts.",
+    "requiredBaggage": ["agentic501.run.id", "agentic501.journey.id"],
+    "forbiddenBaggage": ["prompts", "model.responses", "credentials", "personal.data", "raw.tool.payloads"]
+  },
+  "attributes": [
+    { "name": "agentic501.run.id", "type": "string", "requiredOn": ["all"], "cardinality": "per-run", "sensitive": false },
+    { "name": "agentic501.journey.id", "type": "string", "requiredOn": ["all"], "cardinality": "per-journey", "sensitive": false },
+    { "name": "agentic501.phase", "type": "string", "enum": ["baseline", "sustained", "pressure", "recovery"], "requiredOn": ["all"], "sensitive": false },
+    { "name": "agentic501.profile.id", "type": "string", "requiredOn": ["journey.started"], "sensitive": false },
+    { "name": "agentic501.profile.version", "type": "string", "requiredOn": ["journey.started"], "sensitive": false },
+    { "name": "agentic501.workload.image.digest", "type": "string", "format": "sha256", "requiredOn": ["journey.started"], "sensitive": false },
+    { "name": "agentic501.evaluation_set.version", "type": "string", "requiredOn": ["journey.started", "quality.scored"], "sensitive": false },
+    { "name": "agentic501.step.id", "type": "string", "requiredOn": ["agent.*", "tool.*", "inference.*", "policy.evaluated"], "sensitive": false },
+    { "name": "agentic501.attempt", "type": "integer", "minimum": 1, "requiredOn": ["agent.*", "tool.*", "inference.*"], "sensitive": false },
+    { "name": "agentic501.agent.role", "type": "string", "requiredOn": ["agent.*"], "sensitive": false },
+    { "name": "agentic501.tool.name", "type": "string", "requiredOn": ["tool.*"], "sensitive": false },
+    { "name": "agentic501.policy.version", "type": "string", "requiredOn": ["policy.evaluated"], "sensitive": false },
+    { "name": "agentic501.policy.decision", "type": "string", "enum": ["allow", "deny", "pending-human-approval", "error"], "requiredOn": ["policy.evaluated"], "sensitive": false },
+    { "name": "agentic501.failure.profile.id", "type": "string", "requiredOn": ["failure.*", "recovery.asserted"], "sensitive": false },
+    { "name": "agentic501.failure.execution.id", "type": "string", "requiredOn": ["failure.*", "recovery.asserted"], "sensitive": false },
+    { "name": "agentic501.evidence.class", "type": "string", "enum": ["observed", "derived", "rehearsal", "synthetic"], "requiredOn": ["all"], "sensitive": false },
+    { "name": "agentic501.evidence.payload.sha256", "type": "string", "format": "sha256", "requiredOn": ["all"], "sensitive": false },
+    { "name": "gen_ai.request.model", "type": "string", "requiredOn": ["inference.*"], "sensitive": false },
+    { "name": "gen_ai.usage.input_tokens", "type": "integer", "minimum": 0, "requiredOn": ["inference.completed"], "sensitive": false },
+    { "name": "gen_ai.usage.output_tokens", "type": "integer", "minimum": 0, "requiredOn": ["inference.completed"], "sensitive": false },
+    { "name": "server.address", "type": "string", "requiredOn": ["inference.*", "tool.*"], "sensitive": "redact-query-and-userinfo" },
+    { "name": "error.type", "type": "string", "requiredOn": ["failed-spans"], "sensitive": false }
+  ],
+  "spanNames": [
+    "agentic501.journey",
+    "agentic501.agent.invoke",
+    "agentic501.tool.call",
+    "agentic501.inference.generate",
+    "agentic501.policy.evaluate",
+    "agentic501.quality.score",
+    "agentic501.failure.apply",
+    "agentic501.failure.remove",
+    "agentic501.recovery.assert"
+  ],
+  "failClosed": [
+    "Reject certification evidence with missing or malformed trace_id, span_id, run.id, or journey.id.",
+    "Reject a journey when required component spans cannot be joined into its trace.",
+    "Reject evidence containing a forbidden baggage field.",
+    "Treat unknown agentic501.* attributes as a contract-version mismatch.",
+    "Do not infer absent identifiers from time proximity, log text, or ordering."
+  ]
+}

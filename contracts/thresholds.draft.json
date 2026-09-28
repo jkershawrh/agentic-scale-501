@@ -1,0 +1,11 @@
+{
+  "status": "draft-not-approved",
+  "minimumCompletedJourneys": 25,
+  "maximumErrorRate": 0.02,
+  "maximumTimeoutRate": 0.01,
+  "minimumQualityScore": 0.9,
+  "minimumCorrelationRate": 1,
+  "maximumP95LatencyMs": 15000,
+  "maximumRecoveryMs": 30000,
+  "requireIntelHardwareIdentity": true
+}

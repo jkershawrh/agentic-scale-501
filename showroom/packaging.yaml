@@ -1,0 +1,42 @@
+schemaVersion: agentic-scale-501-showroom-package/v1
+name: agentic-scale-501
+title: Agentic AI 501 — Scale and Certify
+contentRoot: showroom
+componentDescriptor: showroom/antora.yml
+playbook: site.yml
+source:
+  format: markdown
+  root: content-501
+  authority: reviewed-learning-source
+  mutationPolicy: preserve
+conversion:
+  format: asciidoc
+  module: ROOT
+  startPage: index.adoc
+  stages:
+    - 00-preflight.adoc
+    - 01-declare.adoc
+    - 02-baseline.adoc
+    - 03-sustain.adoc
+    - 04-controlled-pressure.adoc
+    - 05-recovery.adoc
+    - 06-score-review.adoc
+    - 07-close-handoff.adoc
+  attachments:
+    - fixtures/baseline.rehearsal.json
+    - fixtures/sustained.rehearsal.json
+    - fixtures/pressure.rehearsal.json
+    - fixtures/recovery.rehearsal.json
+    - templates/learner-record.md
+    - templates/profile-declaration.yaml
+    - templates/scorecard.md
+mode: rehearsal-only
+validation:
+  content: npm --prefix showroom run check:content
+  source: node content-501/tools/rehearsal-check.mjs
+  build: npm --prefix showroom run build
+claims:
+  liveExecution: false
+  certification: false
+  automatedPromotion: false
+  agnosticV: false

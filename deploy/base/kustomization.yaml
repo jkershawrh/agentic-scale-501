@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - deployment.yaml
+  - service.yaml
+  - route.yaml
+  - networkpolicy.yaml
+configMapGenerator:
+  - name: agentic-scale-501-runtime-state
+    envs:
+      - runtime-state.env
+generatorOptions:
+  disableNameSuffixHash: true
+labels:
+  - includeSelectors: true
+    includeTemplates: true
+    pairs:
+      app.kubernetes.io/name: agentic-scale-501
+      app.kubernetes.io/component: rehearsal-presentation
+      app.kubernetes.io/part-of: agentic-ai-learning

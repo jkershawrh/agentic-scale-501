@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM"],
+    "module": "CommonJS",
+    "moduleResolution": "Node",
+    "ignoreDeprecations": "6.0",
+    "strict": true,
+    "skipLibCheck": true,
+    "types": ["node"],
+    "rootDir": "..",
+    "outDir": "../server-dist",
+    "declaration": true,
+    "sourceMap": true,
+    "noEmit": false
+  },
+  "include": [
+    "./admission.ts",
+    "./api.ts",
+    "./config.ts",
+    "./httpServer.ts",
+    "./liveRuntime.ts",
+    "./main.ts",
+    "./quality.ts",
+    "./rehearsalRuntime.ts",
+    "./resourceCollector.ts",
+    "./runtime.ts",
+    "./workflowExecutor.ts",
+    "../src/proof/contract.ts",
+    "../src/proof/scaleRunner.ts"
+  ],
+  "exclude": ["./**/*.test.ts"]
+}

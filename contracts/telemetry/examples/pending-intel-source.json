@@ -1,0 +1,45 @@
+{
+  "schemaVersion": "agentic-501-intel-hardware-source/v1",
+  "sourceId": "pending-intel-source-example",
+  "implementationStatus": "runtime-gated",
+  "approval": {
+    "status": "pending",
+    "authority": "501 telemetry source review board",
+    "scope": "example only; no target is approved",
+    "reviewedAt": "2026-09-28T15:00:00Z"
+  },
+  "collector": {
+    "name": "example-collector-not-deployed",
+    "version": "0.0.0",
+    "deploymentDigest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "transport": "otlp-grpc"
+  },
+  "targetBinding": {
+    "clusterUid": "UNBOUND-EXAMPLE-CLUSTER",
+    "nodeUid": "UNBOUND-EXAMPLE-NODE",
+    "podUid": "UNBOUND-EXAMPLE-POD",
+    "containerId": "UNBOUND-EXAMPLE-CONTAINER",
+    "observedAt": "2026-09-28T15:00:00Z"
+  },
+  "identity": {
+    "vendor": "GenuineIntel",
+    "family": 6,
+    "model": 1,
+    "modelName": "Intel example identity, not observed hardware",
+    "microcode": "unobserved",
+    "logicalCpuCount": 1,
+    "sourceRecordDigest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+  },
+  "measurements": ["cpu.request.cores", "cpu.usage.cores"],
+  "integrity": {
+    "authenticatedTransport": true,
+    "clockSynchronized": true,
+    "maxClockErrorMs": 1000,
+    "retentionDays": 1,
+    "rawRecordsRetained": true
+  },
+  "limitations": [
+    "Example declaration only: approval is pending and no runtime collector is connected.",
+    "All target and hardware values are explicit placeholders and cannot support an Intel hardware claim."
+  ]
+}

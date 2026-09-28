@@ -1,0 +1,152 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://redhat.com/schemas/agentic-scale-proof-v1.json",
+  "title": "Agentic AI 501 scale proof envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "source", "collectedAt", "phase", "runId", "profile", "workload", "correlation", "inference", "policy", "quality", "resources", "authority"],
+  "properties": {
+    "schemaVersion": { "const": "agentic-scale-proof/v1" },
+    "source": { "enum": ["live", "rehearsal", "offline"] },
+    "collectedAt": { "type": "string", "format": "date-time" },
+    "phase": { "enum": ["baseline", "sustained", "pressure", "recovery"] },
+    "runId": { "type": "string", "minLength": 1 },
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "version", "workloadImageDigest", "evaluationSetVersion", "target", "concurrency"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "version": { "type": "string", "minLength": 1 },
+        "workloadImageDigest": { "type": "string", "pattern": "^sha256:[a-fA-F0-9]{64}$" },
+        "evaluationSetVersion": { "type": "string", "minLength": 1 },
+        "target": { "type": "string", "minLength": 1 },
+        "concurrency": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "workload": { "$ref": "#/$defs/workload" },
+    "correlation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["expectedJourneys", "completeJourneys"],
+      "properties": {
+        "expectedJourneys": { "type": "integer", "minimum": 1 },
+        "completeJourneys": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "inference": { "$ref": "#/$defs/inference" },
+    "policy": { "$ref": "#/$defs/policy" },
+    "quality": { "$ref": "#/$defs/quality" },
+    "resources": { "$ref": "#/$defs/resources" },
+    "pressure": { "$ref": "#/$defs/pressure" },
+    "recovery": { "$ref": "#/$defs/recovery" },
+    "authority": { "$ref": "#/$defs/authority" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "phase": { "enum": ["pressure", "recovery"] } }, "required": ["phase"] },
+      "then": { "required": ["pressure"] }
+    },
+    {
+      "if": { "properties": { "phase": { "const": "recovery" } }, "required": ["phase"] },
+      "then": { "required": ["recovery"] }
+    }
+  ],
+  "$defs": {
+    "latency": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["p50", "p95"],
+      "properties": { "p50": { "type": "number", "minimum": 0 }, "p95": { "type": "number", "minimum": 0 } }
+    },
+    "workload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["attemptedJourneys", "completedJourneys", "errorCount", "timeoutCount", "throughputPerMinute", "latencyMs", "queueLatencyMs"],
+      "properties": {
+        "attemptedJourneys": { "type": "integer", "minimum": 1 },
+        "completedJourneys": { "type": "integer", "minimum": 0 },
+        "errorCount": { "type": "integer", "minimum": 0 },
+        "timeoutCount": { "type": "integer", "minimum": 0 },
+        "throughputPerMinute": { "type": "number", "minimum": 0 },
+        "latencyMs": { "$ref": "#/$defs/latency" },
+        "queueLatencyMs": { "$ref": "#/$defs/latency" }
+      }
+    },
+    "inference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["model", "endpoint", "requestCount", "latencyMs", "inputTokens", "outputTokens"],
+      "properties": {
+        "model": { "type": "string", "minLength": 1 },
+        "endpoint": { "type": "string", "minLength": 1 },
+        "requestCount": { "type": "integer", "minimum": 0 },
+        "latencyMs": { "$ref": "#/$defs/latency" },
+        "inputTokens": { "type": "integer", "minimum": 0 },
+        "outputTokens": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["version", "evaluatedJourneys", "compliantJourneys", "unauthorizedActions"],
+      "properties": {
+        "version": { "type": "string", "minLength": 1 },
+        "evaluatedJourneys": { "type": "integer", "minimum": 0 },
+        "compliantJourneys": { "type": "integer", "minimum": 0 },
+        "unauthorizedActions": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "quality": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scorerVersion", "evaluatedJourneys", "score"],
+      "properties": {
+        "scorerVersion": { "type": "string", "minLength": 1 },
+        "evaluatedJourneys": { "type": "integer", "minimum": 0 },
+        "score": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    },
+    "resources": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["telemetrySource", "cpuRequestedCores", "cpuUtilizationPercent"],
+      "properties": {
+        "telemetrySource": { "type": "string", "minLength": 1 },
+        "cpuRequestedCores": { "type": "number", "minimum": 0 },
+        "cpuUtilizationPercent": { "type": "number", "minimum": 0, "maximum": 100 },
+        "hardwareIdentity": { "type": "string", "minLength": 1 }
+      }
+    },
+    "pressure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["condition", "admitted", "removed"],
+      "properties": {
+        "condition": { "type": "string", "minLength": 1 },
+        "admitted": { "type": "boolean" },
+        "removed": { "type": "boolean" }
+      }
+    },
+    "recovery": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["recovered", "recoveryMs", "postRecoveryQualityScore"],
+      "properties": {
+        "recovered": { "type": "boolean" },
+        "recoveryMs": { "type": "number", "minimum": 0 },
+        "postRecoveryQualityScore": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["automatedPromotion", "humanReviewRequired", "reviewerDisposition"],
+      "properties": {
+        "automatedPromotion": { "const": false },
+        "humanReviewRequired": { "const": true },
+        "reviewerDisposition": { "enum": ["pending", "supported", "conditional", "rejected"] }
+      }
+    }
+  }
+}

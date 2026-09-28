@@ -1,0 +1,71 @@
+version: 1
+blueprint: demo-blueprint.yaml
+presentation:
+  title: Scale and certify agentic systems
+  audience: Platform leaders, AI reliability engineers, and architects
+  desired_decision: Approve only the measured operating envelope supported by complete quality, policy, infrastructure, and recovery evidence.
+  duration_minutes: 7
+  core_tension: One successful agent journey proves function; it does not prove production capacity or trust under pressure.
+  cta: Review the evidence package, then authorize independent Launchpad certification when the 401 prerequisite and 501 proof gates are complete.
+source_material:
+  mode: repository-and-certification-charter
+  items:
+    - /Users/jkershaw/Documents/multi-agent-quickstart
+    - /Users/jkershaw/Documents/launchpad/certification/workload/scale-agentic-blueprint.yaml
+    - /Users/jkershaw/Documents/launchpad/certification/catalog/scale-agentic-blueprint.yaml
+    - /Users/jkershaw/Documents/launchpad/evaluation/agentic-scale-v1.yaml
+  consequential_assumptions:
+    - Agentic 401 certification is a hard prerequisite for executing or certifying 501.
+    - Current concurrency, capacity, CPU utilization, quality-under-load, and recovery values are unknown until collected live.
+architecture:
+  actors: [learner, reviewer]
+  boundaries: [participant-namespace, model-gateway, promotion]
+  critical_flows: [scale-certification-flow]
+  omitted_from_main_story:
+    - Blueprint integrations that do not change the measured operating envelope
+    - Any unverified future component or authored performance number
+beats:
+  - beat: ordinary-world
+    claim: A single evidence-backed journey now works.
+  - beat: stakes
+    claim: Production demand can preserve uptime while silently losing quality, policy compliance, or evidence.
+  - beat: root-cause
+    claim: Replica count is not the operating envelope; the system must measure workload, inference, evidence, policy, and lifecycle together.
+  - beat: system-reveal
+    claim: One correlated scale loop declares the profile, runs the workload, scores evidence, introduces pressure, proves recovery, and packages the decision.
+  - beat: live-proof
+    claim: Baseline, sustained, pressure, and recovered states are compared using one immutable workload and evaluation set.
+  - beat: tradeoffs
+    claim: Missing telemetry, incomplete evidence, policy drift, or failed recovery makes the result inconclusive—not green.
+  - beat: transformation
+    claim: The outcome is a bounded operating envelope and a human certification recommendation.
+evidence:
+  - id: source-workflow-proof
+    claim: The source workflow emits evidence, policy, inference, and human-review state.
+    classification: verified-source
+    source: src/models.py
+    owner: Multi-agent workload
+    last_verified: "2026-09-28"
+    treatment: Use to explain the proof contract, not to claim scale.
+  - id: scale-live-proof
+    claim: The target environment returns measured capacity, latency, quality, policy, utilization, and recovery evidence.
+    classification: blocked-live-proof
+    source: future 501 execution adapter
+    owner: Launchpad certification runtime
+    last_verified: null
+    treatment: Show REHEARSAL until the live adapter and 401 prerequisite are complete.
+live_systems:
+  - id: scale-execution
+    endpoint: /api/scale/run
+    timeout_ms: 120000
+    source_states: [live, rehearsal, offline]
+    required_fields: [profile, run_id, source_state, workload, inference, policy, quality, resources, recovery]
+journey:
+  presentation: Seven-minute decision story with no more than seven top-level scenes
+  live_demonstration: Run or replay one source-labeled baseline-to-pressure comparison
+  guided_demo: Inspect correlation, scoring, pressure, recovery, and the promotion boundary
+  hands_on_lab: Declare a profile, execute permitted runs, compare evidence, and produce a certification package
+open_questions:
+  - Which target telemetry source is approved for Intel Xeon allocation and utilization?
+  - Which safe pressure conditions can be independently activated and restored?
+  - What thresholds will be approved after the first 401-certified one-seat baseline?

@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://redhat.com/schemas/agentic-501-recovery-assertion-v1.json",
+  "title": "Agentic AI 501 recovery assertion result",
+  "description": "Deterministic recovery evaluation. Only outcome=passed with live observed evidence may be considered by a human reviewer; it never promotes automatically.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "assertionId", "runId", "failureExecutionId", "evaluatedAt", "evidenceClass", "implementationStatus", "window", "checks", "outcome", "blockers", "authority"],
+  "properties": {
+    "schemaVersion": { "const": "agentic-501-recovery-assertion/v1" },
+    "assertionId": { "$ref": "#/$defs/nonEmpty" },
+    "runId": { "$ref": "#/$defs/nonEmpty" },
+    "failureExecutionId": { "$ref": "#/$defs/nonEmpty" },
+    "evaluatedAt": { "type": "string", "format": "date-time" },
+    "evidenceClass": { "enum": ["observed", "rehearsal", "synthetic"] },
+    "implementationStatus": { "enum": ["implemented", "runtime-gated", "unimplemented"] },
+    "window": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["failureRemovedAt", "recoveryObservedAt", "recoveryMs", "maximumRecoveryMs"],
+      "properties": {
+        "failureRemovedAt": { "type": "string", "format": "date-time" },
+        "recoveryObservedAt": { "type": "string", "format": "date-time" },
+        "recoveryMs": { "type": "number", "minimum": 0 },
+        "maximumRecoveryMs": { "type": "number", "exclusiveMinimum": 0 }
+      }
+    },
+    "checks": {
+      "type": "array",
+      "minItems": 7,
+      "items": { "$ref": "#/$defs/check" },
+      "allOf": [
+        { "contains": { "properties": { "name": { "const": "failure-removed" } }, "required": ["name"] } },
+        { "contains": { "properties": { "name": { "const": "service-ready" } }, "required": ["name"] } },
+        { "contains": { "properties": { "name": { "const": "correlation-complete" } }, "required": ["name"] } },
+        { "contains": { "properties": { "name": { "const": "quality-within-threshold" } }, "required": ["name"] } },
+        { "contains": { "properties": { "name": { "const": "policy-within-threshold" } }, "required": ["name"] } },
+        { "contains": { "properties": { "name": { "const": "no-unauthorized-actions" } }, "required": ["name"] } },
+        { "contains": { "properties": { "name": { "const": "no-automated-promotion" } }, "required": ["name"] } }
+      ]
+    },
+    "outcome": { "enum": ["passed", "failed", "inconclusive"] },
+    "blockers": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/nonEmpty" } },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["automatedPromotion", "humanReviewRequired"],
+      "properties": { "automatedPromotion": { "const": false }, "humanReviewRequired": { "const": true } }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "outcome": { "const": "passed" } }, "required": ["outcome"] },
+      "then": {
+        "properties": {
+          "evidenceClass": { "const": "observed" },
+          "implementationStatus": { "const": "implemented" },
+          "blockers": { "maxItems": 0 },
+          "checks": { "items": { "properties": { "status": { "const": "passed" } } } }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "implementationStatus": { "enum": ["runtime-gated", "unimplemented"] } }, "required": ["implementationStatus"] },
+      "then": { "properties": { "outcome": { "const": "inconclusive" }, "blockers": { "minItems": 1 } } }
+    }
+  ],
+  "$defs": {
+    "nonEmpty": { "type": "string", "minLength": 1, "maxLength": 1024 },
+    "digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "status", "observed", "threshold", "evidenceDigests"],
+      "properties": {
+        "name": { "enum": ["failure-removed", "service-ready", "recovery-deadline", "correlation-complete", "quality-within-threshold", "policy-within-threshold", "no-unauthorized-actions", "no-automated-promotion", "resource-returned-to-envelope"] },
+        "status": { "enum": ["passed", "failed", "missing"] },
+        "observed": { "type": ["string", "number", "integer", "boolean"] },
+        "threshold": { "type": ["string", "number", "integer", "boolean"] },
+        "evidenceDigests": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/digest" } }
+      }
+    }
+  }
+}

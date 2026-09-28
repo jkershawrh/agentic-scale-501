@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "agentic-501-fail-closed-rules/v1",
+  "status": "contract-only-runtime-gated",
+  "defaultDecision": "inconclusive-and-no-promotion",
+  "rules": [
+    { "id": "FC-001", "condition": "schema validation fails or contract version is unknown", "decision": "reject evidence", "automaticRollback": true },
+    { "id": "FC-002", "condition": "run, journey, trace, failure execution, or source identity is missing or ambiguous", "decision": "inconclusive", "automaticRollback": true },
+    { "id": "FC-003", "condition": "telemetry provenance is rehearsal, synthetic, manually captured, or runtime-gated", "decision": "not certifiable", "automaticRollback": false },
+    { "id": "FC-004", "condition": "Intel source is unapproved, expired, revoked, unbound to the target workload, or lacks raw records", "decision": "hardware claim unavailable", "automaticRollback": false },
+    { "id": "FC-005", "condition": "failure profile, target, digest, authorization token, or allowlist does not match", "decision": "do not apply failure", "automaticRollback": false },
+    { "id": "FC-006", "condition": "authorization is absent, expired, reused, or not separation-of-duties approved", "decision": "do not apply failure", "automaticRollback": false },
+    { "id": "FC-007", "condition": "blast radius, duration, error budget, or target scope exceeds a guard", "decision": "abort and roll back", "automaticRollback": true },
+    { "id": "FC-008", "condition": "collector becomes unavailable or correlation is lost during pressure", "decision": "abort, roll back, and mark run inconclusive", "automaticRollback": true },
+    { "id": "FC-009", "condition": "failure removal or rollback cannot be proven", "decision": "recovery failed and operator action required", "automaticRollback": true },
+    { "id": "FC-010", "condition": "any required recovery check is failed or missing", "decision": "recovery failed or inconclusive", "automaticRollback": false },
+    { "id": "FC-011", "condition": "an unauthorized action occurs or policy enforcement is not implemented", "decision": "reject run", "automaticRollback": true },
+    { "id": "FC-012", "condition": "any component attempts automated certification or promotion", "decision": "reject run and raise authority-boundary violation", "automaticRollback": true }
+  ]
+}

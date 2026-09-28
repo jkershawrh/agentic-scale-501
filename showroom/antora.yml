@@ -1,0 +1,13 @@
+name: agentic-scale-501
+title: Agentic AI 501 — Scale and Certify
+version: ~
+start_page: ROOT:index.adoc
+nav:
+  - modules/ROOT/nav.adoc
+asciidoc:
+  attributes:
+    experimental: true
+    page-pagination: true
+    source-highlighter: highlight.js
+    lab-mode: REHEARSAL
+    proof-schema-version: agentic-scale-proof/v1

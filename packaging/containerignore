@@ -1,0 +1,15 @@
+.git
+.github
+node_modules
+dist
+test-results
+visual-tests
+docs
+contracts
+content-501
+server
+deploy
+packaging/showroom
+packaging/*.md
+packaging/*.yaml
+

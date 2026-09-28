@@ -1,0 +1,37 @@
+schemaVersion: agentic-scale-501-content-package/v1
+name: agentic-scale-501
+title: Agentic AI 501 — Scale and Certify
+sourceFormat: markdown
+entrypoint: README.md
+mode: rehearsal-only
+modules:
+  - modules/00-preflight.md
+  - modules/01-declare.md
+  - modules/02-baseline.md
+  - modules/03-sustain.md
+  - modules/04-controlled-pressure.md
+  - modules/05-recovery.md
+  - modules/06-score-review.md
+  - modules/07-close-handoff.md
+templates:
+  - templates/learner-record.md
+  - templates/profile-declaration.yaml
+  - templates/scorecard.md
+fixtures:
+  - fixtures/baseline.rehearsal.json
+  - fixtures/sustained.rehearsal.json
+  - fixtures/pressure.rehearsal.json
+  - fixtures/recovery.rehearsal.json
+validation:
+  command: node content-501/tools/rehearsal-check.mjs
+  expectedClassification: REHEARSAL ONLY
+publication:
+  showroomReady: false
+  antoraComponentReady: false
+  reason: Learning sources are Markdown and are not in Antora's modules/ROOT/pages AsciiDoc layout.
+  requiredReview: Preserve the learning text while producing reviewed AsciiDoc pages and navigation.
+claims:
+  liveExecution: false
+  certification: false
+  automatedPromotion: false
+

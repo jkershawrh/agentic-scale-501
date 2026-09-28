@@ -1,0 +1,55 @@
+{
+  "schemaVersion": "agentic-scale-proof/v1",
+  "source": "rehearsal",
+  "collectedAt": "2026-09-28T14:05:00Z",
+  "phase": "sustained",
+  "runId": "rehearsal-501-001",
+  "profile": {
+    "id": "agentic-501-rehearsal",
+    "version": "v1",
+    "workloadImageDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "evaluationSetVersion": "eval-rehearsal-v1",
+    "target": "local-contract-fixture",
+    "concurrency": 5
+  },
+  "workload": {
+    "attemptedJourneys": 30,
+    "completedJourneys": 30,
+    "errorCount": 0,
+    "timeoutCount": 0,
+    "throughputPerMinute": 12,
+    "latencyMs": { "p50": 6800, "p95": 13800 },
+    "queueLatencyMs": { "p50": 260, "p95": 840 }
+  },
+  "correlation": { "expectedJourneys": 30, "completeJourneys": 30 },
+  "inference": {
+    "model": "model-rehearsal",
+    "endpoint": "model-gateway-rehearsal",
+    "requestCount": 90,
+    "latencyMs": { "p50": 790, "p95": 1750 },
+    "inputTokens": 30400,
+    "outputTokens": 6350
+  },
+  "policy": {
+    "version": "policy-rehearsal-v1",
+    "evaluatedJourneys": 30,
+    "compliantJourneys": 30,
+    "unauthorizedActions": 0
+  },
+  "quality": {
+    "scorerVersion": "quality-rehearsal-v1",
+    "evaluatedJourneys": 30,
+    "score": 0.95
+  },
+  "resources": {
+    "telemetrySource": "rehearsal-fixture-not-target-telemetry",
+    "cpuRequestedCores": 8,
+    "cpuUtilizationPercent": 63,
+    "hardwareIdentity": "REHEARSAL label only; Intel Xeon target not verified"
+  },
+  "authority": {
+    "automatedPromotion": false,
+    "humanReviewRequired": true,
+    "reviewerDisposition": "pending"
+  }
+}

@@ -1,0 +1,115 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://redhat.com/schemas/agentic-501-failure-profile-v1.json",
+  "title": "Agentic AI 501 guarded failure profile",
+  "description": "An allowlisted, bounded, reversible failure experiment declaration. A valid profile is not authorization to execute it.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "id", "version", "implementationStatus", "enabled", "failureType", "target", "guards", "authorization", "apply", "rollback", "evidence"],
+  "properties": {
+    "schemaVersion": { "const": "agentic-501-failure-profile/v1" },
+    "id": { "$ref": "#/$defs/nonEmpty" },
+    "version": { "$ref": "#/$defs/nonEmpty" },
+    "implementationStatus": { "enum": ["runtime-gated", "unimplemented", "implemented"] },
+    "enabled": { "type": "boolean" },
+    "failureType": { "enum": ["dependency-latency", "dependency-unavailable", "inference-rate-limit", "cpu-contention", "worker-termination"] },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["environment", "clusterUid", "namespace", "selector", "allowlistRef"],
+      "properties": {
+        "environment": { "enum": ["ephemeral-lab", "certification"] },
+        "clusterUid": { "$ref": "#/$defs/nonEmpty" },
+        "namespace": { "$ref": "#/$defs/nonEmpty" },
+        "selector": { "$ref": "#/$defs/nonEmpty" },
+        "allowlistRef": { "$ref": "#/$defs/nonEmpty" }
+      }
+    },
+    "guards": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["maximumDurationSeconds", "maximumAffectedReplicas", "maximumAffectedPercent", "oneFailureAtATime", "automaticRollback", "abortConditions"],
+      "properties": {
+        "maximumDurationSeconds": { "type": "integer", "minimum": 1, "maximum": 300 },
+        "maximumAffectedReplicas": { "type": "integer", "minimum": 1, "maximum": 1 },
+        "maximumAffectedPercent": { "type": "number", "exclusiveMinimum": 0, "maximum": 25 },
+        "oneFailureAtATime": { "const": true },
+        "automaticRollback": { "const": true },
+        "abortConditions": {
+          "type": "array",
+          "minItems": 3,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "authority-boundary-violation",
+              "correlation-loss",
+              "collector-unavailable",
+              "target-drift",
+              "error-budget-exhausted",
+              "rollback-deadline-risk",
+              "unexpected-blast-radius"
+            ]
+          },
+          "allOf": [
+            { "contains": { "const": "authority-boundary-violation" } },
+            { "contains": { "const": "correlation-loss" } },
+            { "contains": { "const": "unexpected-blast-radius" } }
+          ]
+        }
+      }
+    },
+    "authorization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required", "singleUse", "expiresAfterSeconds", "separationOfDuties", "tokenBinding"],
+      "properties": {
+        "required": { "const": true },
+        "singleUse": { "const": true },
+        "expiresAfterSeconds": { "type": "integer", "minimum": 1, "maximum": 900 },
+        "separationOfDuties": { "const": true },
+        "tokenBinding": { "type": "array", "uniqueItems": true, "items": { "enum": ["runId", "profileId", "profileVersion", "targetClusterUid", "targetNamespace", "requestDigest"] }, "allOf": [{ "contains": { "const": "runId" } }, { "contains": { "const": "requestDigest" } }] }
+      }
+    },
+    "apply": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["driver", "parameters"],
+      "properties": {
+        "driver": { "$ref": "#/$defs/nonEmpty" },
+        "parameters": { "type": "object", "minProperties": 1, "additionalProperties": { "type": ["string", "number", "integer", "boolean"] } }
+      }
+    },
+    "rollback": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["driver", "deadlineSeconds", "verifyCommandId"],
+      "properties": {
+        "driver": { "$ref": "#/$defs/nonEmpty" },
+        "deadlineSeconds": { "type": "integer", "minimum": 1, "maximum": 300 },
+        "verifyCommandId": { "$ref": "#/$defs/nonEmpty" }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["requiredEventTypes", "retainRawDriverReceipt", "redactSecrets"],
+      "properties": {
+        "requiredEventTypes": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "enum": ["failure.applied", "failure.removed", "recovery.asserted", "policy.evaluated"] },
+          "allOf": [{ "contains": { "const": "failure.applied" } }, { "contains": { "const": "failure.removed" } }, { "contains": { "const": "recovery.asserted" } }]
+        },
+        "retainRawDriverReceipt": { "const": true },
+        "redactSecrets": { "const": true }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "implementationStatus": { "enum": ["runtime-gated", "unimplemented"] } }, "required": ["implementationStatus"] },
+      "then": { "properties": { "enabled": { "const": false } } }
+    }
+  ],
+  "$defs": { "nonEmpty": { "type": "string", "minLength": 1, "maxLength": 512 } }
+}

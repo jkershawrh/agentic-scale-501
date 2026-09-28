@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://redhat.com/schemas/agentic-501-quality-observation-v1.json",
+  "title": "Agentic AI 501 quality observation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "evaluationSetVersion", "caseId", "class", "value"],
+  "properties": {
+    "schemaVersion": { "const": "agentic-501-quality-observation/v1" },
+    "evaluationSetVersion": { "$ref": "#/$defs/text" },
+    "caseId": { "$ref": "#/$defs/text" },
+    "class": { "enum": ["exact-value", "classification", "retrieval"] },
+    "value": {
+      "oneOf": [
+        { "type": ["string", "number", "boolean", "null"] },
+        { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/text" } }
+      ]
+    }
+  },
+  "$defs": { "text": { "type": "string", "minLength": 1, "maxLength": 256 } }
+}

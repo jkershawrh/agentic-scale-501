@@ -1,0 +1,5 @@
+export { createScaleRunHandler, type ScaleRunApiDependencies } from './api'
+export { admitScaleRunRequest, ProfileAdmissionError, type AdmissionLimits } from './admission'
+export type { JourneyExecutor, ResourceCollector } from '../src/proof/scaleRunner'
+export { createWorkflowJourneyExecutor, type WorkflowJourneyExecutorOptions } from './workflowExecutor'
+export { createApprovedIntelResourceCollector, type ApprovedResourceCollectorOptions, type IntelTelemetrySourceDeclaration, type ResourceTelemetryObservation } from './resourceCollector'

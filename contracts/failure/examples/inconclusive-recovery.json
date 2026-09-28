@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "agentic-501-recovery-assertion/v1",
+  "assertionId": "recovery-example-0001",
+  "runId": "run-rehearsal-501-0001",
+  "failureExecutionId": "failure-not-executed-0001",
+  "evaluatedAt": "2026-09-28T15:05:00Z",
+  "evidenceClass": "rehearsal",
+  "implementationStatus": "runtime-gated",
+  "window": {
+    "failureRemovedAt": "2026-09-28T15:04:30Z",
+    "recoveryObservedAt": "2026-09-28T15:04:31Z",
+    "recoveryMs": 1000,
+    "maximumRecoveryMs": 30000
+  },
+  "checks": [
+    { "name": "failure-removed", "status": "missing", "observed": false, "threshold": true, "evidenceDigests": ["sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"] },
+    { "name": "service-ready", "status": "missing", "observed": false, "threshold": true, "evidenceDigests": ["sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"] },
+    { "name": "correlation-complete", "status": "missing", "observed": 0, "threshold": 1, "evidenceDigests": ["sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"] },
+    { "name": "quality-within-threshold", "status": "missing", "observed": 0, "threshold": 0.9, "evidenceDigests": ["sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"] },
+    { "name": "policy-within-threshold", "status": "missing", "observed": 0, "threshold": 1, "evidenceDigests": ["sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"] },
+    { "name": "no-unauthorized-actions", "status": "missing", "observed": false, "threshold": true, "evidenceDigests": ["sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"] },
+    { "name": "no-automated-promotion", "status": "passed", "observed": true, "threshold": true, "evidenceDigests": ["sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"] }
+  ],
+  "outcome": "inconclusive",
+  "blockers": [
+    "No failure driver was executed; this is a contract fixture.",
+    "Runtime correlation, policy enforcement, and approved hardware telemetry remain gated."
+  ],
+  "authority": { "automatedPromotion": false, "humanReviewRequired": true }
+}

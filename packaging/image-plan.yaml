@@ -1,0 +1,31 @@
+schemaVersion: agentic-scale-501-image-plan/v1
+status: pre-immutable-image
+image:
+  name: agentic-scale-501-presentation
+  containerfile: packaging/Containerfile
+  context: .
+  platforms:
+    - linux/amd64
+  prohibitedPlatforms:
+    - linux/arm64
+  outputReferencePolicy: digest-only-for-deployment
+baseImages:
+  build: registry.access.redhat.com/ubi9/nodejs-22
+  runtime: docker.io/nginxinc/nginx-unprivileged:1.27-alpine
+  digestPinRequiredBeforeRelease: true
+runtime:
+  port: 8080
+  healthPath: /healthz
+  readinessPath: /readyz
+  liveExecutionEnabled: false
+  telemetryCollectionEnabled: false
+  faultInjectionEnabled: false
+  certificationEnabled: false
+  automatedPromotionEnabled: false
+releaseGates:
+  - Record immutable base-image digests.
+  - Build only linux/amd64 and verify the resulting manifest architecture.
+  - Complete the SBOM, signature, provenance, vulnerability-scan, and pull-by-digest checks.
+  - Replace the deployment placeholder with the verified output digest.
+  - Obtain explicit approval before enabling any live capability.
+

@@ -1,0 +1,103 @@
+= Agentic AI 501 learner journey
+:navtitle: Journey overview
+
+== Scale and certify a governed agentic workload
+
+This Showroom-style lab asks one question: *what remains true when a governed multi-agent workload is placed under useful load and controlled pressure?*
+
+The lab produces a reviewable proof package, not an automatic promotion. The current repository supports a safe *REHEARSAL* path. Live OpenShift execution, approved Intel hardware telemetry, fault injection, and Launchpad certification remain gated.
+
+IMPORTANT: Every displayed metric in this journey is rehearsal-sourced. This content does not claim a live capacity result, approved Intel performance, or certification.
+
+== Journey map
+
+[cols="1,3,2,2",options="header"]
+|===
+| Stage | Learner outcome | Evidence | Current mode
+
+| xref:00-preflight.adoc[0. Preflight]
+| Prove the lab and prerequisite state
+| readiness record
+| Executable locally
+
+| xref:01-declare.adoc[1. Declare]
+| Freeze the comparison contract
+| declared profile
+| Executable locally
+
+| xref:02-baseline.adoc[2. Baseline]
+| Inspect low-load proof
+| baseline envelope
+| Rehearsal fixture
+
+| xref:03-sustain.adoc[3. Sustain]
+| Compare useful load with baseline
+| sustained envelope
+| Rehearsal fixture
+
+| xref:04-controlled-pressure.adoc[4. Controlled pressure]
+| Test a named, bounded condition
+| pressure envelope
+| Rehearsal fixture; live injection gated
+
+| xref:05-recovery.adoc[5. Recovery]
+| Verify removal and bounded recovery
+| recovery envelope
+| Rehearsal fixture
+
+| xref:06-score-review.adoc[6. Score and review]
+| Make a fail-closed recommendation
+| scorecard
+| Learner review; thresholds unapproved
+
+| xref:07-close-handoff.adoc[7. Close and handoff]
+| State only what the evidence supports
+| handoff record
+| Executable locally; certification gated
+|===
+
+== Learning objectives
+
+By the end, a learner can:
+
+. distinguish functional success from a measured operating envelope;
+. keep workload image, evaluation set, target, policy, model, and run correlation attributable;
+. compare baseline, sustained, pressure, and recovery evidence without treating availability as success;
+. fail closed when telemetry or proof is missing;
+. preserve the boundary between a machine-generated recommendation and a human certification decision.
+
+== Safe execution contract
+
+Commands labeled *RUN NOW — LOCAL REHEARSAL* read repository files and write nothing outside the learner's own worksheet. Commands labeled *GATED FUTURE LIVE EXECUTION* are explanatory only and must not be run until every gate in xref:00-preflight.adoc[Preflight] is approved.
+
+Start the lab from the repository root:
+
+[source,bash]
+----
+node content-501/tools/rehearsal-check.mjs
+----
+
+Expected classification:
+
+[source,text]
+----
+REHEARSAL ONLY — 4 contract-shaped envelopes validated; certification remains unavailable.
+----
+
+== Proof vocabulary
+
+Every phase uses `{proof-schema-version}` and carries:
+
+* `source`: `live`, `rehearsal`, or `offline`;
+* `runId` and immutable comparison identity;
+* workload, correlation, inference, policy, quality, and resource evidence;
+* pressure and recovery evidence when the phase requires it;
+* `automatedPromotion: false`, `humanReviewRequired: true`, and a human-owned disposition.
+
+The proof contract is defined in `contracts/agentic-scale-proof.schema.json`. The values in `contracts/thresholds.draft.json` are deliberately unapproved and cannot certify a run.
+
+== Completion standard
+
+Complete every learner checkpoint in link:{attachmentsdir}/templates/learner-record.md[the learner record,window=_blank]. A valid lab completion can conclude *rehearsal complete* or *inconclusive*. It cannot conclude that the workload is live-certified.
+
+xref:00-preflight.adoc[Begin with Stage 0: Preflight →]

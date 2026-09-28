@@ -1,0 +1,26 @@
+schemaVersion: agentic-scale-501-showroom-assembly/v1
+status: pre-assembly
+publishable: false
+contentManifest: ../../content-501/packaging.yaml
+presentation:
+  kind: static-web
+  buildOutput: dist
+  defaultPath: /
+learnerContent:
+  sourceRoot: content-501
+  sourceFormat: markdown
+  orderedBy: content-501/packaging.yaml
+antora:
+  siteDescriptor: null
+  componentDescriptor: null
+  status: blocked
+  blockers:
+    - Reviewed AsciiDoc derivatives do not exist.
+    - Antora navigation cannot point directly at the current Markdown learning sources.
+    - Showroom runtime attributes and approved lab URLs have not been assigned.
+releaseRules:
+  - Do not modify or silently transform the learning text during image assembly.
+  - Do not publish a Showroom image until an Antora build succeeds from reviewed derived sources.
+  - Keep every live capability disabled until its prerequisite and approval gate is recorded.
+  - Do not represent this package as AgnosticV-integrated or certified.
+

@@ -1,0 +1,100 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://redhat.com/schemas/agentic-501-intel-hardware-source-v1.json",
+  "title": "Approved Intel hardware telemetry source declaration",
+  "description": "Admission contract for a telemetry source. This repository ships no approved live source declaration.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "sourceId", "implementationStatus", "approval", "collector", "targetBinding", "identity", "measurements", "integrity", "limitations"],
+  "properties": {
+    "schemaVersion": { "const": "agentic-501-intel-hardware-source/v1" },
+    "sourceId": { "$ref": "#/$defs/nonEmpty" },
+    "implementationStatus": { "enum": ["runtime-gated", "unimplemented", "implemented"] },
+    "approval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "authority", "scope", "reviewedAt"],
+      "properties": {
+        "status": { "enum": ["pending", "approved", "revoked"] },
+        "authority": { "$ref": "#/$defs/nonEmpty" },
+        "scope": { "$ref": "#/$defs/nonEmpty" },
+        "reviewedAt": { "type": "string", "format": "date-time" },
+        "expiresAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "collector": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version", "deploymentDigest", "transport"],
+      "properties": {
+        "name": { "$ref": "#/$defs/nonEmpty" },
+        "version": { "$ref": "#/$defs/nonEmpty" },
+        "deploymentDigest": { "$ref": "#/$defs/digest" },
+        "transport": { "enum": ["otlp-grpc", "otlp-http", "prometheus-scrape"] }
+      }
+    },
+    "targetBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["clusterUid", "nodeUid", "podUid", "containerId", "observedAt"],
+      "properties": {
+        "clusterUid": { "$ref": "#/$defs/nonEmpty" },
+        "nodeUid": { "$ref": "#/$defs/nonEmpty" },
+        "podUid": { "$ref": "#/$defs/nonEmpty" },
+        "containerId": { "$ref": "#/$defs/nonEmpty" },
+        "observedAt": { "type": "string", "format": "date-time" }
+      }
+    },
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["vendor", "family", "model", "modelName", "microcode", "logicalCpuCount", "sourceRecordDigest"],
+      "properties": {
+        "vendor": { "const": "GenuineIntel" },
+        "family": { "type": "integer", "minimum": 1 },
+        "model": { "type": "integer", "minimum": 1 },
+        "modelName": { "type": "string", "pattern": "Intel", "minLength": 1 },
+        "microcode": { "$ref": "#/$defs/nonEmpty" },
+        "logicalCpuCount": { "type": "integer", "minimum": 1 },
+        "sourceRecordDigest": { "$ref": "#/$defs/digest" }
+      }
+    },
+    "measurements": {
+      "type": "array",
+      "minItems": 2,
+      "uniqueItems": true,
+      "items": { "enum": ["cpu.request.cores", "cpu.limit.cores", "cpu.usage.cores", "cpu.utilization.percent", "cpu.throttled.seconds", "cpu.pressure.stall.seconds"] },
+      "allOf": [
+        { "contains": { "const": "cpu.request.cores" } },
+        { "contains": { "const": "cpu.usage.cores" } }
+      ]
+    },
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authenticatedTransport", "clockSynchronized", "maxClockErrorMs", "retentionDays", "rawRecordsRetained"],
+      "properties": {
+        "authenticatedTransport": { "const": true },
+        "clockSynchronized": { "const": true },
+        "maxClockErrorMs": { "type": "number", "minimum": 0, "maximum": 1000 },
+        "retentionDays": { "type": "integer", "minimum": 1 },
+        "rawRecordsRetained": { "const": true }
+      }
+    },
+    "limitations": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/nonEmpty" } }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "implementationStatus": { "const": "implemented" } }, "required": ["implementationStatus"] },
+      "then": { "properties": { "approval": { "properties": { "status": { "const": "approved" } } } } }
+    },
+    {
+      "if": { "properties": { "approval": { "properties": { "status": { "not": { "const": "approved" } } }, "required": ["status"] } }, "required": ["approval"] },
+      "then": { "properties": { "implementationStatus": { "not": { "const": "implemented" } } } }
+    }
+  ],
+  "$defs": {
+    "nonEmpty": { "type": "string", "minLength": 1, "maxLength": 512 },
+    "digest": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" }
+  }
+}

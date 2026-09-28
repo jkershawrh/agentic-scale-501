@@ -1,0 +1,42 @@
+= 2. Baseline: establish the reference state
+:navtitle: 2. Baseline
+
+== Objective
+
+Inspect a low-concurrency rehearsal envelope and establish a reference for latency, quality, policy, inference, resources, and proof completeness.
+
+== RUN NOW — LOCAL REHEARSAL
+
+[source,bash]
+----
+node content-501/tools/rehearsal-check.mjs --phase baseline
+----
+
+Then inspect the envelope:
+
+[source,bash]
+----
+sed -n '1,240p' content-501/fixtures/baseline.rehearsal.json
+----
+
+The same source-labeled fixture is available as an link:{attachmentsdir}/fixtures/baseline.rehearsal.json[Antora attachment,window=_blank].
+
+== Evidence review
+
+Trace these joins rather than reading one headline metric:
+
+. `runId` joins the phase to the declared run.
+. `correlation.completeJourneys` accounts for every expected journey.
+. `policy` shows evaluated, compliant, and unauthorized activity.
+. `quality` identifies the scorer and evaluation count.
+. `inference` attributes model, endpoint, latency, and token use.
+. `resources` names its telemetry source; a rehearsal hardware label is not approved hardware proof.
+. `authority` preserves human review and disables automated promotion.
+
+== Learner checkpoint
+
+Record the baseline p95 journey latency, inference p95, quality score, policy compliance, correlation ratio, and source. Add the sentence: “These are rehearsal fixture values, not observed OpenShift or Intel performance.”
+
+*Pass when:* your baseline note includes source and provenance, not just performance numbers.
+
+xref:03-sustain.adoc[Continue to Stage 3: Sustain →]

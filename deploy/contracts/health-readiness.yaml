@@ -1,0 +1,24 @@
+schemaVersion: agentic-scale-501-health-contract/v1
+workload: static-rehearsal-presentation
+port: 8080
+liveness:
+  path: /healthz
+  successStatus: 200
+  meaning: The in-container web server can accept and answer HTTP requests.
+  excludes:
+    - live workflow availability
+    - telemetry availability
+    - certification readiness
+readiness:
+  path: /readyz
+  successStatus: 200
+  failureStatus: 503
+  meaning: The web server can locate the packaged presentation entry point.
+  excludes:
+    - live API readiness
+    - external dependency readiness
+    - Showroom or Antora publication readiness
+liveApi:
+  packaged: false
+  expectedStatus: unavailable
+

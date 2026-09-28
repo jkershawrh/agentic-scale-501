@@ -1,0 +1,14 @@
+{
+  "name": "agentic-scale-501-showroom",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "check:content": "node scripts/validate-content.mjs",
+    "check": "npm run check:content && npm run build"
+  },
+  "devDependencies": {
+    "@antora/cli": "3.2.0",
+    "@antora/site-generator": "3.2.0"
+  }
+}

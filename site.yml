@@ -1,0 +1,18 @@
+---
+site:
+  title: Agentic AI 501 — Scale and Certify
+  start_page: agentic-scale-501::index.adoc
+
+content:
+  sources:
+    - url: .
+      start_path: showroom
+
+ui:
+  bundle:
+    url: https://github.com/rhpds/rhdp_showroom_theme/releases/download/latest/ui-bundle.zip
+    snapshot: true
+  supplemental_files: ./showroom/supplemental-ui
+
+output:
+  dir: ./www/showroom
