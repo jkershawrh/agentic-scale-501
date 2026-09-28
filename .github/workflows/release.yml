@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   verify:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
@@ -30,24 +30,25 @@ jobs:
         run: python -m pip install --disable-pip-version-check jsonschema
       - name: Run all repository, contract, Showroom, and Helm checks
         run: npm run check
+      - name: Reject vulnerable application dependencies
+        run: |
+          npm audit --audit-level=high
+          npm --prefix showroom audit --audit-level=high
 
   release:
     needs: verify
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
       packages: write
       id-token: write
-      attestations: write
       security-events: write
     strategy:
       fail-fast: false
       matrix:
         include:
-          - name: presentation
-            containerfile: packaging/Containerfile
-          - name: qualifier
-            containerfile: Containerfile
+          - {component: presentation, file: packaging/Containerfile, image: agentic-scale-501-presentation}
+          - {component: qualifier, file: Containerfile, image: agentic-scale-501-qualifier}
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
       - uses: docker/setup-buildx-action@8d2750c68a42422c14e847fe6c8ac0403b4cbd6f
@@ -56,41 +57,68 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Build and publish linux/amd64 image
-        id: build
-        uses: docker/build-push-action@10e90e3645eae34f1e60eeb005ba3a3d33f178e8
+      - name: Build Linux AMD64 candidate without publishing
+        run: >-
+          docker buildx build
+          --platform linux/amd64
+          --file "${{ matrix.file }}"
+          --label "org.opencontainers.image.revision=${{ github.sha }}"
+          --tag "ghcr.io/${{ github.repository_owner }}/${{ matrix.image }}:${{ github.sha }}"
+          --load .
+      - name: Full vulnerability inventory and zero HIGH/CRITICAL gate
+        uses: anchore/scan-action@v6
         with:
-          context: .
-          file: ${{ matrix.containerfile }}
-          platforms: linux/amd64
-          push: true
-          provenance: false
-          sbom: false
-          tags: |
-            ghcr.io/${{ github.repository_owner }}/agentic-scale-501-${{ matrix.name }}:${{ github.sha }}
-            ghcr.io/${{ github.repository_owner }}/agentic-scale-501-${{ matrix.name }}:latest
-      - name: Reject HIGH or CRITICAL vulnerabilities
-        uses: aquasecurity/trivy-action@a9c7b0f06e461e9d4b4d1711f154ee024b8d7ab8
-        with:
-          image-ref: ghcr.io/${{ github.repository_owner }}/agentic-scale-501-${{ matrix.name }}@${{ steps.build.outputs.digest }}
-          format: table
-          severity: HIGH,CRITICAL
-          vuln-type: os,library
-          ignore-unfixed: false
-          exit-code: '1'
+          image: ghcr.io/${{ github.repository_owner }}/${{ matrix.image }}:${{ github.sha }}
+          severity-cutoff: high
+          fail-build: true
+          output-format: json
+          output-file: vulnerability-${{ matrix.component }}.json
       - name: Generate SPDX SBOM
         uses: anchore/sbom-action@006b7ce8314066bdf1765b4500370d40fa6917a3
         with:
-          image: ghcr.io/${{ github.repository_owner }}/agentic-scale-501-${{ matrix.name }}@${{ steps.build.outputs.digest }}
+          image: ghcr.io/${{ github.repository_owner }}/${{ matrix.image }}:${{ github.sha }}
           format: spdx-json
-          output-file: sbom-${{ matrix.name }}.spdx.json
+          output-file: sbom-${{ matrix.component }}.spdx.json
+          upload-artifact: false
+      - name: Publish and verify exact digest
+        id: publish
+        run: |
+          image="ghcr.io/${{ github.repository_owner }}/${{ matrix.image }}:${{ github.sha }}"
+          docker push "$image"
+          digest_ref="$(docker inspect --format='{{index .RepoDigests 0}}' "$image")"
+          test -n "$digest_ref"
+          docker pull "$digest_ref"
+          test "$(docker inspect --format='{{.Architecture}}' "$digest_ref")" = amd64
+          printf 'digest_ref=%s\n' "$digest_ref" >> "$GITHUB_OUTPUT"
+          printf '%s\n' "$digest_ref" > image-${{ matrix.component }}.txt
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@6f9f17788090df1f26f669e9d70d6ae9567deba6
+        with:
+          cosign-release: v3.1.3
+      - name: Sign and attest with GitHub OIDC
+        env:
+          DIGEST_REF: ${{ steps.publish.outputs.digest_ref }}
+        run: |
+          cosign sign --yes "$DIGEST_REF"
+          cosign attest --yes --type spdxjson --predicate sbom-${{ matrix.component }}.spdx.json "$DIGEST_REF"
+          printf '{"builder":{"id":"%s"},"buildType":"https://github.com/Attestations/GitHubActionsWorkflow@v1","invocation":{"configSource":{"uri":"git+%s/%s","digest":{"sha1":"%s"},"entryPoint":".github/workflows/release.yml"}},"metadata":{"buildInvocationId":"%s"},"materials":[]}\n' "${{ github.workflow_ref }}" "${{ github.server_url }}" "${{ github.repository }}" "${{ github.sha }}" "${{ github.run_id }}" > provenance.json
+          cosign attest --yes --type slsaprovenance --predicate provenance.json "$DIGEST_REF"
+      - name: Verify signature and attestations
+        env:
+          DIGEST_REF: ${{ steps.publish.outputs.digest_ref }}
+        run: |
+          identity="${{ github.server_url }}/${{ github.repository }}/.github/workflows/release.yml@${{ github.ref }}"
+          issuer="https://token.actions.githubusercontent.com"
+          cosign verify --certificate-identity="$identity" --certificate-oidc-issuer="$issuer" "$DIGEST_REF" > signature-verification.json
+          cosign verify-attestation --type spdxjson --certificate-identity="$identity" --certificate-oidc-issuer="$issuer" "$DIGEST_REF" > sbom-verification.json
+          cosign verify-attestation --type slsaprovenance --certificate-identity="$identity" --certificate-oidc-issuer="$issuer" "$DIGEST_REF" > provenance-verification.json
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: sbom-${{ matrix.name }}
-          path: sbom-${{ matrix.name }}.spdx.json
-      - name: Attest the immutable image digest with GitHub OIDC
-        uses: actions/attest-build-provenance@43d14bc2b83dec42d39ecae14e916627a18bb661
-        with:
-          subject-name: ghcr.io/${{ github.repository_owner }}/agentic-scale-501-${{ matrix.name }}
-          subject-digest: ${{ steps.build.outputs.digest }}
-          push-to-registry: true
+          name: agentic-scale-501-${{ matrix.component }}-${{ github.sha }}
+          retention-days: 90
+          path: |
+            image-${{ matrix.component }}.txt
+            vulnerability-${{ matrix.component }}.json
+            sbom-${{ matrix.component }}.spdx.json
+            provenance.json
+            *-verification.json
