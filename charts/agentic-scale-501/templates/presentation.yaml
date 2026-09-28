@@ -26,8 +26,12 @@ spec:
           livenessProbe: { httpGet: { path: /healthz, port: http } }
           resources: {{- toYaml .Values.presentation.resources | nindent 12 }}
           securityContext: {{- include "agentic-scale-501.securityContext" . | nindent 12 }}
-          volumeMounts: [{ name: tmp, mountPath: /tmp }]
-      volumes: [{ name: tmp, emptyDir: { sizeLimit: 16Mi } }]
+          volumeMounts:
+            - { name: tmp, mountPath: /tmp }
+            - { name: nginx-tmp, mountPath: /var/lib/nginx/tmp }
+      volumes:
+        - { name: tmp, emptyDir: { sizeLimit: 16Mi } }
+        - { name: nginx-tmp, emptyDir: { sizeLimit: 16Mi } }
 ---
 apiVersion: v1
 kind: Service
