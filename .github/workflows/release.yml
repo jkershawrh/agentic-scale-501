@@ -19,17 +19,17 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci --ignore-scripts
-      - run: npm run check
-      - name: Validate telemetry and resilience contracts
-        run: python -m pip install --disable-pip-version-check jsonschema && python contracts/telemetry/validate_contracts.py
-      - name: Validate the separate Showroom
+      - name: Install separate Showroom dependencies
         working-directory: showroom
-        run: npm ci --ignore-scripts && npm run check
-      - name: Validate Helm packaging
+        run: npm ci --ignore-scripts
+      - name: Install Helm for chart validation
         uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4
         with:
           version: v3.18.4
-      - run: helm lint charts/agentic-scale-501 && helm template blueprint charts/agentic-scale-501 >/dev/null
+      - name: Install contract validator dependency
+        run: python -m pip install --disable-pip-version-check jsonschema
+      - name: Run all repository, contract, Showroom, and Helm checks
+        run: npm run check
 
   release:
     needs: verify
