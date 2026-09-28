@@ -1,0 +1,8 @@
+{
+  "schema_version": "demo-story.redhat-intel.com/zero-residue/v1",
+  "scope": "local exact-digest container journey",
+  "source_revision": "0a882005514cbee787f3ab085bf91101cb88a56a",
+  "removed": ["agentic501-presentation-evidence container", "agentic501-qualifier-evidence container"],
+  "remaining_matching_containers": 0,
+  "openshift_reclaim": "NOT RUN; independent Launchpad cluster qualification gate"
+}

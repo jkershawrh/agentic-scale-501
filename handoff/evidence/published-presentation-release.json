@@ -1,0 +1,15 @@
+{
+  "schema_version": "demo-story.redhat-intel.com/artifact-release/v1",
+  "evidence_scope": "published_immutable_candidate",
+  "component": "presentation",
+  "source_repository": "https://github.com/jkershawrh/agentic-scale-501",
+  "source_revision": "0a882005514cbee787f3ab085bf91101cb88a56a",
+  "image": "ghcr.io/jkershawrh/agentic-scale-501-presentation@sha256:4d67e5d73f8207498b96172b0c5eeaf736686652dc2de1caa21aeb4fea806615",
+  "architecture": "linux/amd64",
+  "workflow": {"run_id": 36496246656, "url": "https://github.com/jkershawrh/agentic-scale-501/actions/runs/36496246656", "conclusion": "success"},
+  "scan": {"severity_counts": {"critical": 0, "high": 0, "medium": 4}, "hard_gate": "PASS: zero HIGH or CRITICAL", "report_sha256": "94acc665547ecfb287ee533da17f317ec466ec0921854b88808e03a0feb48e31"},
+  "sbom": {"format": "SPDX 2.3 JSON", "packages": 26, "sha256": "2bffa2fd4b8ae283fde666cfef3dcbaed31de04230fbc828b902f93336a48524"},
+  "supply_chain": {"exact_digest_pull": "PASS", "oidc_signature_verification": "PASS", "spdx_attestation_verification": "PASS", "slsa_provenance_verification": "PASS"},
+  "retention_days": 90,
+  "certification": "NOT CLAIMED"
+}

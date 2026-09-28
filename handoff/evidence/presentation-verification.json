@@ -1,0 +1,11 @@
+{
+  "schema_version": "demo-story.redhat-intel.com/presentation-verification/v1",
+  "source_revision": "0a882005514cbee787f3ab085bf91101cb88a56a",
+  "scene_count": 7,
+  "browser_tests": {"passed": 11, "failed": 0, "skipped": 1},
+  "desktop_stage_fit": {"1920x1080": "PASS_ZERO_SCROLL", "1440x900": "PASS_ZERO_SCROLL"},
+  "mobile": "PASS_USABLE; desktop zero-scroll assertion intentionally skipped",
+  "offline_assets": "PASS",
+  "observed_source_state": "REHEARSAL",
+  "live_scale_claimed": false
+}

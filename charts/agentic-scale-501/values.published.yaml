@@ -1,0 +1,25 @@
+images:
+  presentation:
+    repository: ghcr.io/jkershawrh/agentic-scale-501-presentation
+    digest: sha256:4d67e5d73f8207498b96172b0c5eeaf736686652dc2de1caa21aeb4fea806615
+  qualifier:
+    repository: ghcr.io/jkershawrh/agentic-scale-501-qualifier
+    digest: sha256:fe29325bbfdc34466fdfa2a77050282e1e2ec0d6b21d9e0115fe416288d8e431
+imagePullPolicy: IfNotPresent
+presentation:
+  replicas: 1
+  resources:
+    requests: { cpu: 25m, memory: 32Mi }
+    limits: { cpu: 250m, memory: 128Mi }
+qualifier:
+  replicas: 1
+  evidenceSource: rehearsal
+  live:
+    enabled: false
+    secretName: agentic-scale-501-live
+  resources:
+    requests: { cpu: 100m, memory: 128Mi }
+    limits: { cpu: "1", memory: 512Mi }
+networkPolicy:
+  enabled: true
+  ingressNamespaceSelector: {}

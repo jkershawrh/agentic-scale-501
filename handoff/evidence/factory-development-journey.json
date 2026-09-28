@@ -1,0 +1,11 @@
+{
+  "schema_version": "demo-story.redhat-intel.com/factory-development-journey/v1",
+  "source_revision": "0a882005514cbee787f3ab085bf91101cb88a56a",
+  "method": ["CDD", "TDD", "EDD"],
+  "test_gate": {"status": "PASS", "unit_and_contract_tests": 117, "showroom_stages": 8, "helm_charts_linted": 1, "npm_audit_vulnerabilities": 0},
+  "artifact_gate": {"status": "PASS_PUBLISHED_CANDIDATE", "architectures": ["linux/amd64"], "published_scan_high": 0, "published_scan_critical": 0},
+  "development_journey": {"status": "PASS_REHEARSAL_ONLY", "attempted_journeys": 3, "completed_journeys": 3, "complete_correlations": 3, "automated_promotion": false, "human_review_required": true},
+  "resource_snapshot": {"host": "local Podman, Linux AMD64 images under ARM64 emulation", "presentation": {"cpu_percent_snapshot": 3.85, "memory_mb": 13.61, "pids": 7}, "qualifier": {"cpu_percent_snapshot": 47.76, "memory_mb": 57.79, "pids": 7}, "measurement_scope": "single rehearsal run; not a capacity claim"},
+  "integrated_cluster_gate": "NOT_RUN_IN_FACTORY",
+  "authority": "This receipt grants no catalog, provisioning, certification, promotion, or publication authority."
+}

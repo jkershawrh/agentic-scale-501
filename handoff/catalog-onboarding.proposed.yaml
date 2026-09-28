@@ -1,0 +1,13 @@
+api_version: launchpad.redhat.com/v1alpha1
+kind: CatalogOnboardingProposal
+metadata: {catalog_item_id: scale-agentic-blueprint, status: draft}
+spec:
+  repository: https://github.com/jkershawrh/agentic-scale-501
+  revision: 0a882005514cbee787f3ab085bf91101cb88a56a
+  learning_level: "501"
+  prerequisite: operate-agentic-blueprint
+  source_classes:
+    showroom: {playbook: site.yml, start_path: showroom}
+    workload: {deploy_path: charts/agentic-scale-501}
+  requested_actions: [approve_source, run_discovery]
+  authority: {may_modify_catalog: false, may_provision: false, may_publish: false}
