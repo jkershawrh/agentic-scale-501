@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["images", "presentation", "qualifier", "networkPolicy"],
+  "properties": {
+    "images": {
+      "type": "object",
+      "required": ["presentation", "qualifier"],
+      "properties": {
+        "presentation": { "$ref": "#/$defs/image" },
+        "qualifier": { "$ref": "#/$defs/image" }
+      }
+    },
+    "presentation": { "type": "object" },
+    "qualifier": {
+      "type": "object",
+      "required": ["evidenceSource", "live"],
+      "properties": {
+        "evidenceSource": { "enum": ["rehearsal", "live"] },
+        "live": {
+          "type": "object",
+          "required": ["enabled", "secretName"],
+          "properties": { "enabled": { "type": "boolean" }, "secretName": { "type": "string", "minLength": 1 } }
+        }
+      }
+    },
+    "networkPolicy": { "type": "object" }
+  },
+  "$defs": {
+    "image": {
+      "type": "object",
+      "required": ["repository", "digest"],
+      "properties": {
+        "repository": { "type": "string", "minLength": 1 },
+        "digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+      }
+    }
+  }
+}

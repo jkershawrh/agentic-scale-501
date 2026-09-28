@@ -6,10 +6,10 @@ type PresentationProof = Record<string, string | number>
 const collectedAt = '2026-09-28T00:00:00.000Z'
 
 const rehearsals: Record<ScalePhase, PresentationProof> = {
-  baseline: { journeys: 10, p95_latency_ms: 12400, quality: 'REHEARSAL threshold', policy: '10 / 10 rehearsal', disposition: 'REHEARSAL only' },
-  sustained: { journeys: 30, throughput: 12, queue_p95_ms: 840, proof_complete: 'REHEARSAL fixture', disposition: 'REHEARSAL only' },
-  pressure: { condition: 'inference pressure rehearsal', errors: 2, policy: 'fail-closed target', disposition: 'REHEARSAL conditional' },
-  recovery: { recovery_ms: 6200, quality: 'REHEARSAL baseline', proof_complete: 'REHEARSAL fixture', disposition: 'human review required' },
+  baseline: { journeys: 'not observed', p95_latency_ms: 'not observed', quality: 'not evaluated', policy: 'contract only', disposition: 'REHEARSAL only' },
+  sustained: { journeys: 'not observed', throughput: 'not observed', queue_p95_ms: 'not observed', proof_complete: 'not collected', disposition: 'REHEARSAL only' },
+  pressure: { condition: 'gated; not applied', errors: 'not observed', policy: 'fail-closed target', disposition: 'REHEARSAL only' },
+  recovery: { recovery_ms: 'not observed', quality: 'not evaluated', proof_complete: 'not collected', disposition: 'REHEARSAL — human review required' },
 }
 
 export function parseScaleProofResponse(input: unknown, expectedPhase: ScalePhase): ScaleProofEnvelope {

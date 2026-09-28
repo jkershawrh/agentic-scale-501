@@ -12,8 +12,11 @@
     "start:server": "node server-dist/server/main.js",
     "test": "vitest run && vitest run --config server/vitest.config.ts",
     "test:visual": "playwright test",
+    "test:contracts": "python3 contracts/telemetry/validate_contracts.py",
+    "test:showroom": "npm --prefix showroom run check",
+    "test:helm": "helm lint charts/agentic-scale-501 && helm template blueprint charts/agentic-scale-501 > /dev/null",
     "verify:offline": "node scripts/verify-offline.mjs",
-    "check": "npm run test && npm run typecheck:server && npm run build && npm run verify:offline",
+    "check": "npm run test && npm run typecheck:server && npm run build && npm run verify:offline && npm run test:contracts && npm run test:showroom && npm run test:helm",
     "preview": "vite preview"
   },
   "dependencies": {

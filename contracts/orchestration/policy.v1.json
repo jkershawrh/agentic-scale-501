@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "agentic-501-policy/v1",
+  "engine": "deterministic",
+  "policyOrder": [
+    "validate_contract",
+    "validate_identity_and_correlation",
+    "enforce_role_tool_allowlist",
+    "enforce_authority",
+    "enforce_deadline_and_retry_budget",
+    "record_decision"
+  ],
+  "onMissingEvidence": "inconclusive",
+  "onPolicyError": "deny",
+  "automatedPromotion": false,
+  "humanReviewRequired": true,
+  "humanAuthority": {
+    "approveMutation": true,
+    "approveFailureInjection": true,
+    "issueCertificationDisposition": true,
+    "revokeAuthorization": true
+  },
+  "modelAuthority": {
+    "selectPolicy": false,
+    "approveMutation": false,
+    "certify": false,
+    "promote": false
+  }
+}

@@ -63,7 +63,7 @@ a { color: inherit; }
 .brand-lockup-compact span { font-size: 1rem; }
 .brand-lockup-hero { margin-bottom: var(--space-6); }
 
-.demo-header { position: sticky; inset: 0 0 auto; z-index: 20; min-height: 58px; padding: .75rem 2rem; display: flex; justify-content: space-between; align-items: center; background: rgba(31, 31, 31, .92); border-bottom: 1px solid var(--border); backdrop-filter: blur(16px); }
+.demo-header { position: sticky; inset: 0 0 auto; z-index: 20; height: 58px; padding: .75rem 2rem; display: flex; justify-content: space-between; align-items: center; background: rgba(31, 31, 31, .92); border-bottom: 1px solid var(--border); backdrop-filter: blur(16px); }
 .brand-button, .presenter-controls button { background: transparent; border: 0; cursor: pointer; }
 .presenter-controls { display: flex; align-items: center; gap: .65rem; }
 .presenter-controls > button { font-size: 1.15rem; width: 32px; height: 32px; border-radius: 50%; }

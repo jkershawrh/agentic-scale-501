@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "agentic-501-mcp-tool-contract/v1",
+  "transport": "MCP JSON-RPC",
+  "defaultDecision": "deny",
+  "requiredCorrelation": ["run_id", "journey_id", "agent_id", "tool_call_id"],
+  "request": {
+    "required": ["tool_name", "arguments", "correlation", "deadline_at"],
+    "additionalProperties": false
+  },
+  "response": {
+    "required": ["tool_call_id", "outcome", "evidence_refs", "completed_at"],
+    "allowedOutcomes": ["completed", "denied", "failed", "timed_out"]
+  },
+  "retry": {
+    "maxAttempts": 3,
+    "backoff": "bounded_exponential",
+    "retryableOutcomes": ["rate_limited", "dependency_unavailable"],
+    "neverRetry": ["denied", "invalid_request", "authority_required"]
+  },
+  "timeout": {
+    "required": true,
+    "onExpiry": "cancel_and_record"
+  },
+  "idempotency": {
+    "requiredForMutations": true,
+    "keyBinding": ["run_id", "journey_id", "agent_id", "tool_name", "request_digest"],
+    "replayResult": "same_outcome",
+    "conflictResult": "deny"
+  },
+  "mutationAuthority": {
+    "default": "proposal_only",
+    "executionRequires": ["human_approval", "single_use_authorization", "unexpired_deadline"]
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "schemaVersion": "agentic-501-agent-registry/v1",
+  "sourceRepository": "https://github.com/jkershawrh/multi-agent-quickstart",
+  "sourceRevision": "43889bc9444f9ef07f5b1a88e7de534af9647264",
+  "defaultAuthority": "recommend_only",
+  "agents": [
+    {
+      "id": "researcher",
+      "role": "Collect attributable evidence for the declared question.",
+      "inputContract": "orchestration-request/v1",
+      "outputContract": "evidence-bundle/v1",
+      "allowedTools": ["search_documents", "read_document"],
+      "authority": "recommend_only",
+      "failureBoundary": "isolated_step"
+    },
+    {
+      "id": "analyst",
+      "role": "Compare evidence and identify gaps without changing external state.",
+      "inputContract": "evidence-bundle/v1",
+      "outputContract": "analysis-recommendation/v1",
+      "allowedTools": ["read_document", "evaluate_policy"],
+      "authority": "recommend_only",
+      "failureBoundary": "isolated_step"
+    },
+    {
+      "id": "executor",
+      "role": "Prepare an action proposal for explicit human disposition.",
+      "inputContract": "analysis-recommendation/v1",
+      "outputContract": "pending-action/v1",
+      "allowedTools": ["read_document", "propose_task"],
+      "authority": "recommend_only",
+      "failureBoundary": "isolated_step"
+    }
+  ]
+}

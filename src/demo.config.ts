@@ -20,8 +20,8 @@ const technicalTopology = {
 
 export const demoConfig: DemoConfig = {
   id: 'agentic-scale-501',
-  title: 'Scale and certify agentic systems',
-  subtitle: 'The Red Hat × Intel production-scale proof',
+  title: 'Agentic AI 501 — Production Multi-Agent Blueprint',
+  subtitle: 'Governed orchestration, evidence, resilience, and human authority on Red Hat × Intel',
   event: 'Agentic AI 501',
   audience: 'Platform leaders and AI reliability engineers',
   cta: 'Prove the envelope before approving promotion.',
@@ -32,7 +32,7 @@ export const demoConfig: DemoConfig = {
   },
   acts: [
     { id: 'decision', label: '00', title: 'The Decision', scenes: [
-      { id: 'intro', type: 'intro', beat: 'ordinary-world', title: 'One green journey is not a production envelope', subtitle: 'Function is proven at 301 and operated at 401. Level 501 asks what remains true under useful load and controlled failure.', speakerPrompt: 'Acknowledge the working system. Then separate successful function from capacity, resilience, and certification.' },
+      { id: 'intro', type: 'intro', beat: 'ordinary-world', title: 'One green journey is not a production envelope', subtitle: 'The 401 runtime has internal scale evidence but remains draft and activation-gated. Level 501 asks what must be proven under useful load and controlled failure.', speakerPrompt: 'Separate available implementation evidence from an earned catalog level. State that 501 certification is not enabled.' },
       { id: 'reframe', type: 'reframe', beat: 'stakes', eyebrow: 'The production risk', title: 'Availability alone can hide a failed agentic system', before: 'Add replicas and watch uptime', after: 'Measure quality, policy, evidence, inference, and recovery together', detail: 'If the service stays up while evidence disappears, policy drifts, or answers degrade, scaling failed.', speakerPrompt: 'Make clear that replica count is an input—not the business result.' },
     ] },
     { id: 'architecture', label: '01', title: 'Guided Scale Architecture', scenes: [

@@ -1,11 +1,11 @@
 version: 1
 blueprint: demo-blueprint.yaml
 presentation:
-  title: Scale and certify agentic systems
+  title: Agentic AI 501 — Production Multi-Agent Blueprint
   audience: Platform leaders, AI reliability engineers, and architects
   desired_decision: Approve only the measured operating envelope supported by complete quality, policy, infrastructure, and recovery evidence.
   duration_minutes: 7
-  core_tension: One successful agent journey proves function; it does not prove production capacity or trust under pressure.
+  core_tension: Internal 401 evidence does not make 401 active or 501 earned; a production claim requires governed orchestration, complete evidence, and recovery proof under pressure.
   cta: Review the evidence package, then authorize independent Launchpad certification when the 401 prerequisite and 501 proof gates are complete.
 source_material:
   mode: repository-and-certification-charter
@@ -26,7 +26,7 @@ architecture:
     - Any unverified future component or authored performance number
 beats:
   - beat: ordinary-world
-    claim: A single evidence-backed journey now works.
+    claim: The canonical runtime has substantial internal evidence, while its catalog state remains draft and activation-gated.
   - beat: stakes
     claim: Production demand can preserve uptime while silently losing quality, policy compliance, or evidence.
   - beat: root-cause

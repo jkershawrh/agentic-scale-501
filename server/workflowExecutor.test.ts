@@ -36,7 +36,12 @@ describe('canonical workflow journey executor', () => {
     expect(observation.inference).toMatchObject({ model: 'granite', endpoint: 'maas', inputTokens: 100, outputTokens: 20 })
     const call = fetchImpl.mock.calls[0] as unknown as [string | URL | Request, RequestInit]
     const init = call[1]
-    expect(init?.headers).toMatchObject({ authorization: 'Bearer server-only-token' })
+    expect(init?.headers).toMatchObject({
+      authorization: 'Bearer server-only-token',
+      'x-agentic-run-id': 'scale-run',
+      'x-agentic-journey-id': 'scale-run:journey:1',
+      'idempotency-key': 'scale-run:scale-run:journey:1:eval-v1:1',
+    })
     expect(JSON.parse(String(init?.body))).toEqual({ query: 'case 1', workflow_type: 'comprehensive', journey_id: 'scale-run:journey:1', case_id: 'eval-v1:1' })
   })
 
@@ -66,5 +71,28 @@ describe('canonical workflow journey executor', () => {
     )
     expect(observation.policyCompliant).toBe(false)
     expect(observation.unauthorizedActions).toBe(1)
+  })
+
+  it('retries only transient responses with the same idempotency key', async () => {
+    const fetchImpl = vi.fn()
+      .mockResolvedValueOnce(new Response('busy', { status: 503 }))
+      .mockResolvedValueOnce(new Response(JSON.stringify(sourceResponse()), { status: 200 }))
+    const configured = createWorkflowJourneyExecutor({
+      baseUrl: 'https://workload.example', fetch: fetchImpl, retryDelayMs: 0,
+      queryForCase: () => 'case', evaluateQuality: async () => 1, measureQueueLatencyMs: async () => 0,
+      policyResultIsCompliant: () => true,
+    })
+    await configured({ runId: 'scale-run', journeyId: 'scale-run:journey:1', sequence: 1, profile }, new AbortController().signal)
+    expect(fetchImpl).toHaveBeenCalledTimes(2)
+    const firstHeaders = fetchImpl.mock.calls[0][1]?.headers as Record<string, string>
+    const secondHeaders = fetchImpl.mock.calls[1][1]?.headers as Record<string, string>
+    expect(firstHeaders['idempotency-key']).toBe(secondHeaders['idempotency-key'])
+  })
+
+  it('does not retry deterministic denials', async () => {
+    const fetchImpl = vi.fn(async () => new Response('denied', { status: 403 }))
+    await expect(executor(fetchImpl)({ runId: 'scale-run', journeyId: 'scale-run:journey:1', sequence: 1, profile }, new AbortController().signal))
+      .rejects.toThrow(/HTTP 403/)
+    expect(fetchImpl).toHaveBeenCalledTimes(1)
   })
 })

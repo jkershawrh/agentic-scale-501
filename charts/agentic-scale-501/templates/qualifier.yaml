@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-qualifier
+  labels:
+    {{- include "agentic-scale-501.labels" . | nindent 4 }}
+    app.kubernetes.io/component: qualifier
+spec:
+  replicas: {{ .Values.qualifier.replicas }}
+  selector:
+    matchLabels: { app.kubernetes.io/name: {{ .Release.Name }}-qualifier }
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ .Release.Name }}-qualifier
+        app.kubernetes.io/part-of: agentic-scale-501
+    spec:
+      automountServiceAccountToken: false
+      securityContext: { runAsNonRoot: true, seccompProfile: { type: RuntimeDefault } }
+      containers:
+        - name: qualifier
+          image: "{{ .Values.images.qualifier.repository }}@{{ .Values.images.qualifier.digest }}"
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
+          env:
+            - { name: EVIDENCE_SOURCE, value: {{ .Values.qualifier.evidenceSource | quote }} }
+            - { name: LIVE_EXECUTION_ENABLED, value: {{ .Values.qualifier.live.enabled | quote }} }
+            - { name: FAULT_INJECTION_ENABLED, value: "false" }
+{{- if .Values.qualifier.live.enabled }}
+          envFrom:
+            - secretRef: { name: {{ .Values.qualifier.live.secretName }} }
+{{- end }}
+          ports: [{ name: http, containerPort: 8080 }]
+          readinessProbe: { httpGet: { path: /readyz, port: http } }
+          livenessProbe: { httpGet: { path: /healthz, port: http } }
+          resources: {{- toYaml .Values.qualifier.resources | nindent 12 }}
+          securityContext: {{- include "agentic-scale-501.securityContext" . | nindent 12 }}
+          volumeMounts: [{ name: tmp, mountPath: /tmp }]
+      volumes: [{ name: tmp, emptyDir: { sizeLimit: 16Mi } }]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-qualifier
+spec:
+  selector: { app.kubernetes.io/name: {{ .Release.Name }}-qualifier }
+  ports: [{ name: http, port: 8080, targetPort: http }]

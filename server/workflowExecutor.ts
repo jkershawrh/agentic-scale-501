@@ -44,6 +44,8 @@ export interface WorkflowJourneyExecutorOptions {
   evaluateQuality: (input: { response: WorkflowResponse; sequence: number; profile: ScaleRunProfile }) => Promise<number>
   measureQueueLatencyMs: (input: { response: WorkflowResponse; sequence: number; profile: ScaleRunProfile }) => Promise<number>
   policyResultIsCompliant: (result: string) => boolean
+  maxAttempts?: number
+  retryDelayMs?: number
 }
 
 const object = (value: unknown): value is Record<string, unknown> => typeof value === 'object' && value !== null && !Array.isArray(value)
@@ -61,31 +63,57 @@ function parseWorkflowResponse(value: unknown): WorkflowResponse {
   return value as unknown as WorkflowResponse
 }
 
-const requestHeaders = (token?: string) => ({
+const requestHeaders = (token: string | undefined, runId: string, journeyId: string, idempotencyKey: string) => ({
   'content-type': 'application/json',
+  'x-agentic-run-id': runId,
+  'x-agentic-journey-id': journeyId,
+  'idempotency-key': idempotencyKey,
   ...(token ? { authorization: `Bearer ${token}` } : {}),
+})
+
+const retryable = (status: number) => status === 429 || status === 502 || status === 503 || status === 504
+
+const wait = (milliseconds: number, signal: AbortSignal) => new Promise<void>((resolve, reject) => {
+  if (signal.aborted) return reject(signal.reason)
+  const timer = setTimeout(resolve, milliseconds)
+  signal.addEventListener('abort', () => {
+    clearTimeout(timer)
+    reject(signal.reason)
+  }, { once: true })
 })
 
 export function createWorkflowJourneyExecutor(options: WorkflowJourneyExecutorOptions): JourneyExecutor {
   const baseUrl = options.baseUrl.replace(/\/$/, '')
   if (!baseUrl.startsWith('http://') && !baseUrl.startsWith('https://')) throw new Error('Workflow baseUrl must use HTTP or HTTPS')
   const fetchImpl = options.fetch ?? fetch
+  const maxAttempts = options.maxAttempts ?? 3
+  const retryDelayMs = options.retryDelayMs ?? 100
+  if (!Number.isInteger(maxAttempts) || maxAttempts < 1 || maxAttempts > 3) throw new Error('maxAttempts must be between 1 and 3')
+  if (!Number.isFinite(retryDelayMs) || retryDelayMs < 0 || retryDelayMs > 1_000) throw new Error('retryDelayMs must be between 0 and 1000')
 
-  return async ({ journeyId, sequence, profile }, signal) => {
+  return async ({ runId, journeyId, sequence, profile }, signal) => {
     const caseId = `${profile.evaluationSetVersion}:${sequence}`
+    const idempotencyKey = `${runId}:${journeyId}:${caseId}`
     const requestedAt = Date.now()
-    const response = await fetchImpl(`${baseUrl}/api/v1/workflow`, {
-      method: 'POST',
-      headers: requestHeaders(options.serviceToken),
-      body: JSON.stringify({
-        query: options.queryForCase({ sequence, journeyId, profile }),
-        workflow_type: options.workflowType ?? 'comprehensive',
-        journey_id: journeyId,
-        case_id: caseId,
-      }),
-      signal,
-    })
+    let response: Response | undefined
+    for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+      response = await fetchImpl(`${baseUrl}/api/v1/workflow`, {
+        method: 'POST',
+        headers: requestHeaders(options.serviceToken, runId, journeyId, idempotencyKey),
+        body: JSON.stringify({
+          query: options.queryForCase({ sequence, journeyId, profile }),
+          workflow_type: options.workflowType ?? 'comprehensive',
+          journey_id: journeyId,
+          case_id: caseId,
+        }),
+        signal,
+      })
+      if (response.ok || !retryable(response.status) || attempt === maxAttempts) break
+      await response.body?.cancel()
+      await wait(retryDelayMs * (2 ** (attempt - 1)), signal)
+    }
     const receivedAt = Date.now()
+    if (!response) throw new Error('Workflow endpoint returned no response')
     if (!response.ok) throw new Error(`Workflow endpoint returned HTTP ${response.status}`)
     const workflow = parseWorkflowResponse(await response.json())
     const qualityScore = await options.evaluateQuality({ response: workflow, sequence, profile })

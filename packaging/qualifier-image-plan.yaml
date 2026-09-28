@@ -1,0 +1,26 @@
+schemaVersion: agentic-scale-501-image-plan/v1
+status: release-candidate
+image:
+  name: agentic-scale-501-qualifier
+  containerfile: Containerfile
+  context: .
+  platforms: [linux/amd64]
+  prohibitedPlatforms: [linux/arm64]
+  outputReferencePolicy: digest-only-for-deployment
+baseImages:
+  build: registry.access.redhat.com/ubi9/nodejs-22@sha256:90d19cd1a4ba03bcb63c46320862955fc1560511532ee35ff472289bf5fe2276
+  runtime: docker.io/library/node:24-alpine@sha256:83f1c388c31fb2e51f7cbd4dea949b96260798c98f206e8e4696bc93bd964e3a
+runtime:
+  port: 8080
+  healthPath: /healthz
+  readinessPath: /readyz
+  defaultEvidenceSource: rehearsal
+  liveExecutionEnabled: false
+  faultInjectionEnabled: false
+  automatedPromotionEnabled: false
+releaseGates:
+  - Build and publish only linux/amd64.
+  - Reject the digest when any HIGH or CRITICAL vulnerability is present.
+  - Publish an SPDX JSON SBOM for the same digest.
+  - Attach GitHub OIDC build-provenance attestation to the same digest.
+  - Enable live mode only after all handoff gates and human approval are satisfied.

@@ -50,7 +50,7 @@ export function LiveJourney({ scene }: { scene: LiveJourneyScene }) {
       </div>)}
       </div>}
     {state.status === 'ready' && state.data && step && <div className="journey-results">
-      {step.resultFields.map((field) => <div className="journey-result" key={field.key}><span>{field.label}</span><strong>{String(state.data?.[field.key] ?? '—')}{field.suffix}</strong></div>)}
+      {step.resultFields.map((field) => { const value = state.data?.[field.key]; return <div className="journey-result" key={field.key}><span>{field.label}</span><strong>{String(value ?? '—')}{typeof value === 'number' ? field.suffix : ''}</strong></div> })}
     </div>}
     {state.error && <p className="fallback-note">{state.error}{state.status === 'ready' ? ' Showing clearly labeled fallback evidence.' : ''}</p>}
       <div className="journey-controls">

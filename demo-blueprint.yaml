@@ -1,10 +1,10 @@
 version: 1
-status: draft
+status: reviewed-factory-blueprint
 source:
   name: agentic-scale-501
   kind: repository-derived-specialization
   location: /Users/jkershaw/Documents/multi-agent-quickstart
-  revision: d9529ad7caa3b1e5c335085f7e023ebb49e19900
+  revision: 43889bc9444f9ef07f5b1a88e7de534af9647264
   discovered_at: "2026-09-28"
   inspected_artifacts:
     - demo-blueprint.yaml
@@ -22,11 +22,11 @@ source:
     - Agentic 401 is not yet certified, so 501 live execution and certification remain disabled.
     - The source QuickStart proves sequential workflows; it does not yet prove concurrent capacity or throughput.
     - OpenTelemetry correlation and approved Intel Xeon utilization telemetry are not connected end to end.
-    - Fault drivers and automated recovery assertions are chartered but not implemented.
+    - A fail-closed controlled-pressure boundary is implemented and tested here, but no approved target actuator or live recovery evidence is connected.
     - Any presentation fixture must remain REHEARSAL until the 501 execution adapter returns target-cluster evidence.
-    - The current runtime exposes policy metadata but does not evaluate or enforce approval policy.
+    - The current source runtime exposes policy metadata and authenticated model requests, but the 501 adapter must still independently enforce approval policy.
     - Deterministic keyword logic can invoke the mutating create_task MCP tool without human approval; recommend-only authority is not yet enforced.
-    - The runtime exposes model identity, endpoint, latency, and tokens but not Intel CPU identity, placement, allocation, utilization, or throughput.
+    - The runtime exposes model identity, endpoint, latency, and tokens but not approved Intel CPU identity, placement, allocation, utilization, or throughput.
 intent:
   primary_user: Platform engineers, AI reliability engineers, and architects responsible for production agentic systems
   workload: The same evidence-backed research, analyst, and executor workflow introduced at levels 301 and 401
@@ -73,11 +73,11 @@ architecture:
       status: verified
       source: src/mcp_server.py
     - id: policy
-      name: Policy metadata and guardrail boundary
-      kind: incomplete-decision-control
-      responsibility: Describe the intended authority boundary and screen content; approval enforcement remains unimplemented.
-      status: unknown
-      source: src/orchestrator.py
+      name: Deterministic qualification boundary
+      kind: external-decision-control
+      responsibility: Validate source policy evidence and deny qualification when correlation, recommend-only authority, or human review is absent; it cannot repair a source-side mutation.
+      status: implemented-in-501-adapter
+      source: contracts/orchestration/policy.v1.json and server/workflowExecutor.ts
     - id: inference
       name: OpenAI-compatible model endpoint
       kind: inference-service
@@ -198,7 +198,7 @@ decisions:
     owner: Deterministic scorer
     rule: Return inconclusive when required correlation, policy, inference, quality, resource, or lifecycle evidence is absent.
     fail_closed: true
-    implementation_status: proposed
+    implementation_status: implemented-in-501-boundary
   - id: promotion
     owner: Human certification reviewer through Launchpad
     rule: Measurements and LLM output may recommend but may never certify or promote automatically.

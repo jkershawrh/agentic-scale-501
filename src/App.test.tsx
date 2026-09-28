@@ -37,6 +37,6 @@ describe('presentation controls', () => {
     window.history.replaceState(null, '', '/?act=0&scene=0')
     render(<App />)
     fireEvent.click(screen.getByRole('button', { name: 'Toggle presenter prompt' }))
-    expect(screen.getByText(/Acknowledge the working system/)).toBeInTheDocument()
+    expect(screen.getByText(/Separate available implementation evidence/)).toBeInTheDocument()
   })
 })

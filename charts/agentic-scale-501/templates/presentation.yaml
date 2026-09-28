@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-presentation
+  labels:
+    {{- include "agentic-scale-501.labels" . | nindent 4 }}
+    app.kubernetes.io/component: presentation
+spec:
+  replicas: {{ .Values.presentation.replicas }}
+  selector:
+    matchLabels: { app.kubernetes.io/name: {{ .Release.Name }}-presentation }
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ .Release.Name }}-presentation
+        app.kubernetes.io/part-of: agentic-scale-501
+    spec:
+      automountServiceAccountToken: false
+      securityContext: { runAsNonRoot: true, seccompProfile: { type: RuntimeDefault } }
+      containers:
+        - name: presentation
+          image: "{{ .Values.images.presentation.repository }}@{{ .Values.images.presentation.digest }}"
+          imagePullPolicy: {{ .Values.imagePullPolicy }}
+          ports: [{ name: http, containerPort: 8080 }]
+          readinessProbe: { httpGet: { path: /readyz, port: http } }
+          livenessProbe: { httpGet: { path: /healthz, port: http } }
+          resources: {{- toYaml .Values.presentation.resources | nindent 12 }}
+          securityContext: {{- include "agentic-scale-501.securityContext" . | nindent 12 }}
+          volumeMounts: [{ name: tmp, mountPath: /tmp }]
+      volumes: [{ name: tmp, emptyDir: { sizeLimit: 16Mi } }]
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-presentation
+spec:
+  selector: { app.kubernetes.io/name: {{ .Release.Name }}-presentation }
+  ports: [{ name: http, port: 8080, targetPort: http }]

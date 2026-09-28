@@ -17,3 +17,17 @@ test('core controls are keyboard reachable', async ({ page }) => {
   await page.keyboard.press('Tab')
   await expect(page.getByRole('button', { name: 'Restart presentation' })).toBeFocused()
 })
+
+test('stage and laptop scenes require no scrolling', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name === 'rehearsal-mobile', 'Mobile is a rehearsal control surface, not a no-scroll stage.')
+  const scenes = ['/?act=0&scene=0', '/?act=0&scene=1', '/?act=1&scene=0', '/?act=2&scene=0', '/?act=2&scene=1', '/?act=3&scene=0', '/?act=4&scene=0']
+  for (const scene of scenes) {
+    await page.goto(scene)
+    await page.waitForFunction(() => getComputedStyle(document.body).margin === '0px')
+    const overflow = await page.evaluate(() => ({
+      horizontal: document.documentElement.scrollWidth - window.innerWidth,
+      vertical: document.documentElement.scrollHeight - window.innerHeight,
+    }))
+    expect(overflow, `Unexpected scroll at ${scene}`).toEqual({ horizontal: 0, vertical: 0 })
+  }
+})

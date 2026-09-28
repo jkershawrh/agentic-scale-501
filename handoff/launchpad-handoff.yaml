@@ -1,0 +1,42 @@
+schemaVersion: agentic-501-launchpad-handoff/v1
+catalogItem: scale-agentic-blueprint
+title: Agentic AI 501 — Production Multi-Agent Blueprint
+contentRepository: https://github.com/jkershawrh/agentic-scale-501
+canonicalRuntime:
+  repository: https://github.com/jkershawrh/multi-agent-quickstart
+  revision: 43889bc9444f9ef07f5b1a88e7de534af9647264
+catalogBoundary:
+  launchpadRepositoryRole: downstream-certification-infrastructure
+  launchpadMutationPerformed: false
+  prerequisite: operate-agentic-blueprint
+  prerequisiteStateObserved: draft-activation-gated
+  level501StateObserved: charter-execution-disabled
+  earnedLevelClaim: none
+deliverables:
+  triforcePresentation: src/demo.config.ts
+  showroom: showroom/
+  qualificationService: server/
+  orchestrationContracts: contracts/orchestration/
+  evidenceContracts: contracts/telemetry/
+  resilienceContracts: contracts/failure/
+  helmChart: charts/agentic-scale-501/
+  releaseWorkflow: .github/workflows/release.yml
+authority:
+  automatedPromotion: false
+  humanReviewRequired: true
+  launchpadOwnsCertification: true
+liveActivationGates:
+  - Agentic 401 catalog certification is complete.
+  - Organization-owned workload and presentation image digests are approved.
+  - Same-origin policy and complete OpenTelemetry correlation are independently verified.
+  - Approved Intel Xeon placement, allocation, and utilization telemetry is connected when CPU inference is the declared target.
+  - Controlled-pressure target, single-use authorization, rollback, and recovery verification are approved.
+  - A human reviewer approves the immutable profile and thresholds.
+releaseEvidence:
+  workflow: verify-and-release
+  requiredArtifacts:
+    - presentation image digest and SPDX SBOM
+    - qualifier image digest and SPDX SBOM
+    - zero HIGH/CRITICAL Trivy result for each digest
+    - GitHub OIDC build-provenance attestation for each digest
+  evidenceStatus: pending-first-green-main-run

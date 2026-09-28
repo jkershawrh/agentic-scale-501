@@ -1,4 +1,4 @@
-# Agentic AI 501 — Scale and Certify
+# Agentic AI 501 — Production Multi-Agent Blueprint
 
 This workspace is the post-401 Agentic AI presentation and lab-design surface. It applies the Triforce presentation pattern to one question: **what remains true when a governed multi-agent workload is placed under useful load and controlled failure?**
 
@@ -15,7 +15,11 @@ Implemented and testable now:
 - A deterministic, network-free rehearsal runtime as the safe default.
 - Fail-closed live startup that requires separately configured workflow, quality, queue, Intel telemetry, and fault-gate dependencies.
 - Native Antora/Showroom content with exactly eight ordered learner stages and source-exact evidence downloads.
-- A draft discovery blueprint tied to `multi-agent-quickstart` revision `d9529ad7caa3b1e5c335085f7e023ebb49e19900`.
+- A reviewed discovery blueprint tied to `multi-agent-quickstart` revision `43889bc9444f9ef07f5b1a88e7de534af9647264`.
+- Versioned agent-role, MCP/tool, deterministic-policy, evidence, Intel telemetry, and controlled-failure contracts.
+- Correlated, idempotent workflow requests with bounded retries for transient dependency failures only.
+- A separate Helm chart for the presentation and qualification service, with digest-only images, non-root/read-only workloads, and default-deny networking.
+- A pinned GitHub Actions release path that tests the Triforce and Showroom, builds `linux/amd64`, rejects any HIGH/CRITICAL vulnerability, emits SPDX SBOMs, publishes to GHCR, and creates OIDC build-provenance attestations.
 
 Gated and not represented as completed live proof:
 
@@ -26,7 +30,7 @@ Gated and not represented as completed live proof:
 - Approved Intel Xeon identity, allocation, and utilization telemetry from the target environment.
 - Immutable image publication and Launchpad 1 / 5 / 25-seat certification.
 
-Until those gates are satisfied, all displayed measurements are visibly labeled `REHEARSAL` and cannot support promotion.
+Until those gates are satisfied, the presentation reports unobserved measurements as `not observed`; it never substitutes authored numbers for live proof. Contract examples remain explicitly non-certifying test data.
 
 ## Run locally
 
@@ -49,10 +53,13 @@ npm run dev
 - `server/workflowExecutor.ts` — server-side adapter for the canonical multi-agent `/api/v1/workflow` contract; requires independent quality and queue-latency evaluators and fails correlation closed when source evidence is incomplete.
 - `content-501/` — eight-stage Showroom-style rehearsal journey, worksheets, proof fixtures, facilitator guidance, and handoff.
 - `contracts/telemetry/` and `contracts/failure/` — correlation, OpenTelemetry, Intel source-admission, controlled-failure, recovery, and fail-closed contracts.
+- `contracts/orchestration/` — pinned role cards, MCP/tool behavior, deterministic policy order, idempotency, retry, timeout, and human-authority contracts.
 - `server/quality.ts` — deterministic exact-value, classification, and retrieval evaluator with no LLM judge or promotion thresholds.
 - `server/failureDriver.ts` — disabled-by-default, allowlisted, single-use controlled-pressure lifecycle with independent verification and rollback.
 - `server/main.ts` — executable HTTP entrypoint for `/healthz`, `/readyz`, and `/api/scale/run`.
 - `showroom/` and `site.yml` — native Antora component, navigation, validation, and RHDP Showroom build.
+- `charts/agentic-scale-501/` — separate presentation and qualifier workloads with digest-only images and a safe rehearsal default.
+- `.github/workflows/release.yml` — pinned verification, GHCR publication, hard zero HIGH/CRITICAL gate, SPDX SBOM, and GitHub OIDC provenance.
 - `packaging/` and `deploy/` — AMD64-only pre-image plan, hardened OpenShift manifests, health/readiness contracts, runtime Secret references, and supply-chain gates.
 
-The next release step is to create and publish immutable AMD64 image digests, then connect live dependencies only after Agentic 401 certification establishes the prerequisite governed workload. Launchpad certification remains a separate 1 / 5 / 25-seat evidence exercise.
+Pushes to `main` publish immutable AMD64 candidates only when the release workflow is green. Live dependencies remain disabled until Agentic 401 certification establishes the prerequisite governed workload. Launchpad certification remains a separate downstream exercise and this repository never changes that state.
