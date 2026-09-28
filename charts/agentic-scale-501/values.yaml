@@ -1,10 +1,10 @@
 images:
   presentation:
     repository: ghcr.io/jkershawrh/agentic-scale-501-presentation
-    digest: sha256:0000000000000000000000000000000000000000000000000000000000000000
+    digest: sha256:87d088116e9472eb39c0b4e3064f6907e8099808059cf6fcd29c9fd9c06cb5a3
   qualifier:
     repository: ghcr.io/jkershawrh/agentic-scale-501-qualifier
-    digest: sha256:0000000000000000000000000000000000000000000000000000000000000000
+    digest: sha256:b8f24b91779078d439aad8d62ddd4ebb503e883a73a7b307ca1f387a6f125e2c
 imagePullPolicy: IfNotPresent
 presentation:
   replicas: 1

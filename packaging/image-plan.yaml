@@ -1,5 +1,5 @@
 schemaVersion: agentic-scale-501-image-plan/v1
-status: pre-immutable-image
+status: released-candidate
 image:
   name: agentic-scale-501-presentation
   containerfile: packaging/Containerfile
@@ -9,6 +9,7 @@ image:
   prohibitedPlatforms:
     - linux/arm64
   outputReferencePolicy: digest-only-for-deployment
+  publishedDigest: sha256:87d088116e9472eb39c0b4e3064f6907e8099808059cf6fcd29c9fd9c06cb5a3
 baseImages:
   build: registry.access.redhat.com/ubi9/nodejs-22@sha256:90d19cd1a4ba03bcb63c46320862955fc1560511532ee35ff472289bf5fe2276
   runtime: docker.io/nginxinc/nginx-unprivileged:alpine@sha256:c18d735d33a1c3ccb5ef201d504e5b4aa4d003e81f034b329011267f4c4d0f58

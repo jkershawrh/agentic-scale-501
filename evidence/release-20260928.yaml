@@ -1,0 +1,32 @@
+schemaVersion: agentic-501-release-evidence/v1
+recordedAt: "2026-09-28"
+sourceRevision: f8b7a213362423ee3fa0e1819a7177bb97912775
+workflowRun: https://github.com/jkershawrh/agentic-scale-501/actions/runs/36483977267
+result: green-release-candidate
+certificationClaim: none
+images:
+  - name: presentation
+    reference: ghcr.io/jkershawrh/agentic-scale-501-presentation@sha256:87d088116e9472eb39c0b4e3064f6907e8099808059cf6fcd29c9fd9c06cb5a3
+    platform: linux/amd64
+    vulnerabilityGate: { high: 0, critical: 0 }
+    sbomArtifact: sbom-presentation
+    sbomSha256: 71d2bd4bc3eb340f85500c9f1dcf75d298340ffeffde8f1b65692e077d44772a
+    provenance: https://github.com/jkershawrh/agentic-scale-501/attestations/50913591
+  - name: qualifier
+    reference: ghcr.io/jkershawrh/agentic-scale-501-qualifier@sha256:b8f24b91779078d439aad8d62ddd4ebb503e883a73a7b307ca1f387a6f125e2c
+    platform: linux/amd64
+    vulnerabilityGate: { high: 0, critical: 0 }
+    sbomArtifact: sbom-qualifier
+    sbomSha256: a426d5f4bf2acb45ed0416ee0a0701d8d1edb63635281b89a22492a40ae7333a
+    provenance: https://github.com/jkershawrh/agentic-scale-501/attestations/50913649
+verification:
+  unitAndContractTests: { passed: 117, failed: 0 }
+  visualTests: { passed: 11, skippedMobileNoScroll: 1, failed: 0 }
+  showroom: green
+  helmLintAndRender: green
+  npmAudits: { rootVulnerabilities: 0, showroomVulnerabilities: 0 }
+authority:
+  automatedPromotion: false
+  humanReviewRequired: true
+  launchpadMutationPerformed: false
+  level501Earned: false

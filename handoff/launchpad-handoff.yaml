@@ -34,9 +34,16 @@ liveActivationGates:
   - A human reviewer approves the immutable profile and thresholds.
 releaseEvidence:
   workflow: verify-and-release
+  workflowRun: https://github.com/jkershawrh/agentic-scale-501/actions/runs/36483977267
   requiredArtifacts:
     - presentation image digest and SPDX SBOM
     - qualifier image digest and SPDX SBOM
     - zero HIGH/CRITICAL Trivy result for each digest
     - GitHub OIDC build-provenance attestation for each digest
-  evidenceStatus: pending-first-green-main-run
+  images:
+    presentation: ghcr.io/jkershawrh/agentic-scale-501-presentation@sha256:87d088116e9472eb39c0b4e3064f6907e8099808059cf6fcd29c9fd9c06cb5a3
+    qualifier: ghcr.io/jkershawrh/agentic-scale-501-qualifier@sha256:b8f24b91779078d439aad8d62ddd4ebb503e883a73a7b307ca1f387a6f125e2c
+  attestations:
+    presentation: https://github.com/jkershawrh/agentic-scale-501/attestations/50913591
+    qualifier: https://github.com/jkershawrh/agentic-scale-501/attestations/50913649
+  evidenceStatus: green-release-candidate
