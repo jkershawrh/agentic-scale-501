@@ -6,6 +6,8 @@ images:
     repository: ghcr.io/jkershawrh/agentic-scale-501-qualifier
     digest: sha256:b8f24b91779078d439aad8d62ddd4ebb503e883a73a7b307ca1f387a6f125e2c
 imagePullPolicy: IfNotPresent
+routes:
+  enabled: true
 presentation:
   replicas: 1
   resources:

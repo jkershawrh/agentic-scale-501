@@ -14,7 +14,7 @@
     "test:visual": "playwright test",
     "test:contracts": "python3 contracts/telemetry/validate_contracts.py",
     "test:showroom": "npm --prefix showroom run check",
-    "test:helm": "helm lint charts/agentic-scale-501 && helm template blueprint charts/agentic-scale-501 > /dev/null",
+    "test:helm": "helm lint charts/agentic-scale-501 && node scripts/verify-helm-routes.mjs",
     "verify:offline": "node scripts/verify-offline.mjs",
     "check": "npm run test && npm run typecheck:server && npm run build && npm run verify:offline && npm run test:contracts && npm run test:showroom && npm run test:helm",
     "preview": "vite preview"

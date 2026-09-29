@@ -1,0 +1,35 @@
+{{- if .Values.routes.enabled }}
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: {{ .Release.Name }}-presentation
+  labels:
+    {{- include "agentic-scale-501.labels" . | nindent 4 }}
+    app.kubernetes.io/component: presentation
+spec:
+  to:
+    kind: Service
+    name: {{ .Release.Name }}-presentation
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: {{ .Release.Name }}-qualifier
+  labels:
+    {{- include "agentic-scale-501.labels" . | nindent 4 }}
+    app.kubernetes.io/component: qualifier
+spec:
+  to:
+    kind: Service
+    name: {{ .Release.Name }}-qualifier
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+{{- end }}
