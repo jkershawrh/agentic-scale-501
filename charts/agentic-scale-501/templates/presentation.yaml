@@ -28,9 +28,11 @@ spec:
           securityContext: {{- include "agentic-scale-501.securityContext" . | nindent 12 }}
           volumeMounts:
             - { name: tmp, mountPath: /tmp }
+            - { name: run, mountPath: /run }
             - { name: nginx-tmp, mountPath: /var/lib/nginx/tmp }
       volumes:
         - { name: tmp, emptyDir: { sizeLimit: 16Mi } }
+        - { name: run, emptyDir: { sizeLimit: 16Mi } }
         - { name: nginx-tmp, emptyDir: { sizeLimit: 16Mi } }
 ---
 apiVersion: v1

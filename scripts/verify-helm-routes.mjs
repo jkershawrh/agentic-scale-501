@@ -22,3 +22,10 @@ for (const [name, hostPrefix] of [
 }
 
 console.log('Helm route contract verified for presentation and qualifier.')
+
+if (!rendered.includes('app.kubernetes.io/part-of: agentic-scale-501')) {
+  throw new Error('Default-deny policy is not scoped to the 501 workload pods')
+}
+if (!rendered.includes('mountPath: /run')) {
+  throw new Error('Read-only presentation container is missing its writable /run volume')
+}
