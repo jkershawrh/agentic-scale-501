@@ -1,13 +1,23 @@
 = 4. Controlled pressure: cross one named boundary
 :navtitle: 4. Controlled pressure
 
+== What you will learn
+
+* How to define one bounded and reversible pressure condition.
+* Which evidence must remain visible during degradation.
+* When to abort rather than continue an unsafe run.
+
 == Objective
+
+Evaluate one approved pressure condition without expanding its blast radius or authority.
+
+== See: cross one named boundary
 
 Observe system behavior with one admitted pressure condition while the workload identity and evaluation set remain fixed.
 
 == RUN NOW — LOCAL REHEARSAL
 
-[source,bash]
+[source,bash,role="execute"]
 ----
 node content-501/tools/rehearsal-check.mjs --phase pressure
 ----
@@ -28,10 +38,41 @@ WARNING: A live pressure action is permitted only when the declaration names the
 
 If admission, boundedness, or reversibility is missing, skip injection and mark the stage inconclusive.
 
+=== Review lens
+
+* *Admission:* the exact mechanism is named and approved.
+* *Boundary:* the blast radius is limited to the declared target.
+* *Duration:* maximum exposure and abort time are explicit.
+* *Observation:* correlation, policy, quality, and errors remain available.
+* *Authority:* no automatic promotion or unreviewed mutation is permitted.
+* *Restoration:* removal and post-removal checks are defined in advance.
+
+=== Evidence to capture
+
+* pressure condition and owner;
+* start time and maximum duration;
+* abort threshold and observer;
+* affected and protected resources;
+* removal command or mechanism;
+* restoration evidence path;
+* human disposition after recovery.
+
 == Learner checkpoint
 
 State the admitted condition, its intended blast radius, the evidence that must remain intact, the abort condition, and the restoration proof you would require.
 
 *Pass when:* your plan tests one condition and protects the participant namespace, shared model gateway, and promotion boundary.
+
+== Verify
+
+Confirm that the pressure envelope names exactly one admitted condition and preserves the same workload identity and evaluation set. Check that the start condition, maximum duration, abort threshold, removal step, restoration owner, and post-removal check are all recorded.
+
+Compare error, timeout, queue, retry, quality, policy, and correlation evidence with the baseline. Verify that automated promotion remains false and that no mutating action can occur without the declared human boundary.
+
+Classify the stage as inconclusive if the pressure mechanism is improvised, its blast radius is unknown, or restoration cannot be proven. Rehearsal evidence teaches the review method but does not authorize a destination fault.
+
+== Key takeaway
+
+Controlled pressure is safe only when it is singular, bounded, observable, reversible, and human-owned. Missing admission or restoration evidence is a stop condition, not permission to improvise.
 
 xref:05-recovery.adoc[Continue to Stage 5: Recovery →]

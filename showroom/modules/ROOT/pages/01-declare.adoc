@@ -1,13 +1,23 @@
 = 1. Declare: freeze the comparison contract
 :navtitle: 1. Declare
 
+== What you will learn
+
+* How to freeze the identity of a meaningful comparison.
+* Which single condition may change during each phase.
+* Which stop conditions prevent an unsupported conclusion.
+
 == Objective
+
+Freeze a comparison contract that another reviewer can reproduce and challenge.
+
+== See: freeze the comparison contract
 
 Declare what is held fixed, what intentionally changes, what evidence is mandatory, and what condition ends the run.
 
 == Read the declaration
 
-[source,bash]
+[source,bash,role="execute"]
 ----
 sed -n '1,240p' content-501/templates/profile-declaration.yaml
 ----
@@ -51,5 +61,17 @@ In the learner record, write:
 . the person or role that owns final disposition.
 
 *Pass when:* another reviewer could detect an apples-to-oranges comparison from your declaration alone.
+
+== Verify
+
+Check that the declaration names one workload image, one evaluation set, one target, one model boundary, one policy version, and one run identifier. Confirm that these values remain fixed for baseline, sustained load, controlled pressure, and recovery.
+
+Ask a second learner to identify the only intended change in each phase. If that learner cannot determine it from the declaration, revise the record before proceeding. Note the abort owner, restoration owner, and final human reviewer as distinct responsibilities.
+
+The declaration is complete only when a reviewer can distinguish a planned change from accidental drift and can identify exactly which evidence would invalidate the comparison.
+
+== Key takeaway
+
+Scale evidence is useful only when the comparison identity is stable. Declaring invariants and stop conditions before execution prevents a fast but incomparable run from being mistaken for proof.
 
 xref:02-baseline.adoc[Continue to Stage 2: Baseline →]

@@ -1,7 +1,17 @@
 = 0. Preflight: establish what you are allowed to prove
 :navtitle: 0. Preflight
 
+== What you will learn
+
+* How rehearsal evidence differs from destination evidence.
+* Which prerequisites admit a live qualification run.
+* Why incomplete evidence must fail closed.
+
 == Objective
+
+Establish the authority, source, and destination boundaries before evaluating any result.
+
+== See: establish the proof boundary
 
 Confirm the local rehearsal is intact, name the live blockers, and refuse to confuse contract-shaped fixture data with target-environment evidence.
 
@@ -9,7 +19,7 @@ Confirm the local rehearsal is intact, name the live blockers, and refuse to con
 
 From the repository root:
 
-[source,bash]
+[source,bash,role="execute"]
 ----
 node content-501/tools/rehearsal-check.mjs
 ----
@@ -61,5 +71,15 @@ Record:
 * why an incomplete envelope must be inconclusive rather than green.
 
 *Pass when:* you can explain why a locally valid rehearsal envelope is useful for learning but insufficient for a live capacity or certification claim.
+
+== Verify
+
+Confirm that the checker reports four rehearsal envelopes, that the threshold metadata is not approved, and that automated promotion remains disabled. Record each result in the learner record instead of relying on the command exit status alone.
+
+Review the admission list once more and classify every item as present, absent, or awaiting human review. An unknown condition is not equivalent to a pass. The resulting preflight record becomes the first evidence item in the handoff package.
+
+== Key takeaway
+
+A valid schema proves that evidence is shaped correctly; it does not prove that the evidence came from the destination system. Live certification begins only after source, target, telemetry, safety, and human-authority gates are all admitted.
 
 xref:01-declare.adoc[Continue to Stage 1: Declare →]

@@ -1,7 +1,17 @@
 = 7. Close and handoff: certify the envelope, not the ambition
 :navtitle: 7. Close and handoff
 
+== What you will learn
+
+* How to state the narrowest claim supported by evidence.
+* How to package results for an independent reviewer.
+* How cleanup and ownership close the qualification lifecycle.
+
 == Objective
+
+Package the narrowest evidence-backed conclusion for independent review and the next owner.
+
+== See: close with a reviewable handoff
 
 Close with the narrowest supported statement, preserve blockers, and define the next owner.
 
@@ -36,10 +46,33 @@ Include:
 
 Because the current flow is read-only rehearsal, the cleanup statement is: “No target environment or Launchpad state was changed.”
 
+Record the completed package inventory with an executable local check:
+
+[source,bash,role="execute"]
+----
+node content-501/tools/rehearsal-check.mjs --summary
+----
+
 == Learner checkpoint
 
 Have another learner challenge one claim. Either point to the exact proof path or narrow the claim.
 
 *Pass when:* the handoff can be reviewed without oral context and contains no unsupported live claim.
+
+== Verify
+
+Confirm that the handoff declares its mode, comparison identity, observed results, unsupported claims, disposition, next owner, and next evidence gate. Check every cited file and evidence path for availability and source labeling.
+
+Verify that the learner record, declaration, four envelopes, scorecard, pressure plan, reviewer responsibility, and cleanup statement are present. Ask an independent learner to challenge one claim and narrow it when the exact proof cannot be found.
+
+The package is ready for review only when it can stand without oral context and when it cannot be mistaken for live OpenShift, Intel Xeon, capacity, resilience, or Launchpad certification evidence.
+
+== Key takeaway
+
+A good handoff preserves what was proved, what was not proved, who decides next, and how the environment was left. It certifies the evidence envelope—not the ambition of the program.
+
+The next owner should be able to repeat the checks, locate every cited artifact, and determine the remaining gate without relying on the facilitator's memory.
+
+Preserve the immutable source revision and evidence hashes with that handoff so later runs can distinguish a repeated proof from a changed package.
 
 xref:index.adoc[← Return to the journey overview]

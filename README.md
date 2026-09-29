@@ -1,4 +1,4 @@
-# Qualify a Production Multi-Agent Blueprint
+# Build and Qualify a Production Multi-Agent Blueprint
 
 ## Table of contents
 

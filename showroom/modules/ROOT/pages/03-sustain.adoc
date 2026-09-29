@@ -1,13 +1,23 @@
 = 3. Sustain: hold useful load without losing trust
 :navtitle: 3. Sustain
 
+== What you will learn
+
+* How to compare useful load with the declared baseline.
+* How to identify queueing, quality, or policy drift.
+* Why availability alone does not define a trusted envelope.
+
 == Objective
+
+Determine whether useful, governed behavior persists as concurrency increases.
+
+== See: hold useful load without losing trust
 
 Compare a sustained-load rehearsal envelope with baseline while keeping the evaluation and attribution contract fixed.
 
 == RUN NOW — LOCAL REHEARSAL
 
-[source,bash]
+[source,bash,role="execute"]
 ----
 node content-501/tools/rehearsal-check.mjs --phase sustained
 ----
@@ -16,7 +26,7 @@ node content-501/tools/rehearsal-check.mjs --phase sustained
 
 Inspect both phases:
 
-[source,bash]
+[source,bash,role="execute"]
 ----
 node content-501/tools/rehearsal-check.mjs --compare baseline,sustained
 ----
@@ -34,10 +44,34 @@ Ask:
 
 An available service with incomplete evidence is not a successful sustained run. Replica count and CPU utilization alone do not define the operating envelope.
 
+=== Review lens
+
+* *Demand:* the intended concurrency and completed journey count.
+* *Latency:* journey, inference, and queue latency remain separate.
+* *Reliability:* errors, timeouts, and retries remain in the denominator.
+* *Quality:* the fixed evaluation set uses the declared scorer.
+* *Policy:* compliance and unauthorized actions remain observable.
+* *Correlation:* every expected journey has complete evidence joins.
+* *Attribution:* workload, target, model, and telemetry sources do not drift.
+* *Limits:* rehearsal load is not a destination capacity claim.
+* *Review:* unexplained drift remains a blocker for the next phase.
+
 == Learner checkpoint
 
 Write one evidence-backed comparison and one limitation. Use “the rehearsal fixture shows…” rather than “the platform sustains…”.
 
 *Pass when:* your comparison covers usefulness and trust—quality, policy, and correlation—not only throughput.
+
+== Verify
+
+Confirm that baseline and sustained envelopes use the same run identity, image, evaluation set, model, endpoint, target, policy, and scorer. Compare completed journeys, throughput, p95 journey latency, p95 inference latency, queue latency, errors, and timeouts.
+
+Check that every expected journey remains correlated and that policy compliance and quality remain visible under load. A higher throughput result is inconclusive when the evaluation set changes, correlation is incomplete, or failures disappear from the denominator.
+
+Write one supported observation, one limitation, and one question for the human reviewer. Keep rehearsal language explicit so that a later destination run cannot be confused with this learning artifact.
+
+== Key takeaway
+
+Sustained-load proof must show that the system remains useful, attributable, governed, and observable—not merely that replicas continued responding.
 
 xref:04-controlled-pressure.adoc[Continue to Stage 4: Controlled pressure →]

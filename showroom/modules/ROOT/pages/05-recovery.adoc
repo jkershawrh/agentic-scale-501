@@ -1,13 +1,23 @@
 = 5. Recovery: prove restoration, not merely availability
 :navtitle: 5. Recovery
 
+== What you will learn
+
+* How to distinguish endpoint availability from governed recovery.
+* Which post-pressure measurements prove restoration.
+* Why cleanup evidence belongs in the recovery decision.
+
 == Objective
+
+Prove that the declared operating state and lifecycle cleanliness were restored.
+
+== See: prove restoration rather than availability
 
 Verify that pressure was removed and that useful, governed, correlated behavior returned within a declared bound.
 
 == RUN NOW — LOCAL REHEARSAL
 
-[source,bash]
+[source,bash,role="execute"]
 ----
 node content-501/tools/rehearsal-check.mjs --phase recovery
 ----
@@ -26,10 +36,41 @@ Recovery proof requires all of the following:
 
 A responding endpoint is not sufficient recovery. If correlation, quality, policy, or restoration evidence is missing, the result is inconclusive. If the condition remains active or recovery exceeds an approved bound, the future live score may reject the run.
 
+=== Review lens
+
+* *Removal:* the admitted pressure condition is no longer active.
+* *Timing:* recovery duration is measured against an approved bound.
+* *Usefulness:* post-recovery quality is comparable with baseline.
+* *Safety:* policy compliance returns without unauthorized action.
+* *Correlation:* expected and completed journeys match again.
+* *Resources:* temporary resources and effects are removed.
+
+=== Evidence to capture
+
+* pressure removal timestamp;
+* readiness and functional restoration timestamps;
+* post-recovery journey results;
+* quality and policy comparison;
+* correlation-completeness ratio;
+* residue inventory;
+* reviewer disposition and limitations.
+
 == Learner checkpoint
 
 Compare recovered quality and correlation with baseline. Then list one piece of lifecycle evidence needed to prove the target was restored cleanly.
 
 *Pass when:* you can separate “service answered” from “the governed operating state recovered.”
+
+== Verify
+
+Confirm that the pressure condition is marked removed and that the recovery interval is measured. Compare completed journeys, quality, policy compliance, unauthorized actions, correlation, queue latency, errors, and timeouts with the declared baseline.
+
+Verify that the same workload image, evaluation set, model, endpoint, target, policy, and scorer remain attributable. Record whether the recovery bound is approved or still draft; a measured value cannot pass an unapproved threshold.
+
+Add lifecycle evidence showing that the temporary pressure mechanism and any generated resources were removed. A healthy endpoint with stale pressure, incomplete correlation, or residue is not a recovered system.
+
+== Key takeaway
+
+Recovery means that useful, governed, correlated behavior and a clean lifecycle state returned within an approved bound. Availability by itself is only one part of that proof.
 
 xref:06-score-review.adoc[Continue to Stage 6: Score and review →]
