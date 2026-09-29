@@ -14,7 +14,7 @@ factory_receipt:
     may_publish: false
   presentation_source:
     repository: https://github.com/jkershawrh/agentic-scale-501
-    revision: "ec4640638bc981f01a3080dd30b4d79ab5c87721"
+    revision: "5413bb24b25e67e7fba9d2025c4e4b070e324878"
     tree_dirty: false
   artifacts:
     workload:
@@ -31,8 +31,8 @@ factory_receipt:
       release_receipt: {path: evidence/published-presentation-release.json, sha256: "618d10b2e85c098a50e3552d7d126e6aca8123bce59e9b55b792d1f77504c9f8"}
     showroom_content:
       repository: https://github.com/jkershawrh/agentic-scale-501
-      revision: "ec4640638bc981f01a3080dd30b4d79ab5c87721"
-      bundle_digest: "sha256:4bd82157f844ed25060db92796cfdfad6a93edca78587f5e777975b4a601020a"
+      revision: "5413bb24b25e67e7fba9d2025c4e4b070e324878"
+      bundle_digest: "sha256:4f4b5272e17026cf9d3b913a7d398c8e5fce535af5ba68a80191134825e763d8"
   factory_evidence:
     development_journey: {path: evidence/factory-development-journey.json, sha256: "ba48a2db78e55e206c204b9ebfc3771deea5bc6d0fb14516f7ca5c6266948168"}
     presentation_verification: {path: evidence/presentation-verification.json, sha256: "ae0e63373e759045d0919a5103c71db40d62dbb63a2d2523924f65930ed35673"}
@@ -71,8 +71,8 @@ proposed_launchpad_intake:
     shared_blueprint: red-hat-intel-agentic-v1
     solution_family: agentic_ai
   sources:
-    showroom: {repo_url: "https://github.com/jkershawrh/agentic-scale-501", revision: "ec4640638bc981f01a3080dd30b4d79ab5c87721", playbook: site.yml, start_path: showroom}
-    workload: {repo_url: "https://github.com/jkershawrh/agentic-scale-501", revision: "ec4640638bc981f01a3080dd30b4d79ab5c87721", deploy_path: charts/agentic-scale-501}
+    showroom: {repo_url: "https://github.com/jkershawrh/agentic-scale-501", revision: "5413bb24b25e67e7fba9d2025c4e4b070e324878", playbook: site.yml, start_path: showroom}
+    workload: {repo_url: "https://github.com/jkershawrh/agentic-scale-501", revision: "5413bb24b25e67e7fba9d2025c4e4b070e324878", deploy_path: charts/agentic-scale-501}
   runtime:
     deployment_type: helm
     deployment_class: shared_namespace
