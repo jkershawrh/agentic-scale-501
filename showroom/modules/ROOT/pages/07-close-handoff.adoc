@@ -74,5 +74,6 @@ A good handoff preserves what was proved, what was not proved, who decides next,
 The next owner should be able to repeat the checks, locate every cited artifact, and determine the remaining gate without relying on the facilitator's memory.
 
 Preserve the immutable source revision and evidence hashes with that handoff so later runs can distinguish a repeated proof from a changed package.
+Record the expected retention period and evidence owner alongside the package.
 
 xref:index.adoc[← Return to the journey overview]
