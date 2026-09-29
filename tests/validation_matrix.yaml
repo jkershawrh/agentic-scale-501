@@ -1,0 +1,55 @@
+schema_version: quickstart.redhat.com/validation-matrix/v1
+stages:
+  - id: source-contract
+    name: Source, artifact, and authority contracts
+    method: CDD
+    threshold: 100
+    required: true
+    checks:
+      - immutable-source-revision
+      - digest-pinned-images
+      - rehearsal-and-live-labels-separated
+      - automated-promotion-disabled
+  - id: component-behavior
+    name: Qualification components
+    method: CBT
+    threshold: 100
+    required: true
+    checks:
+      - presentation-health-and-readiness
+      - qualifier-health-and-readiness
+      - bounded-route-hostnames
+      - namespace-scoped-network-policy
+  - id: participant-behavior
+    name: Participant qualification journey
+    method: BDD
+    threshold: 100
+    required: true
+    checks:
+      - declare-profile
+      - establish-baseline
+      - sustain-useful-load
+      - controlled-pressure
+      - recovery-proof
+      - human-review-handoff
+  - id: evidence
+    name: Proof and lifecycle evidence
+    method: EDD
+    threshold: 100
+    required: true
+    checks:
+      - source-labeled-proof-envelope
+      - correlation-complete
+      - policy-compliant
+      - one-seat-zero-residue
+      - five-seat-zero-residue
+  - id: release
+    name: Red and green release evidence
+    method: TDD
+    threshold: 100
+    required: true
+    checks:
+      - unit-and-contract-tests
+      - negative-fail-closed-tests
+      - showroom-content-tests
+      - helm-render-tests

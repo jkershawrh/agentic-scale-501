@@ -1,0 +1,14 @@
+schema_version: "1.0"
+benchmarks:
+  - id: QUAL-501-001
+    scenario: destination-rehearsal-single-seat
+    pass: Presentation, Showroom, qualifier, isolation, and zero-residue reclaim all pass without a live-evidence claim.
+  - id: QUAL-501-002
+    scenario: live-single-seat
+    pass: All journeys correlate, policy remains compliant, human review remains required, and approved Intel telemetry is present.
+  - id: QUAL-501-003
+    scenario: five-seat-functional
+    pass: Every seat completes independently with no cross-seat access and complete reclaim.
+  - id: QUAL-501-004
+    scenario: controlled-pressure-and-recovery
+    pass: The admitted pressure is bounded, removed, and followed by independently verified recovery within the approved budget.

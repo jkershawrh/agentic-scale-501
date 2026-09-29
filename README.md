@@ -1,4 +1,16 @@
-# Agentic AI 501 — Production Multi-Agent Blueprint
+# Qualify a Production Multi-Agent Blueprint
+
+## Table of contents
+
+- [Overview](#overview)
+- [Architecture](#architecture)
+- [Requirements](#requirements)
+- [Deploy](#deploy)
+- [Repository structure](#repository-structure)
+- [Tags](#tags)
+- [References](#references)
+
+## Overview
 
 This workspace is the post-401 Agentic AI presentation and lab-design surface. It applies the Triforce presentation pattern to one question: **what remains true when a governed multi-agent workload is placed under useful load and controlled failure?**
 
@@ -32,13 +44,41 @@ Gated and not represented as completed live proof:
 
 Until those gates are satisfied, the presentation reports unobserved measurements as `not observed`; it never substitutes authored numbers for live proof. Contract examples remain explicitly non-certifying test data.
 
-## Run locally
+## Architecture
+
+The learner experience separates four responsibilities: a Triforce-style presentation,
+an Antora/Showroom guide, a qualification service, and Launchpad lifecycle control.
+The presentation explains the business decision; Showroom leads the participant through
+the evidence journey; the qualifier emits a versioned proof envelope; Launchpad owns
+placement, participant isolation, certification, and complete reclamation. Rehearsal and
+live evidence are deliberately separate runtime modes and automated promotion is never
+permitted.
+
+## Requirements
+
+- Node.js 22 and npm for local presentation and qualifier development.
+- Python 3 for contract validation.
+- Helm 3 for the OpenShift package checks.
+- An OpenShift destination with Routes for Launchpad certification.
+- Approved live workflow, evaluation, queue, Intel telemetry, and fault-gate endpoints
+  before enabling live evidence mode.
+
+## Deploy
+
+The repository publishes digest-pinned AMD64 presentation and qualifier images. For
+local verification, run the complete gate before rendering the Helm package:
 
 ```bash
 npm install
 npm run check
 npm run dev
 ```
+
+Launchpad must deploy the chart from an immutable Git revision, keep
+`qualifier.evidenceSource: rehearsal` until all live dependencies are independently
+approved, and certify one seat before raising the workshop limit.
+
+## Repository structure
 
 ## Key files
 
@@ -63,3 +103,15 @@ npm run dev
 - `packaging/` and `deploy/` — AMD64-only pre-image plan, hardened OpenShift manifests, health/readiness contracts, runtime Secret references, and supply-chain gates.
 
 Pushes to `main` publish immutable AMD64 candidates only when the release workflow is green. Live dependencies remain disabled until Agentic 401 certification establishes the prerequisite governed workload. Launchpad certification remains a separate downstream exercise and this repository never changes that state.
+
+## Tags
+
+`agentic-ai`, `multi-agent`, `OpenShift`, `Intel Xeon`, `Showroom`, `qualification`,
+`resilience`, `human-authority`, `evidence-driven-development`
+
+## References
+
+- `handoff/launchpad-handoff.yaml` — fail-closed Launchpad handoff and artifact receipt.
+- `handoff/catalog-certification.proposed.yaml` — proposed independent certification sequence.
+- `contracts/agentic-scale-proof.schema.json` — versioned proof-envelope schema.
+- `docs/architecture/observability-and-controlled-failure.md` — telemetry and failure boundaries.

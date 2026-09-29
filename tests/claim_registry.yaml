@@ -1,0 +1,22 @@
+schema_version: "1.0"
+claims:
+  - id: SCALE-501-001
+    statement: Rehearsal evidence is visibly labeled and cannot be promoted as live evidence.
+    evidence: server/api.test.ts
+    status: locally-verified
+  - id: SCALE-501-002
+    statement: Automated promotion remains disabled and human review remains required.
+    evidence: src/proof/contract.test.ts
+    status: locally-verified
+  - id: SCALE-501-003
+    statement: Presentation and qualifier workloads are non-root, read-only, and digest pinned.
+    evidence: charts/agentic-scale-501
+    status: locally-verified
+  - id: SCALE-501-004
+    statement: The package supports one Flightpath seat with complete reclaim.
+    evidence: pending-launchpad-certification
+    status: pending-live-verification
+  - id: SCALE-501-005
+    statement: The package supports five simultaneous Flightpath seats.
+    evidence: pending-launchpad-certification
+    status: pending-live-verification
