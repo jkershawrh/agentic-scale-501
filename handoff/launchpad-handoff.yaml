@@ -14,7 +14,7 @@ factory_receipt:
     may_publish: false
   presentation_source:
     repository: https://github.com/jkershawrh/agentic-scale-501
-    revision: "01fd26c794c46cb1ca8773c3133d00e796014cdf"
+    revision: "ec4640638bc981f01a3080dd30b4d79ab5c87721"
     tree_dirty: false
   artifacts:
     workload:
@@ -31,7 +31,7 @@ factory_receipt:
       release_receipt: {path: evidence/published-presentation-release.json, sha256: "618d10b2e85c098a50e3552d7d126e6aca8123bce59e9b55b792d1f77504c9f8"}
     showroom_content:
       repository: https://github.com/jkershawrh/agentic-scale-501
-      revision: "01fd26c794c46cb1ca8773c3133d00e796014cdf"
+      revision: "ec4640638bc981f01a3080dd30b4d79ab5c87721"
       bundle_digest: "sha256:4bd82157f844ed25060db92796cfdfad6a93edca78587f5e777975b4a601020a"
   factory_evidence:
     development_journey: {path: evidence/factory-development-journey.json, sha256: "ba48a2db78e55e206c204b9ebfc3771deea5bc6d0fb14516f7ca5c6266948168"}
@@ -71,8 +71,8 @@ proposed_launchpad_intake:
     shared_blueprint: red-hat-intel-agentic-v1
     solution_family: agentic_ai
   sources:
-    showroom: {repo_url: "https://github.com/jkershawrh/agentic-scale-501", revision: "01fd26c794c46cb1ca8773c3133d00e796014cdf", playbook: site.yml, start_path: showroom}
-    workload: {repo_url: "https://github.com/jkershawrh/agentic-scale-501", revision: "01fd26c794c46cb1ca8773c3133d00e796014cdf", deploy_path: charts/agentic-scale-501}
+    showroom: {repo_url: "https://github.com/jkershawrh/agentic-scale-501", revision: "ec4640638bc981f01a3080dd30b4d79ab5c87721", playbook: site.yml, start_path: showroom}
+    workload: {repo_url: "https://github.com/jkershawrh/agentic-scale-501", revision: "ec4640638bc981f01a3080dd30b4d79ab5c87721", deploy_path: charts/agentic-scale-501}
   runtime:
     deployment_type: helm
     deployment_class: shared_namespace

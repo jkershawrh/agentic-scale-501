@@ -3,7 +3,7 @@ kind: CatalogOnboardingProposal
 metadata: {catalog_item_id: scale-agentic-blueprint, status: draft}
 spec:
   repository: https://github.com/jkershawrh/agentic-scale-501
-  revision: 01fd26c794c46cb1ca8773c3133d00e796014cdf
+  revision: ec4640638bc981f01a3080dd30b4d79ab5c87721
   learning_level: "501"
   prerequisite: operate-agentic-blueprint
   source_classes:
