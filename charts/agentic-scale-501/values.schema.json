@@ -13,9 +13,10 @@
     },
     "routes": {
       "type": "object",
-      "required": ["enabled"],
+      "required": ["enabled", "ingressDomain"],
       "properties": {
-        "enabled": { "type": "boolean" }
+        "enabled": { "type": "boolean" },
+        "ingressDomain": { "type": "string", "minLength": 1 }
       }
     },
     "presentation": { "type": "object" },

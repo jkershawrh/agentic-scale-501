@@ -8,6 +8,7 @@ images:
 imagePullPolicy: IfNotPresent
 routes:
   enabled: true
+  ingressDomain: apps.flightpath.fm2aihpcsed.com
 presentation:
   replicas: 1
   resources:

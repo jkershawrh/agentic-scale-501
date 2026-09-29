@@ -7,6 +7,7 @@ metadata:
     {{- include "agentic-scale-501.labels" . | nindent 4 }}
     app.kubernetes.io/component: presentation
 spec:
+  host: {{ printf "a501p-%s.%s" (trunc -8 .Release.Namespace) .Values.routes.ingressDomain }}
   to:
     kind: Service
     name: {{ .Release.Name }}-presentation
@@ -24,6 +25,7 @@ metadata:
     {{- include "agentic-scale-501.labels" . | nindent 4 }}
     app.kubernetes.io/component: qualifier
 spec:
+  host: {{ printf "a501q-%s.%s" (trunc -8 .Release.Namespace) .Values.routes.ingressDomain }}
   to:
     kind: Service
     name: {{ .Release.Name }}-qualifier
