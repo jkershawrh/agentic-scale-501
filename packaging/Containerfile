@@ -17,6 +17,7 @@ LABEL org.opencontainers.image.title="Agentic AI 501 rehearsal presentation" \
       org.opencontainers.image.architecture="amd64"
 
 COPY --from=build /opt/app-root/src/dist /usr/share/nginx/html
+COPY packaging/nginx-main.conf /etc/nginx/nginx.conf
 COPY packaging/nginx.conf /etc/nginx/conf.d/nginx.default.conf
 
 EXPOSE 8080

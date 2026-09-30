@@ -62,6 +62,15 @@ def test_presentation_probes_allow_bounded_nginx_startup():
     assert "failureThreshold: 12" in template
 
 
+def test_presentation_nginx_workers_are_bounded_for_large_clusters():
+    containerfile = (ROOT / "packaging/Containerfile").read_text()
+    config = (ROOT / "packaging/nginx-main.conf").read_text()
+    assert "COPY packaging/nginx-main.conf /etc/nginx/nginx.conf" in containerfile
+    assert "worker_processes 2;" in config
+    assert "worker_processes auto;" not in config
+    assert "pid /tmp/nginx.pid;" in config
+
+
 def test_release_workflow_enforces_publication_contracts():
     workflow = (ROOT / ".github/workflows/release.yml").read_text()
     assert "python -m pytest -q tests/publication" in workflow
