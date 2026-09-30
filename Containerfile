@@ -5,11 +5,19 @@ RUN npm ci --ignore-scripts
 COPY --chown=1001:0 . .
 RUN npm run build
 
-FROM --platform=linux/amd64 cgr.dev/chainguard/node@sha256:0d0e3c2b91b1c82c125052fc4dd0fe22294b13e22c5210ebc94955bdfd5fe2d3
+FROM --platform=linux/amd64 cgr.dev/chainguard/node@sha256:6f32fc8fbde89a61e7829f7064c71022fe26734e32ea41f7590a2b708229cdef AS node-runtime
+
+FROM --platform=linux/amd64 docker.io/library/alpine:3.22@sha256:4bcff63911fcb4448bd4fdacec207030997caf25e9bea4045fa6c8c44de311d1 AS runtime-sanitizer
+COPY --from=node-runtime / /node-root
+RUN rm -rf /node-root/usr/lib/node_modules \
+    /node-root/usr/bin/npm /node-root/usr/bin/npx
+
+FROM scratch
 LABEL org.opencontainers.image.title="Agentic AI 501 qualification service" \
       org.opencontainers.image.description="Fail-closed evidence qualification; no certification or promotion authority" \
       org.opencontainers.image.source="https://github.com/jkershawrh/agentic-scale-501" \
       org.opencontainers.image.architecture="amd64"
+COPY --from=runtime-sanitizer /node-root /
 ENV NODE_ENV=production \
     EVIDENCE_SOURCE=rehearsal \
     LIVE_EXECUTION_ENABLED=false \
@@ -20,4 +28,5 @@ WORKDIR /app
 COPY --from=build --chown=65532:65532 /opt/app-root/src/server-dist ./server-dist
 USER 65532
 EXPOSE 8080
+ENTRYPOINT ["/usr/bin/node"]
 CMD ["server-dist/server/main.js"]

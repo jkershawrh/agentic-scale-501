@@ -67,3 +67,14 @@ def test_release_workflow_enforces_publication_contracts():
     assert "python -m pytest -q tests/publication" in workflow
     assert "Build Linux AMD64 candidate without publishing" in workflow
     assert "Publish and verify exact digest" in workflow
+    assert "Retain vulnerability inventory even when the gate fails" in workflow
+
+
+def test_qualifier_runtime_removes_unused_package_managers():
+    containerfile = (ROOT / "Containerfile").read_text()
+    assert "cgr.dev/chainguard/node@sha256:" in containerfile
+    assert "FROM scratch" in containerfile
+    assert "rm -rf /node-root/usr/lib/node_modules" in containerfile
+    assert "/node-root/usr/bin/npm" in containerfile
+    assert 'ENTRYPOINT ["/usr/bin/node"]' in containerfile
+    assert "USER 65532" in containerfile

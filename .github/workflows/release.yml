@@ -75,6 +75,14 @@ jobs:
           fail-build: true
           output-format: json
           output-file: vulnerability-${{ matrix.component }}.json
+      - name: Retain vulnerability inventory even when the gate fails
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: vulnerability-${{ matrix.component }}-${{ github.sha }}
+          retention-days: 90
+          path: vulnerability-${{ matrix.component }}.json
+          if-no-files-found: error
       - name: Generate SPDX SBOM
         uses: anchore/sbom-action@006b7ce8314066bdf1765b4500370d40fa6917a3
         with:
