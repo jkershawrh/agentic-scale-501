@@ -26,6 +26,10 @@ describe('executable scale service', () => {
 
     expect(await (await fetch(`${baseUrl}/healthz`)).json()).toEqual({ status: 'ok' })
     expect(await (await fetch(`${baseUrl}/readyz`)).json()).toEqual({ status: 'ready' })
+    expect(await (await fetch(baseUrl)).json()).toEqual({
+      service: 'agentic-scale-501-qualifier',
+      status: 'ready',
+    })
 
     const response = await fetch(`${baseUrl}/api/scale/run`, {
       method: 'POST',

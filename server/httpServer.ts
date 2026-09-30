@@ -74,6 +74,13 @@ export function createScaleHttpService(config: HttpRuntimeConfig, handleScaleRun
       json(response, ready ? 200 : 503, { status: ready ? 'ready' : 'draining' })
       return
     }
+    if (url.pathname === '/') {
+      json(response, ready ? 200 : 503, {
+        service: 'agentic-scale-501-qualifier',
+        status: ready ? 'ready' : 'draining',
+      })
+      return
+    }
 
     const abort = new AbortController()
     const onAborted = () => abort.abort(new DOMException('Client disconnected', 'AbortError'))

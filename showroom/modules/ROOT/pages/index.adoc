@@ -1,6 +1,32 @@
 = Agentic AI 501 learner journey
 :navtitle: Journey overview
 
+== Story
+
+Agentic AI 401 proved that one evidence-backed workflow could be operated,
+challenged, and restored. A platform owner now asks whether that same governed
+system remains useful when several journeys arrive together and one bounded
+dependency is placed under pressure.
+
+You are the qualification engineer. Your job is not to make the graph look
+fast. It is to preserve the workload identity, evidence, policy, quality,
+human authority, and recovery boundary while load changes. The evidence
+package you produce is the prerequisite for Agentic AI 601, where a human may
+consider granting narrowly scoped action authority.
+
+== Show → Learn → Do → Prove
+
+* *Show:* inspect the presentation and source-labeled proof envelopes for one
+  governed workload across baseline, sustained, pressure, and recovery phases.
+* *Learn:* distinguish throughput from usefulness, request evidence from shared
+  Intel telemetry, and machine scoring from human certification authority.
+* *Do:* execute the local rehearsal checker, freeze the comparison identity,
+  compare phases, challenge missing proof, and complete the scorecard.
+* *Prove:* deliver a reproducible handoff that states its source, evidence
+  paths, limitations, cleanup state, next owner, and exact gate into the
+  Agentic AI 601 experience. No rehearsal value is presented as a live
+  OpenShift or Intel result.
+
 == Scale and certify a governed agentic workload
 
 This Showroom-style lab asks one question: *what remains true when a governed multi-agent workload is placed under useful load and controlled pressure?*
@@ -8,6 +34,16 @@ This Showroom-style lab asks one question: *what remains true when a governed mu
 The lab produces a reviewable proof package, not an automatic promotion. The current repository supports a safe *REHEARSAL* path. Live OpenShift execution, approved Intel hardware telemetry, fault injection, and Launchpad certification remain gated.
 
 IMPORTANT: Every displayed metric in this journey is rehearsal-sourced. This content does not claim a live capacity result, approved Intel performance, or certification.
+
+== Runtime truth
+
+This candidate installs no optional OpenShift Operator and provisions no model.
+The OpenShift Console is an inspection surface, not an Operator claim. The
+checked-in rehearsal envelopes include synthetic inference fields so the
+learner can practice attribution, but they are not proof that a model ran.
+A future LIVE qualification must attach the already-governed prerequisite
+workload, its approved model endpoint, and independently admitted Intel Xeon
+telemetry before any inference or hardware result may be scored.
 
 == Journey map
 

@@ -46,6 +46,24 @@ Include:
 
 Because the current flow is read-only rehearsal, the cleanup statement is: “No target environment or Launchpad state was changed.”
 
+== Cleanup and Reclaim Boundary
+
+The current rehearsal reads checked-in contracts and fixtures only. It creates
+no cluster workload, pressure mechanism, or external target, so there is no
+runtime object for the learner to delete. Preserve the learner record and
+proof hashes, then confirm that the working tree contains only the evidence
+the facilitator intended to retain.
+
+A future admitted live run must remove its pressure mechanism, restore the
+declared baseline, and inventory temporary resources before it can close. The
+participant performs only that bounded workload restoration. Namespace,
+routes, credentials, Showroom, and the workload release remain owned by
+Launchpad reclaim, whose independent lifecycle proof must report zero residue.
+
+The two statements are intentionally different: “No target environment or
+Launchpad state was changed” is truthful for this rehearsal; “zero residue” is
+a destination claim that requires live reclaim evidence.
+
 Record the completed package inventory with an executable local check:
 
 [source,bash,role="execute"]

@@ -51,3 +51,19 @@ def test_handoff_remains_fail_closed():
     assert authority["orderable"] is False
     assert authority["certified"] is False
     assert authority["promotion_eligible"] is False
+
+
+def test_presentation_probes_allow_bounded_nginx_startup():
+    template = (
+        ROOT / "charts/agentic-scale-501/templates/presentation.yaml"
+    ).read_text()
+    assert "startupProbe:" in template
+    assert "timeoutSeconds: 5" in template
+    assert "failureThreshold: 12" in template
+
+
+def test_release_workflow_enforces_publication_contracts():
+    workflow = (ROOT / ".github/workflows/release.yml").read_text()
+    assert "python -m pytest -q tests/publication" in workflow
+    assert "Build Linux AMD64 candidate without publishing" in workflow
+    assert "Publish and verify exact digest" in workflow

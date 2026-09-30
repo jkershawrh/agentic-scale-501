@@ -22,8 +22,21 @@ spec:
           image: "{{ .Values.images.presentation.repository }}@{{ .Values.images.presentation.digest }}"
           imagePullPolicy: {{ .Values.imagePullPolicy }}
           ports: [{ name: http, containerPort: 8080 }]
-          readinessProbe: { httpGet: { path: /readyz, port: http } }
-          livenessProbe: { httpGet: { path: /healthz, port: http } }
+          startupProbe:
+            httpGet: { path: /healthz, port: http }
+            periodSeconds: 5
+            timeoutSeconds: 5
+            failureThreshold: 12
+          readinessProbe:
+            httpGet: { path: /readyz, port: http }
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          livenessProbe:
+            httpGet: { path: /healthz, port: http }
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
           resources: {{- toYaml .Values.presentation.resources | nindent 12 }}
           securityContext: {{- include "agentic-scale-501.securityContext" . | nindent 12 }}
           volumeMounts:
