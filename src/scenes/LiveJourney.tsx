@@ -30,18 +30,18 @@ export function LiveJourney({ scene }: { scene: LiveJourneyScene }) {
   }
 
   return <SceneFrame scene={scene}><div className="live-workspace" data-testid="live-workspace">
-    <nav className="live-workspace-steps" aria-label="Live proof progress">
+    <nav className="live-workspace-steps" aria-label="Scale proof progress">
       {scene.steps.map((item, index) => <button key={item.id} disabled={index > stepIndex} className={index === stepIndex ? 'active' : index < stepIndex ? 'complete' : ''} onClick={() => index < stepIndex && void runStep(index)}><span>{index < stepIndex ? '✓' : index + 1}</span>{item.title}</button>)}
     </nav>
     <div className="live-workspace-main">
       <div className="journey-status">
-        <small>{step ? `ACT ${stepIndex + 1} OF ${scene.steps.length}` : 'LIVE WORKLOAD'}</small>
+        <small>{step ? `ACT ${stepIndex + 1} OF ${scene.steps.length}` : 'SCALE PROOF'}</small>
         <strong>{step?.title ?? 'Start with the workload—not the topology'}</strong>
         <span>{step?.detail ?? 'Run a concrete input, then inspect the evidence and measurements returned by each condition.'}</span>
         {state.source && <span className={`source-badge source-${state.source}`}>{state.source}</span>}
       </div>
       {!step && <div className="live-workspace-intake"><span>INPUT</span><strong>Bounded demonstration request</strong><small>The first action should describe what enters the system, why it matters, and what will be measured.</small></div>}
-      {!scene.technicalTopology && step && <div className="live-architecture" aria-label="Live architecture journey">
+      {!scene.technicalTopology && step && <div className="live-architecture" aria-label="Architecture journey">
       {scene.nodes.map((node, index) => <div className="live-node-wrap" key={node.id}>
         <div className={`live-node ${node.tone ? `tone-${node.tone}` : ''} ${step && index <= step.activeNode ? 'done' : ''} ${step?.activeNode === index ? 'active' : ''}`}>
           <strong>{node.label}</strong>{node.detail && <span>{node.detail}</span>}
@@ -56,7 +56,7 @@ export function LiveJourney({ scene }: { scene: LiveJourneyScene }) {
       <div className="journey-controls">
       {scene.technicalTopology && <button className="button button-secondary" onClick={() => setShowTopology((visible) => !visible)}>{showTopology ? 'Hide' : 'Inspect'} technical topology</button>}
       {stepIndex < 0 && <button className="button button-primary" onClick={() => runStep(0)}>{scene.cta}</button>}
-      {stepIndex >= 0 && !complete && state.status !== 'loading' && <button className="button button-primary" onClick={() => runStep(stepIndex + 1)}>Next live act →</button>}
+      {stepIndex >= 0 && !complete && state.status !== 'loading' && <button className="button button-primary" onClick={() => runStep(stepIndex + 1)}>Next proof act →</button>}
       {state.status === 'loading' && <button className="button button-primary" disabled>Running…</button>}
       {state.status === 'error' && <button className="button button-secondary" onClick={() => runStep(stepIndex)}>Retry</button>}
       {complete && <button className="button button-secondary" onClick={() => { setStepIndex(-1); setState({ status: 'idle' }); setShowTopology(false) }}>Replay</button>}

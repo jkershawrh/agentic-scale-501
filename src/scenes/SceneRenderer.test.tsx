@@ -26,14 +26,17 @@ describe('SceneRenderer', () => {
     const scene = scenes.find((item) => item.type === 'live-journey')!
     render(<SceneRenderer scene={scene} brand={demoConfig.brand} />)
     expect(screen.getByTestId('live-workspace')).toBeInTheDocument()
-    expect(screen.queryByLabelText('Live technical deployment topology')).not.toBeInTheDocument()
+    expect(screen.getByRole('navigation', { name: 'Scale proof progress' })).toBeInTheDocument()
+    expect(screen.getByText('SCALE PROOF')).toBeInTheDocument()
+    expect(screen.queryByText('LIVE WORKLOAD')).not.toBeInTheDocument()
+    expect(screen.queryByLabelText('Technical deployment topology')).not.toBeInTheDocument()
     fireEvent.click(screen.getByRole('button', { name: 'Inspect technical topology' }))
-    expect(screen.getByLabelText('Live technical deployment topology')).toBeInTheDocument()
+    expect(screen.getByLabelText('Technical deployment topology')).toBeInTheDocument()
     expect(screen.getByText('OpenShift participant namespace')).toBeInTheDocument()
     expect(screen.getByText('POST /api/v1/workflow')).toBeInTheDocument()
     fireEvent.click(screen.getByRole('button', { name: /run the measured journey/i }))
     expect((await screen.findAllByText('Establish the baseline'))[0]).toBeInTheDocument()
-    expect(await screen.findByRole('button', { name: /next live act/i })).toBeInTheDocument()
+    expect(await screen.findByRole('button', { name: /next proof act/i })).toBeInTheDocument()
   })
 
   it('renders the statistic-grid scene', () => {
