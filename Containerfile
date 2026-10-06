@@ -5,7 +5,7 @@ RUN npm ci --ignore-scripts
 COPY --chown=1001:0 . .
 RUN npm run build
 
-FROM --platform=linux/amd64 cgr.dev/chainguard/node@sha256:6f32fc8fbde89a61e7829f7064c71022fe26734e32ea41f7590a2b708229cdef AS node-runtime
+FROM --platform=linux/amd64 cgr.dev/chainguard/node@sha256:0768cc87864665f3217b35f47520e7e5555b9ae3fa0eb53ddceea018a83ae34c AS node-runtime
 
 FROM --platform=linux/amd64 docker.io/library/alpine:3.22@sha256:4bcff63911fcb4448bd4fdacec207030997caf25e9bea4045fa6c8c44de311d1 AS runtime-sanitizer
 COPY --from=node-runtime / /node-root
