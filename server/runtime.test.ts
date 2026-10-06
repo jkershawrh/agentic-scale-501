@@ -30,6 +30,14 @@ describe('executable scale service', () => {
       service: 'agentic-scale-501-qualifier',
       status: 'ready',
     })
+    const statusPage = await fetch(`${baseUrl}/api/v1/status`)
+    expect(statusPage.status).toBe(200)
+    expect(statusPage.headers.get('content-type')).toContain('text/html')
+    const statusHtml = await statusPage.text()
+    expect(statusHtml).toContain('Qualification Evidence')
+    expect(statusHtml).toContain('REHEARSAL')
+    expect(statusHtml).toContain('Human review required')
+    expect(statusHtml).toContain('No model participated')
 
     const response = await fetch(`${baseUrl}/api/scale/run`, {
       method: 'POST',
