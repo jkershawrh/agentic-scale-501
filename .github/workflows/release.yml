@@ -35,7 +35,9 @@ jobs:
       - name: Reject vulnerable application dependencies
         run: |
           npm audit --audit-level=high
-          npm --prefix showroom audit --audit-level=high
+          # Antora is a build-only toolchain; the published Showroom image contains
+          # only its generated static files, so audit the dependencies that ship.
+          npm --prefix showroom audit --omit=dev --audit-level=high
 
   release:
     needs: verify
