@@ -1,97 +1,38 @@
-= 7. Close and handoff: certify the envelope, not the ambition
-:navtitle: 7. Close and handoff
+= 7. Package your evidence
+:navtitle: 7. Package
 
-== What you will learn
-
-* How to state the narrowest claim supported by evidence.
-* How to package results for an independent reviewer.
-* How cleanup and ownership close the qualification lifecycle.
-
-== Objective
-
-Package the narrowest evidence-backed conclusion for independent review and the next owner.
-
-== See: close with a reviewable handoff
-
-Close with the narrowest supported statement, preserve blockers, and define the next owner.
-
-== Required close
-
-Use this structure:
-
-. *Mode:* REHEARSAL, OFFLINE, or LIVE.
-. *Compared:* baseline, sustained, controlled pressure, and recovery for one declared identity.
-. *Observed:* only metrics actually present in the proof package.
-. *Not proved:* capacity, resilience, Intel utilization, or certification claims not backed by approved live sources.
-. *Disposition:* pending human review; automated promotion is false.
-. *Next gate:* exact owner and evidence needed before live execution or independent certification.
-
-For this repository, a defensible close is:
-
-____
-The Agentic AI 501 rehearsal produced four contract-shaped, correlated proof envelopes for one declared comparison. It demonstrates the evidence and review method, not a live OpenShift capacity result, approved Intel Xeon performance, or Launchpad certification. Live execution remains gated, and the promotion decision remains human-owned.
-____
-
-== Handoff package
-
-Include:
-
-* completed learner record;
-* profile declaration;
-* four source-labeled envelopes;
-* scorecard with blockers and evidence paths;
-* pressure admission and restoration plan for future review;
-* reviewer identity or role and next decision date;
-* cleanup or no-change statement.
-
-Because the current flow is read-only rehearsal, the cleanup statement is: “No target environment or Launchpad state was changed.”
-
-== Cleanup and Reclaim Boundary
-
-The current rehearsal reads checked-in contracts and fixtures only. It creates
-no cluster workload, pressure mechanism, or external target, so there is no
-runtime object for the learner to delete. Preserve the learner record and
-proof hashes, then confirm that the working tree contains only the evidence
-the facilitator intended to retain.
-
-A future admitted live run must remove its pressure mechanism, restore the
-declared baseline, and inventory temporary resources before it can close. The
-participant performs only that bounded workload restoration. Namespace,
-routes, credentials, Showroom, and the workload release remain owned by
-Launchpad reclaim, whose independent lifecycle proof must report zero residue.
-
-The two statements are intentionally different: “No target environment or
-Launchpad state was changed” is truthful for this rehearsal; “zero residue” is
-a destination claim that requires live reclaim evidence.
-
-Record the completed package inventory with an executable local check:
+== RUN NOW — create the leave-behind
 
 [source,bash,role="execute"]
 ----
-node content-501/tools/rehearsal-check.mjs --summary
+node content-501/tools/qualification-runner.mjs package
+tar -tzf "$HOME/agentic-501-evidence.tgz"
 ----
 
-== Learner checkpoint
+Verify the artifact hashes:
 
-Have another learner challenge one claim. Either point to the exact proof path or narrow the claim.
+[source,bash,role="execute"]
+----
+cd "$HOME/agentic-501-evidence"
+sha256sum -c evidence-manifest.sha256
+----
 
-*Pass when:* the handoff can be reviewed without oral context and contains no unsupported live claim.
+Your package contains the profile, all four phase envelopes, the generated comparison report, your human decision, and a hash manifest. It is portable and reviewable without the facilitator's memory.
 
-== Verify
+== What you proved
 
-Confirm that the handoff declares its mode, comparison identity, observed results, unsupported claims, disposition, next owner, and next evidence gate. Check every cited file and evidence path for availability and source labeling.
+You executed a participant-owned workload through baseline, sustained load, bounded pressure, and recovery. You preserved evidence correlation, policy, and human authority and created a reproducible handoff.
 
-Verify that the learner record, declaration, four envelopes, scorecard, pressure plan, reviewer responsibility, and cleanup statement are present. Ask an independent learner to challenge one claim and narrow it when the exact proof cannot be found.
+== What you did not prove
 
-The package is ready for review only when it can stand without oral context and when it cannot be mistaken for live OpenShift, Intel Xeon, capacity, resilience, or Launchpad certification evidence.
+The package does not prove production capacity, shared model behavior, approved Intel Xeon utilization, multi-seat scale, or Launchpad certification. Those require admitted live sources and independent review.
 
-== Key takeaway
+== Cleanup and reclaim boundary
 
-A good handoff preserves what was proved, what was not proved, who decides next, and how the environment was left. It certifies the evidence envelope—not the ambition of the program.
+The workload ran only inside your terminal process and has stopped. The evidence files remain intentionally as your leave-behind. Launchpad still owns namespace, route, credential, and lab reclamation.
 
-The next owner should be able to repeat the checks, locate every cited artifact, and determine the remaining gate without relying on the facilitator's memory.
+== Completion standard
 
-Preserve the immutable source revision and evidence hashes with that handoff so later runs can distinguish a repeated proof from a changed package.
-Record the expected retention period and evidence owner alongside the package.
+The lab is complete when every manifest entry verifies, the archive exists, and your disposition cites evidence rather than intuition.
 
-xref:index.adoc[← Return to the journey overview]
+xref:index.adoc[Return to the journey overview]

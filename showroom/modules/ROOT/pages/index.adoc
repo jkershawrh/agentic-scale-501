@@ -1,139 +1,55 @@
-= Agentic AI 501 learner journey
+= Agentic AI 501 — Scale and Certify
 :navtitle: Journey overview
 
-== Story
+== Your mission
 
-Agentic AI 401 proved that one evidence-backed workflow could be operated,
-challenged, and restored. A platform owner now asks whether that same governed
-system remains useful when several journeys arrive together and one bounded
-dependency is placed under pressure.
+A governed agent service is preparing for a larger rollout. Leadership does not want a screenshot showing that the service was healthy once. They need a reviewable answer to a harder question:
 
-You are the qualification engineer. Your job is not to make the graph look
-fast. It is to preserve the workload identity, evidence, policy, quality,
-human authority, and recovery boundary while load changes. The evidence
-package you produce is the prerequisite for Agentic AI 601, where a human may
-consider granting narrowly scoped action authority.
+*Does the service remain useful, governed, attributable, and recoverable as demand changes?*
+
+You are the qualification engineer. You will execute a bounded workload, increase concurrency, introduce one safe local pressure condition, remove it, and package the resulting evidence for a human release decision.
 
 == Show → Learn → Do → Prove
 
-* *Show:* inspect the presentation and source-labeled proof envelopes for one
-  governed workload across baseline, sustained, pressure, and recovery phases.
-* *Learn:* distinguish throughput from usefulness, request evidence from shared
-  Intel telemetry, and machine scoring from human certification authority.
-* *Do:* execute the local rehearsal checker, freeze the comparison identity,
-  compare phases, challenge missing proof, and complete the scorecard.
-* *Prove:* deliver a reproducible handoff that states its source, evidence
-  paths, limitations, cleanup state, next owner, and exact gate into the
-  Agentic AI 601 experience. No rehearsal value is presented as a live
-  OpenShift or Intel result.
+* *Show:* see the difference between availability and an evidence-backed operating envelope.
+* *Learn:* freeze comparison identity, preserve policy and human authority, and fail closed when evidence is missing.
+* *Do:* create your own run, execute baseline, sustained, pressure, and recovery phases, and observe how the measurements change.
+* *Prove:* leave with a portable evidence package containing your profile, four proof envelopes, report, decision record, and hashes.
 
-== Scale and certify a governed agentic workload
+== What is real in this lab
 
-This Showroom-style lab asks one question: *what remains true when a governed multi-agent workload is placed under useful load and controlled pressure?*
+The commands execute a deterministic workload in your participant terminal and measure that execution. They create a participant-owned, learner-controlled evidence set under `$HOME/agentic-501-evidence`. The controlled pressure is local and bounded; it does not inject a cluster fault or affect another seat.
 
-The lab produces a reviewable proof package, not an automatic promotion. The current repository supports a safe *REHEARSAL* path. Live OpenShift execution, approved Intel hardware telemetry, fault injection, and Launchpad certification remain gated.
+IMPORTANT: The evidence source is *OFFLINE*. This lab proves the qualification method and your execution of it. It does not claim production capacity, approved Intel Xeon utilization, or Launchpad certification. Those claims require independently admitted live telemetry and human review.
 
-IMPORTANT: Every displayed metric in this journey is rehearsal-sourced. This content does not claim a live capacity result, approved Intel performance, or certification.
-
-== Runtime truth
-
-This candidate installs no optional OpenShift Operator and provisions no model.
-The OpenShift Console is an inspection surface, not an Operator claim. The
-checked-in rehearsal envelopes include synthetic inference fields so the
-learner can practice attribution, but they are not proof that a model ran.
-A future LIVE qualification must attach the already-governed prerequisite
-workload, its approved model endpoint, and independently admitted Intel Xeon
-telemetry before any inference or hardware result may be scored.
-
-== Journey map
-
-[cols="1,3,2,2",options="header"]
-|===
-| Stage | Learner outcome | Evidence | Current mode
-
-| xref:00-preflight.adoc[0. Preflight]
-| Prove the lab and prerequisite state
-| readiness record
-| Executable locally
-
-| xref:01-declare.adoc[1. Declare]
-| Freeze the comparison contract
-| declared profile
-| Executable locally
-
-| xref:02-baseline.adoc[2. Baseline]
-| Inspect low-load proof
-| baseline envelope
-| Rehearsal fixture
-
-| xref:03-sustain.adoc[3. Sustain]
-| Compare useful load with baseline
-| sustained envelope
-| Rehearsal fixture
-
-| xref:04-controlled-pressure.adoc[4. Controlled pressure]
-| Test a named, bounded condition
-| pressure envelope
-| Rehearsal fixture; live injection gated
-
-| xref:05-recovery.adoc[5. Recovery]
-| Verify removal and bounded recovery
-| recovery envelope
-| Rehearsal fixture
-
-| xref:06-score-review.adoc[6. Score and review]
-| Make a fail-closed recommendation
-| scorecard
-| Learner review; thresholds unapproved
-
-| xref:07-close-handoff.adoc[7. Close and handoff]
-| State only what the evidence supports
-| handoff record
-| Executable locally; certification gated
-|===
-
-== Learning objectives
-
-By the end, a learner can:
-
-. distinguish functional success from a measured operating envelope;
-. keep workload image, evaluation set, target, policy, model, and run correlation attributable;
-. compare baseline, sustained, pressure, and recovery evidence without treating availability as success;
-. fail closed when telemetry or proof is missing;
-. preserve the boundary between a machine-generated recommendation and a human certification decision.
-
-== Safe execution contract
-
-Commands labeled *RUN NOW — LOCAL REHEARSAL* read repository files and write nothing outside the learner's own worksheet. Commands labeled *GATED FUTURE LIVE EXECUTION* are explanatory only and must not be run until every gate in xref:00-preflight.adoc[Preflight] is approved.
-
-Start the lab from the repository root:
-
-[source,bash]
-----
-node content-501/tools/rehearsal-check.mjs
-----
-
-Expected classification:
+== The artifact you will take away
 
 [source,text]
 ----
-REHEARSAL ONLY — 4 contract-shaped envelopes validated; certification remains unavailable.
+agentic-501-evidence.tgz
+├── qualification-profile.json
+├── baseline.json
+├── sustained.json
+├── pressure.json
+├── recovery.json
+├── qualification-report.md
+├── learner-decision.md
+└── evidence-manifest.sha256
 ----
 
-== Proof vocabulary
+== Journey map
 
-Every phase uses `{proof-schema-version}` and carries:
+[cols="1,3,3",options="header"]
+|===
+| Stage | Action | Evidence you create
+| xref:00-preflight.adoc[0. Prepare] | Initialize your scenario and authority boundary | learner profile and decision record
+| xref:01-declare.adoc[1. Declare] | Inspect and freeze the comparison identity | declared profile
+| xref:02-baseline.adoc[2. Baseline] | Execute the low-concurrency reference | baseline envelope
+| xref:03-sustain.adoc[3. Sustain] | Increase concurrent journeys | sustained envelope
+| xref:04-controlled-pressure.adoc[4. Pressure] | Apply one bounded local latency condition | pressure envelope
+| xref:05-recovery.adoc[5. Recover] | Remove pressure and verify restoration | recovery envelope
+| xref:06-score-review.adoc[6. Decide] | Generate and challenge the recommendation | qualification report
+| xref:07-close-handoff.adoc[7. Package] | Hash and package the complete run | portable evidence bundle
+|===
 
-* `source`: `live`, `rehearsal`, or `offline`;
-* `runId` and immutable comparison identity;
-* workload, correlation, inference, policy, quality, and resource evidence;
-* pressure and recovery evidence when the phase requires it;
-* `automatedPromotion: false`, `humanReviewRequired: true`, and a human-owned disposition.
-
-The proof contract is defined in `contracts/agentic-scale-proof.schema.json`. The values in `contracts/thresholds.draft.json` are deliberately unapproved and cannot certify a run.
-
-== Completion standard
-
-Complete every learner checkpoint in link:{attachmentsdir}/templates/learner-record.md[the learner record,window=_blank]. A valid lab completion can conclude *rehearsal complete* or *inconclusive*. It cannot conclude that the workload is live-certified.
-
-xref:00-preflight.adoc[Begin with Stage 0: Preflight →]
+xref:00-preflight.adoc[Begin the qualification →]

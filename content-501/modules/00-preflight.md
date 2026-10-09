@@ -1,59 +1,11 @@
-# 0. Preflight: establish what you are allowed to prove
+# 0. Prepare
 
-## Objective
-
-Confirm the local rehearsal is intact, name the live blockers, and refuse to confuse contract-shaped fixture data with target-environment evidence.
-
-## RUN NOW — LOCAL REHEARSAL
-
-From the repository root:
+Create a unique learner-owned run and decision record:
 
 ```bash
-node content-501/tools/rehearsal-check.mjs
+rm -rf "$HOME/agentic-501-evidence" "$HOME/agentic-501-evidence.tgz"
+node content-501/tools/qualification-runner.mjs init --scenario customer-support-triage-readiness
+cat "$HOME/agentic-501-evidence/qualification-profile.json" | jq
 ```
 
-This command only reads the schema, the draft threshold metadata, and the four rehearsal envelopes. It checks source labels, phase requirements, immutable identity, correlation, and the human authority boundary.
-
-Inspect the declared mode:
-
-```bash
-sed -n '1,160p' docs/rehearsal/README.md
-```
-
-## Live admission gates
-
-All of the following must be evidenced before live execution is admitted:
-
-- Agentic AI 401 certification for the exact workload revision;
-- immutable workload image digest and versioned evaluation set;
-- approved OpenShift target and participant namespace;
-- runtime approval enforcement for mutating actions;
-- approved model identity and model-gateway boundary;
-- end-to-end OpenTelemetry correlation;
-- approved Intel Xeon identity, allocation, and utilization source;
-- approved thresholds and failure budget;
-- reversible pressure driver, named owner, abort condition, and cleanup check;
-- human reviewer and independent certification path.
-
-Today, these gates are not all satisfied. Therefore the lab stays in rehearsal mode.
-
-## GATED FUTURE LIVE EXECUTION — DO NOT RUN
-
-The future flow will resemble the following sequence, but endpoint names and operational commands are intentionally omitted until they are approved:
-
-```text
-admit profile -> open correlated run -> baseline -> sustained load
--> approved pressure -> remove pressure -> verify recovery
--> seal proof package -> human review -> independent certification
-```
-
-## Learner checkpoint
-
-Record:
-
-- the validator's exact source classification;
-- two currently missing live gates;
-- who owns the promotion decision;
-- why an incomplete envelope must be inconclusive rather than green.
-
-**Pass when:** you can explain why a locally valid rehearsal envelope is useful for learning but insufficient for a live capacity or certification claim.
+Pass when the profile exists and you can explain why the runner may recommend but cannot certify.

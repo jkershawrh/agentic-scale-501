@@ -3,7 +3,7 @@ name: agentic-scale-501
 title: Agentic AI 501 — Scale and Certify
 sourceFormat: markdown
 entrypoint: README.md
-mode: rehearsal-only
+mode: participant-owned-offline-qualification
 modules:
   - modules/00-preflight.md
   - modules/01-declare.md
@@ -23,15 +23,16 @@ fixtures:
   - fixtures/pressure.rehearsal.json
   - fixtures/recovery.rehearsal.json
 validation:
-  command: node content-501/tools/rehearsal-check.mjs
-  expectedClassification: REHEARSAL ONLY
+  command: npm run test:qualification
+  expectedClassification: qualification runner PASS
 publication:
-  showroomReady: false
-  antoraComponentReady: false
-  reason: Learning sources are Markdown and are not in Antora's modules/ROOT/pages AsciiDoc layout.
-  requiredReview: Preserve the learning text while producing reviewed AsciiDoc pages and navigation.
+  showroomReady: true
+  antoraComponentReady: true
+  reason: The Showroom contains the complete participant execution and evidence-package journey.
+  requiredReview: Preserve the offline evidence label and human authority boundary.
 claims:
   liveExecution: false
   certification: false
   automatedPromotion: false
-
+  participantExecution: true
+  durableLeaveBehind: true

@@ -1,77 +1,26 @@
-= 1. Declare: freeze the comparison contract
+= 1. Declare the comparison
 :navtitle: 1. Declare
 
-== What you will learn
+== Why this matters
 
-* How to freeze the identity of a meaningful comparison.
-* Which single condition may change during each phase.
-* Which stop conditions prevent an unsupported conclusion.
+A scale comparison is meaningless if the workload, evaluation set, target, or policy changes quietly between phases. Your generated profile freezes those identities while allowing concurrency and the single pressure condition to change.
 
-== Objective
-
-Freeze a comparison contract that another reviewer can reproduce and challenge.
-
-== See: freeze the comparison contract
-
-Declare what is held fixed, what intentionally changes, what evidence is mandatory, and what condition ends the run.
-
-== Read the declaration
+== RUN NOW — verify the invariant identity
 
 [source,bash,role="execute"]
 ----
-sed -n '1,240p' content-501/templates/profile-declaration.yaml
+jq '{runId,scenario,profileId,profileVersion,workloadImageDigest,evaluationSetVersion,target,authority}' \
+  "$HOME/agentic-501-evidence/qualification-profile.json"
 ----
 
-You can also link:{attachmentsdir}/templates/profile-declaration.yaml[download the rehearsal declaration,window=_blank].
+Write one sentence in `learner-decision.md` describing the business outcome you are protecting. Do not edit the run ID, workload digest, evaluation set, or target after execution begins.
 
-The rehearsal holds these identities fixed across all four phases:
+== Stop conditions
 
-* profile family and version;
-* workload image digest;
-* evaluation set version;
-* target label;
-* policy and quality-scorer versions;
-* model and inference endpoint;
-* telemetry source;
-* `runId`.
+Stop and classify the result as inconclusive if an evidence file is absent, a phase carries a different run identity, correlation is incomplete, pressure is not removed, or automated promotion appears anywhere.
 
-The phase and intended load level may change. During a future controlled-pressure phase, only the pre-approved pressure condition may change. Quiet changes to the image, evaluation set, policy, model, or target invalidate comparison.
+== Checkpoint
 
-== Failure budget and stop conditions
+You pass when you can name what stays fixed, what changes, and which condition makes the run inconclusive.
 
-The repository's threshold file is `draft-not-approved`. Use its values to learn how a deterministic scorecard is structured, not to claim an approved service envelope.
-
-Stop or classify the evidence as inconclusive if:
-
-* a required identity or proof field is absent;
-* a phase is mislabeled or the source changes;
-* correlation is incomplete;
-* the pressure condition is not admitted or cannot be removed;
-* the runtime attempts to certify or promote;
-* safe restoration cannot be confirmed.
-
-== Learner checkpoint
-
-In the learner record, write:
-
-. the invariant comparison identity;
-. the single changed condition at each stage;
-. the source classification;
-. one stop condition;
-. the person or role that owns final disposition.
-
-*Pass when:* another reviewer could detect an apples-to-oranges comparison from your declaration alone.
-
-== Verify
-
-Check that the declaration names one workload image, one evaluation set, one target, one model boundary, one policy version, and one run identifier. Confirm that these values remain fixed for baseline, sustained load, controlled pressure, and recovery.
-
-Ask a second learner to identify the only intended change in each phase. If that learner cannot determine it from the declaration, revise the record before proceeding. Note the abort owner, restoration owner, and final human reviewer as distinct responsibilities.
-
-The declaration is complete only when a reviewer can distinguish a planned change from accidental drift and can identify exactly which evidence would invalidate the comparison.
-
-== Key takeaway
-
-Scale evidence is useful only when the comparison identity is stable. Declaring invariants and stop conditions before execution prevents a fast but incomparable run from being mistaken for proof.
-
-xref:02-baseline.adoc[Continue to Stage 2: Baseline →]
+xref:02-baseline.adoc[Continue to Baseline →]

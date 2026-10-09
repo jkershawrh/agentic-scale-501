@@ -52,22 +52,37 @@ for (const pageName of pageNames) {
   allPages.set(pageName, pageText)
   if (!pageText.startsWith('=')) fail(`${pageName} has no AsciiDoc document title`)
   if (pageName !== 'index.adoc') {
-    if (!pageText.includes('== Objective')) fail(`${pageName} is missing its objective`)
-    if (!pageText.includes('== Learner checkpoint')) fail(`${pageName} is missing its learner checkpoint`)
-    if (!pageText.includes('*Pass when:*')) fail(`${pageName} is missing its completion criterion`)
+    if (!pageText.includes('== Checkpoint') && !pageText.includes('== Completion standard')) {
+      fail(`${pageName} is missing its completion checkpoint`)
+    }
   }
 }
 
 const requiredHonesty = [
-  ['index.adoc', 'REHEARSAL'],
-  ['index.adoc', 'cannot conclude that the workload is live-certified'],
-  ['04-controlled-pressure.adoc', 'GATED FUTURE LIVE EXECUTION — DO NOT RUN'],
-  ['06-score-review.adoc', 'human disposition and promotion'],
-  ['07-close-handoff.adoc', 'automated promotion is false'],
-  ['07-close-handoff.adoc', 'No target environment or Launchpad state was changed'],
+  ['index.adoc', 'participant-owned'],
+  ['index.adoc', 'evidence source is *OFFLINE*'],
+  ['index.adoc', 'does not claim production capacity'],
+  ['04-controlled-pressure.adoc', 'cannot delete pods'],
+  ['06-score-review.adoc', 'cannot certify or promote'],
+  ['07-close-handoff.adoc', 'does not prove production capacity'],
+  ['07-close-handoff.adoc', 'Launchpad still owns namespace'],
 ]
 for (const [pageName, phrase] of requiredHonesty) {
   if (!allPages.get(pageName)?.includes(phrase)) fail(`${pageName} is missing required boundary text: ${phrase}`)
+}
+
+const requiredActions = [
+  ['00-preflight.adoc', 'qualification-runner.mjs init'],
+  ['02-baseline.adoc', 'qualification-runner.mjs run baseline'],
+  ['03-sustain.adoc', 'qualification-runner.mjs run sustained'],
+  ['04-controlled-pressure.adoc', 'qualification-runner.mjs run pressure'],
+  ['05-recovery.adoc', 'qualification-runner.mjs run recovery'],
+  ['06-score-review.adoc', 'qualification-runner.mjs report'],
+  ['07-close-handoff.adoc', 'qualification-runner.mjs package'],
+  ['07-close-handoff.adoc', 'evidence-manifest.sha256'],
+]
+for (const [pageName, phrase] of requiredActions) {
+  if (!allPages.get(pageName)?.includes(phrase)) fail(`${pageName} is missing required learner action: ${phrase}`)
 }
 
 const sourceCopies = [

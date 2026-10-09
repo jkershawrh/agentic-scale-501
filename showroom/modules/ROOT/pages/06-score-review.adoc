@@ -1,75 +1,34 @@
-= 6. Score and review: fail closed, then hand judgment to a human
-:navtitle: 6. Score and review
+= 6. Score and make the human decision
+:navtitle: 6. Decide
 
-== What you will learn
-
-* How deterministic scoring separates missing proof from failed proof.
-* How to cite evidence paths for every recommendation.
-* Why the machine cannot grant certification authority.
-
-== Objective
-
-Produce a deterministic, reproducible recommendation while preserving human authority.
-
-== See: score fail-closed evidence
-
-Build a defensible recommendation without granting the runner certification authority.
-
-== RUN NOW — LOCAL REHEARSAL
+== RUN NOW — generate the report
 
 [source,bash,role="execute"]
 ----
-node content-501/tools/rehearsal-check.mjs --summary
+node content-501/tools/qualification-runner.mjs report
+sed -n '1,240p' "$HOME/agentic-501-evidence/qualification-report.md"
 ----
 
-The checker validates shape and invariants. It deliberately does *not* print `supported`, because:
+The machine may recommend `REHEARSAL COMPLETE`, but it cannot certify or promote. Review the four phase rows and challenge these questions:
 
-* every envelope is `source: rehearsal`;
-* the threshold status is `draft-not-approved`;
-* the Intel identity is a rehearsal label, not approved target telemetry;
-* `reviewerDisposition` is `pending`;
-* independent Launchpad certification is outside this content path.
+* Did the comparison identity remain fixed?
+* Did useful work complete under sustained load?
+* Was the pressure effect visible and singular?
+* Did the system recover after pressure was removed?
+* Were correlation, policy, and human authority preserved?
+* Which production claims remain unsupported?
 
-== Review order
+== RUN NOW — record your disposition
 
-. *Admissibility:* correct source, prerequisite, approved profile, immutable identity.
-. *Completeness:* every required field and every correlated journey.
-. *Safety:* no unauthorized action; bounded pressure removed.
-. *Usefulness:* quality, throughput, latency, errors, and timeouts.
-. *Recovery:* restoration and post-recovery quality within approved limits.
-. *Authority:* machine recommendation only; human disposition and promotion.
+[source,bash,role="execute"]
+----
+sed -n '1,200p' "$HOME/agentic-501-evidence/learner-decision.md"
+----
 
-Use the link:{attachmentsdir}/templates/scorecard.md[review scorecard,window=_blank]. Missing evidence is `INCONCLUSIVE`, not zero and not pass. A threshold breach is distinct from missing proof.
+Edit that file in the Terminal or editor and select exactly one outcome: `REHEARSAL COMPLETE` or `INCONCLUSIVE`. Add at least three exact evidence paths supporting the choice.
 
-=== Review lens
+== Checkpoint
 
-* *Source:* live, rehearsal, and offline evidence remain distinct.
-* *Thresholds:* only approved thresholds can produce a pass or fail.
-* *Completeness:* missing required evidence is explicitly inconclusive.
-* *Safety:* unauthorized action and incomplete restoration fail closed.
-* *Reproducibility:* every score cites an exact evidence path.
-* *Authority:* the reviewer owns disposition and promotion.
-* *Limitations:* unresolved blockers remain visible in the result.
-* *Lifecycle:* cleanup and residue evidence are part of the decision.
-* *Comparison:* every phase retains the declared identity.
-* *Handoff:* the next owner receives evidence rather than an oral claim.
+You pass when another reviewer can reproduce your disposition without relying on an oral explanation.
 
-== Learner checkpoint
-
-Choose `REHEARSAL COMPLETE` or `INCONCLUSIVE`, and cite at least three proof paths. Do not select a live certification outcome.
-
-*Pass when:* a reviewer can reproduce your recommendation and see every blocker without trusting prose alone.
-
-== Verify
-
-Trace at least three recommendation statements to exact fields in the proof envelopes. Confirm that missing evidence produces `INCONCLUSIVE`, while an observed threshold breach produces a separate failing result. Do not convert either state into zero or silently omit it.
-
-Check that the source remains rehearsal, the threshold set remains unapproved, Intel telemetry is not represented as observed, and reviewer disposition remains pending. Confirm that automated promotion is false in every phase.
-
-Have another learner reproduce the recommendation from the evidence paths and declaration without using your prose summary. Record disagreements for the human reviewer rather than asking the runtime to resolve authority.
-
-== Key takeaway
-
-Deterministic scoring makes evidence review repeatable, but certification remains a human-owned decision. A defensible recommendation exposes its sources, limits, and unresolved blockers.
-
-xref:07-close-handoff.adoc[Continue to Stage 7: Close and handoff →]
+xref:07-close-handoff.adoc[Continue to Package and hand off →]

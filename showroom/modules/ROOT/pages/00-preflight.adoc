@@ -1,85 +1,31 @@
-= 0. Preflight: establish what you are allowed to prove
-:navtitle: 0. Preflight
+= 0. Prepare your qualification
+:navtitle: 0. Prepare
 
-== What you will learn
+== Business decision
 
-* How rehearsal evidence differs from destination evidence.
-* Which prerequisites admit a live qualification run.
-* Why incomplete evidence must fail closed.
+Choose a governed agent workload that must remain trustworthy as demand grows. The default scenario is a customer-support triage service preparing for a larger rollout.
 
-== Objective
-
-Establish the authority, source, and destination boundaries before evaluating any result.
-
-== See: establish the proof boundary
-
-Confirm the local rehearsal is intact, name the live blockers, and refuse to confuse contract-shaped fixture data with target-environment evidence.
-
-== RUN NOW — LOCAL REHEARSAL
-
-From the repository root:
+== RUN NOW — create your run
 
 [source,bash,role="execute"]
 ----
-node content-501/tools/rehearsal-check.mjs
+rm -rf "$HOME/agentic-501-evidence" "$HOME/agentic-501-evidence.tgz"
+node content-501/tools/qualification-runner.mjs init \
+  --scenario customer-support-triage-readiness
 ----
 
-This command only reads the schema, the draft threshold metadata, and the four rehearsal envelopes. It checks source labels, phase requirements, immutable identity, correlation, and the human authority boundary.
+Inspect what you now own:
 
-Inspect the declared mode:
-
-[source,bash]
+[source,bash,role="execute"]
 ----
-sed -n '1,160p' docs/rehearsal/README.md
-----
-
-== Live admission gates
-
-All of the following must be evidenced before live execution is admitted:
-
-* Agentic AI 401 certification for the exact workload revision;
-* immutable workload image digest and versioned evaluation set;
-* approved OpenShift target and participant namespace;
-* runtime approval enforcement for mutating actions;
-* approved model identity and model-gateway boundary;
-* end-to-end OpenTelemetry correlation;
-* approved Intel Xeon identity, allocation, and utilization source;
-* approved thresholds and failure budget;
-* reversible pressure driver, named owner, abort condition, and cleanup check;
-* human reviewer and independent certification path.
-
-Today, these gates are not all satisfied. Therefore the lab stays in rehearsal mode.
-
-== GATED FUTURE LIVE EXECUTION — DO NOT RUN
-
-The future flow will resemble the following sequence, but endpoint names and operational commands are intentionally omitted until they are approved:
-
-[source,text]
-----
-admit profile -> open correlated run -> baseline -> sustained load
--> approved pressure -> remove pressure -> verify recovery
--> seal proof package -> human review -> independent certification
+find "$HOME/agentic-501-evidence" -maxdepth 1 -type f -print
+cat "$HOME/agentic-501-evidence/qualification-profile.json" | jq
 ----
 
-== Learner checkpoint
+The profile gives your run a unique identity and preserves two authority rules: automated promotion is disabled, and a human review is required.
 
-Record:
+== Checkpoint
 
-* the validator's exact source classification;
-* two currently missing live gates;
-* who owns the promotion decision;
-* why an incomplete envelope must be inconclusive rather than green.
+You pass when the workspace contains `qualification-profile.json` and `learner-decision.md`, and you can explain why the runner may recommend but cannot certify.
 
-*Pass when:* you can explain why a locally valid rehearsal envelope is useful for learning but insufficient for a live capacity or certification claim.
-
-== Verify
-
-Confirm that the checker reports four rehearsal envelopes, that the threshold metadata is not approved, and that automated promotion remains disabled. Record each result in the learner record instead of relying on the command exit status alone.
-
-Review the admission list once more and classify every item as present, absent, or awaiting human review. An unknown condition is not equivalent to a pass. The resulting preflight record becomes the first evidence item in the handoff package.
-
-== Key takeaway
-
-A valid schema proves that evidence is shaped correctly; it does not prove that the evidence came from the destination system. Live certification begins only after source, target, telemetry, safety, and human-authority gates are all admitted.
-
-xref:01-declare.adoc[Continue to Stage 1: Declare →]
+xref:01-declare.adoc[Continue to Declare →]

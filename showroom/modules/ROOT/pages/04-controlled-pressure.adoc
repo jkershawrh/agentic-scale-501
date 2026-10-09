@@ -1,78 +1,29 @@
-= 4. Controlled pressure: cross one named boundary
-:navtitle: 4. Controlled pressure
+= 4. Apply controlled pressure
+:navtitle: 4. Pressure
 
-== What you will learn
+== Safety boundary
 
-* How to define one bounded and reversible pressure condition.
-* Which evidence must remain visible during degradation.
-* When to abort rather than continue an unsafe run.
+The runner applies only a bounded latency delay inside its own local journey execution. It cannot delete pods, change cluster resources, call a shared model, or affect another participant.
 
-== Objective
-
-Evaluate one approved pressure condition without expanding its blast radius or authority.
-
-== See: cross one named boundary
-
-Observe system behavior with one admitted pressure condition while the workload identity and evaluation set remain fixed.
-
-== RUN NOW — LOCAL REHEARSAL
+== RUN NOW — cross one named boundary
 
 [source,bash,role="execute"]
 ----
-node content-501/tools/rehearsal-check.mjs --phase pressure
+node content-501/tools/qualification-runner.mjs run pressure
 ----
 
-The fixture's condition is a narrative rehearsal. It does not inject a fault into OpenShift, the model gateway, or any Intel-backed target. The source-labeled fixture is available as an link:{attachmentsdir}/fixtures/pressure.rehearsal.json[Antora attachment,window=_blank].
+Inspect the effect:
 
-Review:
+[source,bash,role="execute"]
+----
+jq '{condition:.pressure.condition,admitted:.pressure.admitted,removed:.pressure.removed,p95:.workload.latencyMs.p95,quality:.quality.score,errors:.workload.errorCount,unauthorized:.policy.unauthorizedActions}' \
+  "$HOME/agentic-501-evidence/pressure.json"
+----
 
-* `pressure.condition` is specific and attributable;
-* `pressure.admitted` is true;
-* `pressure.removed` remains false during this phase;
-* errors, timeouts, queueing, retry behavior, quality, and policy are still measured;
-* no unauthorized action or automatic promotion occurs.
+Compare p95 with sustained load. Pressure should be visible, attributable, and still active in this phase. Policy and correlation must remain intact.
 
-== GATED FUTURE LIVE EXECUTION — DO NOT RUN
+== Checkpoint
 
-WARNING: A live pressure action is permitted only when the declaration names the exact reversible mechanism, owner, start condition, maximum duration, abort threshold, restoration step, and post-restoration check. Generic commands and improvised fault injection are outside this lab.
+You pass when exactly one condition is named, its blast radius is local, `removed` is false, and the proof still preserves policy and authority.
 
-If admission, boundedness, or reversibility is missing, skip injection and mark the stage inconclusive.
-
-=== Review lens
-
-* *Admission:* the exact mechanism is named and approved.
-* *Boundary:* the blast radius is limited to the declared target.
-* *Duration:* maximum exposure and abort time are explicit.
-* *Observation:* correlation, policy, quality, and errors remain available.
-* *Authority:* no automatic promotion or unreviewed mutation is permitted.
-* *Restoration:* removal and post-removal checks are defined in advance.
-
-=== Evidence to capture
-
-* pressure condition and owner;
-* start time and maximum duration;
-* abort threshold and observer;
-* affected and protected resources;
-* removal command or mechanism;
-* restoration evidence path;
-* human disposition after recovery.
-
-== Learner checkpoint
-
-State the admitted condition, its intended blast radius, the evidence that must remain intact, the abort condition, and the restoration proof you would require.
-
-*Pass when:* your plan tests one condition and protects the participant namespace, shared model gateway, and promotion boundary.
-
-== Verify
-
-Confirm that the pressure envelope names exactly one admitted condition and preserves the same workload identity and evaluation set. Check that the start condition, maximum duration, abort threshold, removal step, restoration owner, and post-removal check are all recorded.
-
-Compare error, timeout, queue, retry, quality, policy, and correlation evidence with the baseline. Verify that automated promotion remains false and that no mutating action can occur without the declared human boundary.
-
-Classify the stage as inconclusive if the pressure mechanism is improvised, its blast radius is unknown, or restoration cannot be proven. Rehearsal evidence teaches the review method but does not authorize a destination fault.
-
-== Key takeaway
-
-Controlled pressure is safe only when it is singular, bounded, observable, reversible, and human-owned. Missing admission or restoration evidence is a stop condition, not permission to improvise.
-
-xref:05-recovery.adoc[Continue to Stage 5: Recovery →]
+xref:05-recovery.adoc[Continue to Recovery →]

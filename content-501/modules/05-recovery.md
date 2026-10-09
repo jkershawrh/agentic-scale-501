@@ -1,29 +1,11 @@
-# 5. Recovery: prove restoration, not merely availability
+# 5. Recovery
 
-## Objective
-
-Verify that pressure was removed and that useful, governed, correlated behavior returned within a declared bound.
-
-## RUN NOW — LOCAL REHEARSAL
+Remove pressure and execute the recovery phase:
 
 ```bash
-node content-501/tools/rehearsal-check.mjs --phase recovery
+node content-501/tools/qualification-runner.mjs run recovery
+jq '{pressure,recovery,p95:.workload.latencyMs.p95,quality:.quality.score,correlation,policy}' \
+  "$HOME/agentic-501-evidence/recovery.json"
 ```
 
-Recovery proof requires all of the following:
-
-- `pressure.removed: true`;
-- `recovery.recovered: true`;
-- a measured `recoveryMs`;
-- post-recovery quality;
-- complete journey correlation;
-- policy compliance and zero unauthorized actions;
-- human review still required and automated promotion still false.
-
-A responding endpoint is not sufficient recovery. If correlation, quality, policy, or restoration evidence is missing, the result is inconclusive. If the condition remains active or recovery exceeds an approved bound, the future live score may reject the run.
-
-## Learner checkpoint
-
-Compare recovered quality and correlation with baseline. Then list one piece of lifecycle evidence needed to prove the target was restored cleanly.
-
-**Pass when:** you can separate “service answered” from “the governed operating state recovered.”
+Pass when pressure is removed, recovery is recorded, quality returns toward baseline, correlation is complete, and unauthorized actions remain zero.
