@@ -9,7 +9,7 @@ The runner applies only a bounded latency delay inside its own local journey exe
 
 [source,bash,role="execute"]
 ----
-node content-501/tools/qualification-runner.mjs run pressure
+python3 $HOME/agentic-501/qualification-runner.py run pressure
 ----
 
 Inspect the effect:

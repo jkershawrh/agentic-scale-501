@@ -3,7 +3,7 @@
 Apply one bounded latency condition inside the local runner:
 
 ```bash
-node content-501/tools/qualification-runner.mjs run pressure
+python3 $HOME/agentic-501/qualification-runner.py run pressure
 jq '{pressure,p95:.workload.latencyMs.p95,quality:.quality.score,errors:.workload.errorCount,unauthorized:.policy.unauthorizedActions}' \
   "$HOME/agentic-501-evidence/pressure.json"
 ```

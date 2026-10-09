@@ -3,7 +3,7 @@
 Remove pressure and execute the recovery phase:
 
 ```bash
-node content-501/tools/qualification-runner.mjs run recovery
+python3 $HOME/agentic-501/qualification-runner.py run recovery
 jq '{pressure,recovery,p95:.workload.latencyMs.p95,quality:.quality.score,correlation,policy}' \
   "$HOME/agentic-501-evidence/recovery.json"
 ```

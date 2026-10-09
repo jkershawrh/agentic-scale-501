@@ -5,7 +5,7 @@
 
 [source,bash,role="execute"]
 ----
-node content-501/tools/qualification-runner.mjs package
+python3 $HOME/agentic-501/qualification-runner.py package
 tar -tzf "$HOME/agentic-501-evidence.tgz"
 ----
 

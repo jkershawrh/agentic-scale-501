@@ -3,7 +3,7 @@
 Create and verify the leave-behind:
 
 ```bash
-node content-501/tools/qualification-runner.mjs package
+python3 $HOME/agentic-501/qualification-runner.py package
 tar -tzf "$HOME/agentic-501-evidence.tgz"
 cd "$HOME/agentic-501-evidence"
 sha256sum -c evidence-manifest.sha256

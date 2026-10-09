@@ -22,6 +22,8 @@ fixtures:
   - fixtures/sustained.rehearsal.json
   - fixtures/pressure.rehearsal.json
   - fixtures/recovery.rehearsal.json
+runtimeAssets:
+  - ../showroom/modules/ROOT/attachments/tools/qualification-runner.py
 validation:
   command: npm run test:qualification
   expectedClassification: qualification runner PASS

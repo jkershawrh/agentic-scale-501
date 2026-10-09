@@ -22,5 +22,5 @@ This is real namespace-local participant execution with evidence source `offline
 Start with:
 
 ```bash
-node content-501/tools/qualification-runner.mjs init --scenario customer-support-triage-readiness
+python3 $HOME/agentic-501/qualification-runner.py init --scenario customer-support-triage-readiness
 ```

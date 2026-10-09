@@ -3,7 +3,7 @@
 Generate the comparison report:
 
 ```bash
-node content-501/tools/qualification-runner.mjs report
+python3 $HOME/agentic-501/qualification-runner.py report
 sed -n '1,240p' "$HOME/agentic-501-evidence/qualification-report.md"
 ```
 

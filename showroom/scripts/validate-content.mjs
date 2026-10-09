@@ -72,13 +72,13 @@ for (const [pageName, phrase] of requiredHonesty) {
 }
 
 const requiredActions = [
-  ['00-preflight.adoc', 'qualification-runner.mjs init'],
-  ['02-baseline.adoc', 'qualification-runner.mjs run baseline'],
-  ['03-sustain.adoc', 'qualification-runner.mjs run sustained'],
-  ['04-controlled-pressure.adoc', 'qualification-runner.mjs run pressure'],
-  ['05-recovery.adoc', 'qualification-runner.mjs run recovery'],
-  ['06-score-review.adoc', 'qualification-runner.mjs report'],
-  ['07-close-handoff.adoc', 'qualification-runner.mjs package'],
+  ['00-preflight.adoc', 'qualification-runner.py init'],
+  ['02-baseline.adoc', 'qualification-runner.py run baseline'],
+  ['03-sustain.adoc', 'qualification-runner.py run sustained'],
+  ['04-controlled-pressure.adoc', 'qualification-runner.py run pressure'],
+  ['05-recovery.adoc', 'qualification-runner.py run recovery'],
+  ['06-score-review.adoc', 'qualification-runner.py report'],
+  ['07-close-handoff.adoc', 'qualification-runner.py package'],
   ['07-close-handoff.adoc', 'evidence-manifest.sha256'],
 ]
 for (const [pageName, phrase] of requiredActions) {
