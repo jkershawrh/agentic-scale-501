@@ -8,7 +8,7 @@ COPY --chown=1001:0 public ./public
 COPY --chown=1001:0 src ./src
 RUN npm run build:presentation
 
-FROM --platform=linux/amd64 cgr.dev/chainguard/nginx@sha256:57e924b3b177cf480ce53cdcad2982b44093494c217d2bc95f2fb5b6a0950a5a
+FROM --platform=linux/amd64 cgr.dev/chainguard/nginx@sha256:c215e9f4b14bfc2cce3fe748e0d337dbefa8d79a1a1f98f776136d2c3ec89e93
 
 LABEL org.opencontainers.image.title="Agentic AI 501 rehearsal presentation" \
       org.opencontainers.image.description="Static rehearsal presentation; live execution and certification are not included" \
